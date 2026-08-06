@@ -1,0 +1,1095 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Camera,
+  Utensils,
+  Flame,
+  CheckCircle2,
+  Plus,
+  X,
+  Sparkles,
+  Timer,
+  Send,
+  Zap,
+  Activity,
+  Gauge,
+  Dumbbell,
+  TrendingUp,
+  Footprints,
+  Layers,
+  ChevronRight,
+  Trash2,
+  ListPlus,
+  HeartPulse,
+  Award,
+  Mic,
+  ShieldCheck,
+  RotateCcw,
+  Check,
+  ChevronDown,
+  Info,
+} from 'lucide-react';
+import confetti from 'canvas-confetti';
+import {
+  IClientUser,
+  IMealEntry,
+  MealType,
+  IWorkoutLog,
+  WorkoutCategory,
+  WorkoutIntensity,
+  CardioActivityType,
+  ICardioLog,
+  IMuscleGroupLog,
+  IMuscleExercise,
+  MuscleCategory,
+} from '../../types';
+import { submitDailyLog, fetchTodayLog } from '../../services/api';
+import { ProgressRing } from '../../components/ProgressRing';
+import { LiveCameraModal } from '../../components/LiveCameraModal';
+import { VoiceFeedbackPlayer } from '../../components/VoiceFeedbackPlayer';
+import { VoiceNoteRecorder } from '../../components/VoiceNoteRecorder';
+import { soundFx } from '../../utils/audio';
+
+interface ClientDailyLoggerProps {
+  client: IClientUser;
+  onLogSaved?: () => void;
+}
+
+const MUSCLE_DEFINITIONS: { id: MuscleCategory; label: string; icon: string; defaultExercises: string[] }[] = [
+  { id: 'chest', label: 'Chest / Pectorals', icon: '🛡️', defaultExercises: ['Incline Barbell Bench', 'Flat DB Press', 'Cable Chest Flyes', 'Dips'] },
+  { id: 'back', label: 'Back (Lats & Traps)', icon: '🦅', defaultExercises: ['Conventional Deadlift', 'Lat Pulldown', 'T-Bar Row', 'Seated Cable Row'] },
+  { id: 'shoulders', label: 'Shoulders & Delts', icon: '⚡', defaultExercises: ['Overhead DB Press', 'Lateral Raises', 'Face Pulls', 'Rear Delt Flyes'] },
+  { id: 'arms', label: 'Arms (Biceps & Triceps)', icon: '💪', defaultExercises: ['Incline DB Curls', 'Tricep Rope Pushdowns', 'Skull Crushers', 'Hammer Curls'] },
+  { id: 'legs', label: 'Legs (Quads & Glutes)', icon: '🦵', defaultExercises: ['Barbell Back Squats', 'Bulgarian Split Squats', 'Romanian Deadlifts', 'Leg Press'] },
+  { id: 'core', label: 'Core & Abs', icon: '🎯', defaultExercises: ['Hanging Leg Raises', 'Ab Wheel Rollouts', 'Cable Woodchoppers', 'Plank Hold'] },
+];
+
+export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, onLogSaved }) => {
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().split('T')[0]
+  );
+
+  // 1. STRENGTH TRAINING WORKOUT STATE
+  const [workoutTitle, setWorkoutTitle] = useState<string>('Heavy Upper Hypertrophy');
+  const [workoutCategory, setWorkoutCategory] = useState<WorkoutCategory>('push');
+  const [workoutIntensity, setWorkoutIntensity] = useState<WorkoutIntensity>('high');
+  // Single total session duration in minutes (no per-day duration duplication)
+  const [totalSessionDurationMinutes, setTotalSessionDurationMinutes] = useState<number>(55);
+  const [workoutSummary, setWorkoutSummary] = useState<string>('Intense chest stretch and strict lockout on presses.');
+
+  // Muscle Groups structure
+  const [muscleGroups, setMuscleGroups] = useState<IMuscleGroupLog[]>([
+    {
+      muscle: 'chest',
+      label: 'Chest / Pectorals',
+      totalMuscleReps: 64,
+      exercises: [
+        { name: 'Incline Barbell Bench Press', sets: 4, reps: '8', totalReps: 32, weightKg: 80, notes: 'Top set 80kg felt strong' },
+        { name: 'Cable Chest Flyes', sets: 4, reps: '8', totalReps: 32, weightKg: 18, notes: 'Deep stretch at bottom' },
+      ],
+    },
+    {
+      muscle: 'shoulders',
+      label: 'Shoulders & Delts',
+      totalMuscleReps: 40,
+      exercises: [
+        { name: 'Dumbbell Overhead Press', sets: 4, reps: '10', totalReps: 40, weightKg: 24, notes: 'Strict form with full lockout' },
+      ],
+    },
+  ]);
+
+  // Active muscle section being edited
+  const [activeMuscleTab, setActiveMuscleTab] = useState<MuscleCategory>('chest');
+  const [newExName, setNewExName] = useState<string>('');
+  const [newExSets, setNewExSets] = useState<number>(4);
+  const [newExReps, setNewExReps] = useState<string>('10');
+  const [newExWeight, setNewExWeight] = useState<number>(20);
+  const [newExNotes, setNewExNotes] = useState<string>('');
+  const [showAddModal, setShowAddModal] = useState<boolean>(false);
+
+  // 2. CARDIO SESSION STATE
+  const [cardioType, setCardioType] = useState<CardioActivityType>('incline_walk');
+  const [cardioDistanceKm, setCardioDistanceKm] = useState<number>(4.2);
+  const [cardioDurationMins, setCardioDurationMins] = useState<number>(35);
+  const [inclinePercentage, setInclinePercentage] = useState<number>(12);
+  const [stairmasterFloors, setStairmasterFloors] = useState<number>(85);
+  const [stairmasterLevel, setStairmasterLevel] = useState<number>(8);
+  const [heartRateAvg, setHeartRateAvg] = useState<number>(140);
+
+  // 3. FOOD & NUTRITION PHOTOS
+  const [meals, setMeals] = useState<IMealEntry[]>([]);
+  const [currentMealType, setCurrentMealType] = useState<MealType>('lunch');
+  const [mealCaption, setMealCaption] = useState<string>('');
+  const [isAddingMeal, setIsAddingMeal] = useState<boolean>(false);
+  const [mealFile, setMealFile] = useState<File | null>(null);
+  const [mealPreviewUrl, setMealPreviewUrl] = useState<string | null>(null);
+
+  // 4. POST-SESSION SELFIE
+  const [sessionPhotoFile, setSessionPhotoFile] = useState<File | null>(null);
+  const [sessionPhotoUrl, setSessionPhotoUrl] = useState<string | null>(null);
+
+  // 5. CLIENT VOICE NOTE (Microphone Recorded)
+  const [voiceNoteBlob, setVoiceNoteBlob] = useState<Blob | null>(null);
+  const [voiceNoteUrl, setVoiceNoteUrl] = useState<string | null>(null);
+
+  // Notes & Coach Cheer
+  const [clientNotes, setClientNotes] = useState<string>('Hydration reached 3.5L. Felt energetic through all sets.');
+  const [coachCheer, setCoachCheer] = useState<{ reactionEmoji?: string; message: string } | null>(null);
+
+  // Live Camera Modal State
+  const [cameraModalMode, setCameraModalMode] = useState<'meal' | 'selfie' | null>(null);
+
+  // UI state
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
+  const fileInputRefMeal = useRef<HTMLInputElement>(null);
+  const fileInputRefSelfie = useRef<HTMLInputElement>(null);
+
+  // Load today's log if available
+  useEffect(() => {
+    let isMounted = true;
+    const loadLog = async () => {
+      try {
+        const log = await fetchTodayLog(client._id, selectedDate);
+        if (log && isMounted) {
+          if (log.workout) {
+            setWorkoutTitle(log.workout.title || 'Strength Session');
+            setWorkoutCategory(log.workout.category || 'push');
+            setWorkoutIntensity(log.workout.intensity || 'high');
+            setTotalSessionDurationMinutes(
+              log.workout.totalSessionDurationMinutes || log.workout.durationMinutes || 45
+            );
+            setWorkoutSummary(log.workout.summary || '');
+
+            if (log.workout.muscleGroups && log.workout.muscleGroups.length > 0) {
+              setMuscleGroups(log.workout.muscleGroups);
+            }
+          }
+
+          const cardio = log.cardio || log.running;
+          if (cardio) {
+            setCardioType(
+              cardio.activityType ||
+                (cardio.stairmasterFloors && cardio.stairmasterFloors > 0
+                  ? 'stairmaster'
+                  : cardio.inclinePercentage && cardio.inclinePercentage > 0
+                  ? 'incline_walk'
+                  : 'running')
+            );
+            setCardioDistanceKm(cardio.distanceKm || 0);
+            setCardioDurationMins(cardio.durationMinutes || 0);
+            setInclinePercentage(cardio.inclinePercentage || 0);
+            setStairmasterFloors(cardio.stairmasterFloors || 0);
+            setStairmasterLevel(cardio.stairmasterLevel || 0);
+            setHeartRateAvg(cardio.heartRateAvg || 0);
+          }
+
+          setMeals(log.meals || []);
+          setSessionPhotoUrl(log.postWorkoutPhoto || null);
+          setVoiceNoteUrl(log.voiceNoteUrl || null);
+          setClientNotes(log.notes || '');
+          if (log.coachFeedback) {
+            setCoachCheer(log.coachFeedback);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load log', err);
+      }
+    };
+    loadLog();
+    return () => {
+      isMounted = false;
+    };
+  }, [client._id, selectedDate]);
+
+  // Total reps calculation across all muscle groups
+  const grandTotalReps = muscleGroups.reduce((acc, mg) => acc + (mg.totalMuscleReps || 0), 0);
+
+  // Real-time habit scoring
+  const hasWorkout = Boolean(muscleGroups.some((mg) => mg.exercises.length > 0));
+  const hasCardio = Boolean(
+    (cardioType === 'stairmaster' && stairmasterFloors > 0) ||
+      cardioDistanceKm > 0 ||
+      cardioDurationMins > 0
+  );
+  const hasMeals = meals.length > 0 || mealFile !== null;
+  const hasSelfie = sessionPhotoUrl !== null || sessionPhotoFile !== null;
+
+  let completionScore = 0;
+  if (hasWorkout) completionScore += 25;
+  if (hasCardio) completionScore += 25;
+  if (hasMeals) completionScore += 25;
+  if (hasSelfie) completionScore += 25;
+
+  // Add exercise to active muscle group
+  const handleAddExercise = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newExName.trim()) return;
+
+    soundFx.playTapSound();
+    const repsInt = parseInt(newExReps.split('-')[0].replace(/\D/g, ''), 10) || 10;
+    const computedTotal = newExSets * repsInt;
+
+    const newExercise: IMuscleExercise = {
+      name: newExName.trim(),
+      sets: newExSets,
+      reps: newExReps,
+      totalReps: computedTotal,
+      weightKg: newExWeight,
+      notes: newExNotes.trim(),
+    };
+
+    setMuscleGroups((prev) => {
+      const existingIdx = prev.findIndex((mg) => mg.muscle === activeMuscleTab);
+      if (existingIdx >= 0) {
+        const updated = [...prev];
+        const currentGroup = updated[existingIdx];
+        const newExercises = [...currentGroup.exercises, newExercise];
+        const newTotalReps = newExercises.reduce((sum, ex) => sum + (ex.totalReps || 0), 0);
+
+        updated[existingIdx] = {
+          ...currentGroup,
+          exercises: newExercises,
+          totalMuscleReps: newTotalReps,
+        };
+        return updated;
+      } else {
+        const def = MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab);
+        return [
+          ...prev,
+          {
+            muscle: activeMuscleTab,
+            label: def?.label || activeMuscleTab,
+            totalMuscleReps: computedTotal,
+            exercises: [newExercise],
+          },
+        ];
+      }
+    });
+
+    setNewExName('');
+    setNewExNotes('');
+    setShowAddModal(false);
+  };
+
+  const handleRemoveExercise = (muscle: MuscleCategory, exIdx: number) => {
+    soundFx.playTapSound();
+    setMuscleGroups((prev) => {
+      return prev
+        .map((mg) => {
+          if (mg.muscle === muscle) {
+            const newExercises = mg.exercises.filter((_, idx) => idx !== exIdx);
+            const newTotalReps = newExercises.reduce((sum, ex) => sum + (ex.totalReps || 0), 0);
+            return {
+              ...mg,
+              exercises: newExercises,
+              totalMuscleReps: newTotalReps,
+            };
+          }
+          return mg;
+        })
+        .filter((mg) => mg.exercises.length > 0);
+    });
+  };
+
+  // Convert Live Camera base64 to File
+  const dataUrlToFile = (dataUrl: string, filename: string): File => {
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)![1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  const handleLiveCameraCapture = (dataUrl: string) => {
+    if (cameraModalMode === 'meal') {
+      const file = dataUrlToFile(dataUrl, `live-meal-${Date.now()}.jpg`);
+      setMealFile(file);
+      setMealPreviewUrl(dataUrl);
+      setIsAddingMeal(true);
+      setCameraModalMode(null);
+    } else if (cameraModalMode === 'selfie') {
+      const file = dataUrlToFile(dataUrl, `live-selfie-${Date.now()}.jpg`);
+      setSessionPhotoFile(file);
+      setSessionPhotoUrl(dataUrl);
+      setCameraModalMode(null);
+    }
+  };
+
+  const handleAddMealItem = () => {
+    if (!mealPreviewUrl) return;
+    soundFx.playSuccessChime();
+    const newMeal: IMealEntry = {
+      type: currentMealType,
+      imagePath: mealPreviewUrl,
+      caption: mealCaption.trim(),
+      loggedAt: new Date(),
+    };
+    setMeals((prev) => [...prev, newMeal]);
+    setMealCaption('');
+    setMealPreviewUrl(null);
+    setIsAddingMeal(false);
+  };
+
+  const handleVoiceAudioReady = (audioBlob: Blob | null, url: string | null) => {
+    setVoiceNoteBlob(audioBlob);
+    setVoiceNoteUrl(url);
+  };
+
+  // Save full daily log payload
+  const handleSaveDailyLog = async () => {
+    setIsSubmitting(true);
+    setSaveSuccess(false);
+
+    try {
+      const formData = new FormData();
+      formData.append('clientId', client._id);
+      formData.append('date', selectedDate);
+      formData.append('notes', clientNotes);
+
+      // Total Session Duration and Muscle Groups
+      formData.append('totalSessionDurationMinutes', String(totalSessionDurationMinutes));
+      formData.append('totalWorkoutReps', String(grandTotalReps));
+      formData.append('muscleGroups', JSON.stringify(muscleGroups));
+
+      const workoutPayload: IWorkoutLog = {
+        title: workoutTitle,
+        category: workoutCategory,
+        intensity: workoutIntensity,
+        totalSessionDurationMinutes,
+        durationMinutes: totalSessionDurationMinutes,
+        totalWorkoutReps: grandTotalReps,
+        muscleGroups,
+        exercises: muscleGroups.flatMap((mg) =>
+          mg.exercises.map((e) => `${mg.label}: ${e.name} ${e.sets}x${e.reps} (${e.weightKg}kg)`)
+        ),
+        exerciseDetails: muscleGroups.flatMap((mg) =>
+          mg.exercises.map((e) => ({
+            name: `${mg.label}: ${e.name}`,
+            sets: e.sets,
+            reps: String(e.reps),
+            weightKg: e.weightKg,
+            notes: e.notes,
+          }))
+        ),
+        summary: workoutSummary,
+      };
+
+      formData.append('workout', JSON.stringify(workoutPayload));
+
+      // Cardio Payload
+      const cardioPayload: ICardioLog = {
+        activityType: cardioType,
+        distanceKm: cardioDistanceKm,
+        durationMinutes: cardioDurationMins,
+        pace: cardioDistanceKm > 0 ? `${(cardioDurationMins / cardioDistanceKm).toFixed(1)} min/km` : '',
+        inclinePercentage,
+        stairmasterFloors,
+        stairmasterLevel,
+        heartRateAvg,
+        caloriesBurned: Math.round(
+          cardioType === 'stairmaster'
+            ? stairmasterFloors * 3.5 + cardioDurationMins * 8
+            : cardioDistanceKm * 65 * (1 + inclinePercentage * 0.08)
+        ),
+      };
+      formData.append('cardio', JSON.stringify(cardioPayload));
+
+      // Existing Meals + New Meal Photo
+      formData.append('meals', JSON.stringify(meals));
+      if (mealFile) {
+        formData.append('mealPhotos', mealFile);
+        formData.append('mealTypes', JSON.stringify([currentMealType]));
+      }
+
+      // Post-workout selfie
+      if (sessionPhotoFile) {
+        formData.append('sessionPhoto', sessionPhotoFile);
+      } else if (sessionPhotoUrl) {
+        formData.append('postWorkoutPhoto', sessionPhotoUrl);
+      }
+
+      // Client Voice Note Audio File
+      if (voiceNoteBlob) {
+        const audioFile = new File([voiceNoteBlob], `voicenote-${client._id}-${Date.now()}.webm`, {
+          type: 'audio/webm',
+        });
+        formData.append('voiceNoteAudio', audioFile);
+      } else if (voiceNoteUrl) {
+        formData.append('voiceNoteUrl', voiceNoteUrl);
+      }
+
+      await submitDailyLog(formData);
+
+      soundFx.playCheerSound();
+      setSaveSuccess(true);
+      confetti({
+        particleCount: 80,
+        spread: 60,
+        origin: { y: 0.8 },
+      });
+
+      if (onLogSaved) {
+        onLogSaved();
+      }
+      setTimeout(() => setSaveSuccess(false), 4000);
+    } catch (err: any) {
+      console.error('Failed to submit daily log', err);
+      alert(err.message || 'Error saving daily log');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const currentMuscleGroup = muscleGroups.find((mg) => mg.muscle === activeMuscleTab);
+
+  return (
+    <div className="space-y-4 pb-28 animate-in fade-in duration-300">
+      {/* Top Banner: Date Selector & Real-Time Habit Completion Ring */}
+      <div className="rounded-3xl bg-zinc-950/90 border border-zinc-800/90 p-4 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="flex items-center space-x-2">
+              <span className="text-xs font-black uppercase tracking-wider text-emerald-400">
+                Daily Athlete Log
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+            </div>
+            <h2 className="text-lg font-black text-white mt-0.5">Track Your Session</h2>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="mt-1 bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-emerald-500 font-medium"
+            />
+          </div>
+
+          <div className="flex flex-col items-center">
+            <ProgressRing
+              progress={completionScore}
+              size={68}
+              strokeWidth={6}
+              indicatorColor={completionScore >= 75 ? '#10b981' : completionScore >= 50 ? '#f59e0b' : '#6366f1'}
+            />
+            <span className="text-[10px] font-bold text-zinc-400 mt-1">4 Habits</span>
+          </div>
+        </div>
+
+        {/* Coach Cheer Alert if available */}
+        {coachCheer && (
+          <div className="mt-3.5 p-3 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 flex items-start space-x-3">
+            <span className="text-2xl">{coachCheer.reactionEmoji || '🔥'}</span>
+            <div>
+              <span className="text-xs font-black text-indigo-300 block">Coach Kai Cheer</span>
+              <p className="text-xs text-zinc-300 font-medium mt-0.5">{coachCheer.message}</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* SECTION 1: STRENGTH TRAINING - MUSCLE GROUPS & REPS */}
+      <div className="rounded-3xl bg-zinc-900/90 border border-zinc-800 p-4 space-y-4 shadow-xl backdrop-blur-md">
+        {/* Header & Single Total Duration */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-md">
+              <Dumbbell className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-black text-white flex items-center space-x-1.5">
+                <span>Muscle Group Workout</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
+                  {grandTotalReps} Total Reps
+                </span>
+              </h3>
+              <span className="text-[11px] text-zinc-400 font-medium">
+                Log reps per muscle group with single total duration
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Workout Meta: Title & Single Session Duration */}
+        <div className="grid grid-cols-2 gap-2.5 bg-zinc-950/70 p-3 rounded-2xl border border-zinc-800/80">
+          <div>
+            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
+              Workout Focus
+            </label>
+            <input
+              type="text"
+              value={workoutTitle}
+              onChange={(e) => setWorkoutTitle(e.target.value)}
+              placeholder="e.g. Chest & Shoulders"
+              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 font-bold"
+            />
+          </div>
+
+          <div>
+            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
+              Total Duration (Mins)
+            </label>
+            <div className="flex items-center space-x-1.5 bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5">
+              <Timer className="w-3.5 h-3.5 text-emerald-400" />
+              <input
+                type="number"
+                min="5"
+                max="240"
+                value={totalSessionDurationMinutes}
+                onChange={(e) => setTotalSessionDurationMinutes(parseInt(e.target.value, 10) || 0)}
+                className="w-full bg-transparent text-xs text-white font-black focus:outline-none"
+              />
+              <span className="text-[10px] text-zinc-500 font-bold">min</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Muscle Selector Anatomical Tabs */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between px-1">
+            <span className="text-[11px] font-bold text-zinc-300">Choose Muscle to Log:</span>
+            <span className="text-[10px] text-zinc-500 font-medium">Tap to switch muscle section</span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-1.5">
+            {MUSCLE_DEFINITIONS.map((def) => {
+              const mgLog = muscleGroups.find((m) => m.muscle === def.id);
+              const totalReps = mgLog?.totalMuscleReps || 0;
+              const isActive = activeMuscleTab === def.id;
+
+              return (
+                <button
+                  key={def.id}
+                  type="button"
+                  onClick={() => {
+                    soundFx.playTapSound();
+                    setActiveMuscleTab(def.id);
+                  }}
+                  className={`p-2 rounded-2xl border text-left transition flex flex-col justify-between relative overflow-hidden ${
+                    isActive
+                      ? 'bg-gradient-to-tr from-emerald-950/60 to-zinc-900 border-emerald-500/60 shadow-lg shadow-emerald-500/10 ring-1 ring-emerald-400/30'
+                      : 'bg-zinc-950/60 border-zinc-800/80 hover:border-zinc-700'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-base">{def.icon}</span>
+                    {totalReps > 0 && (
+                      <span className="px-1.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 font-black text-[9px]">
+                        {totalReps}r
+                      </span>
+                    )}
+                  </div>
+                  <span className={`text-[11px] font-bold mt-1 line-clamp-1 ${isActive ? 'text-emerald-300' : 'text-zinc-300'}`}>
+                    {def.label.split(' ')[0]}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Active Muscle Group Exercise Roster & Reps Counter */}
+        <div className="bg-zinc-950/80 rounded-2xl border border-zinc-800 p-3.5 space-y-3">
+          <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="text-lg">
+                {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.icon}
+              </span>
+              <div>
+                <h4 className="text-xs font-black text-white">
+                  {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.label}
+                </h4>
+                <span className="text-[10px] text-zinc-400 font-bold">
+                  {currentMuscleGroup?.totalMuscleReps || 0} Total Reps Logged
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                soundFx.playTapSound();
+                setShowAddModal(true);
+              }}
+              className="px-2.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black flex items-center space-x-1 shadow-md shadow-emerald-500/20 transition active:scale-95"
+            >
+              <Plus className="w-3.5 h-3.5 stroke-[3]" />
+              <span>Add Exercise</span>
+            </button>
+          </div>
+
+          {/* Exercise List for Active Muscle */}
+          {currentMuscleGroup && currentMuscleGroup.exercises.length > 0 ? (
+            <div className="space-y-2">
+              {currentMuscleGroup.exercises.map((ex, idx) => (
+                <div
+                  key={idx}
+                  className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center justify-between group"
+                >
+                  <div className="flex-1 pr-2">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs font-bold text-white">{ex.name}</span>
+                      <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                        {ex.totalReps || ex.sets * 10} reps
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3 text-[10px] text-zinc-400 mt-0.5 font-medium">
+                      <span>{ex.sets} sets × {ex.reps} reps</span>
+                      {ex.weightKg !== undefined && ex.weightKg > 0 && <span>• {ex.weightKg} kg</span>}
+                      {ex.notes && <span className="text-zinc-500 line-clamp-1">({ex.notes})</span>}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveExercise(activeMuscleTab, idx)}
+                    className="p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-5 space-y-1.5">
+              <p className="text-xs text-zinc-500 font-medium">
+                No exercises logged for {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.label.split(' ')[0]} yet.
+              </p>
+              <button
+                type="button"
+                onClick={() => setShowAddModal(true)}
+                className="text-xs font-bold text-emerald-400 hover:underline"
+              >
+                + Add {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.label.split(' ')[0]} Exercise
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Add Exercise Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-4 w-full max-w-sm space-y-3 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+              <h4 className="text-xs font-black text-white flex items-center space-x-1.5">
+                <span>Add Exercise to</span>
+                <span className="text-emerald-400">
+                  {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.label.split(' ')[0]}
+                </span>
+              </h4>
+              <button
+                type="button"
+                onClick={() => setShowAddModal(false)}
+                className="p-1 rounded-full text-zinc-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddExercise} className="space-y-3">
+              <div>
+                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Exercise Name</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Incline DB Bench Press"
+                  value={newExName}
+                  onChange={(e) => setNewExName(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-bold"
+                />
+
+                {/* Quick suggestions */}
+                <div className="flex flex-wrap gap-1 mt-1.5">
+                  {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.defaultExercises.map((sug) => (
+                    <button
+                      key={sug}
+                      type="button"
+                      onClick={() => setNewExName(sug)}
+                      className="text-[9px] bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-2 py-0.5 rounded-full transition"
+                    >
+                      {sug}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Sets</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={newExSets}
+                    onChange={(e) => setNewExSets(parseInt(e.target.value, 10) || 1)}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Reps/Set</label>
+                  <input
+                    type="text"
+                    value={newExReps}
+                    onChange={(e) => setNewExReps(e.target.value)}
+                    placeholder="8-10"
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Weight (kg)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="500"
+                    value={newExWeight}
+                    onChange={(e) => setNewExWeight(parseFloat(e.target.value) || 0)}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Coach Notes (optional)</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Clean lockout, 3s eccentric tempo"
+                  value={newExNotes}
+                  onChange={(e) => setNewExNotes(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-2 text-[10px] text-emerald-300 font-bold flex items-center justify-between">
+                <span>Calculated Reps:</span>
+                <span className="text-xs font-black">
+                  {newExSets * (parseInt(newExReps.split('-')[0].replace(/\D/g, ''), 10) || 10)} reps
+                </span>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 text-xs font-black shadow-lg shadow-emerald-500/25 transition active:scale-98"
+              >
+                Confirm & Add to {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.label.split(' ')[0]}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* SECTION 2: CLIENT DAILY VOICE NOTE (Microphone Access) */}
+      <VoiceNoteRecorder onAudioReady={handleVoiceAudioReady} coachName="Coach Kai" />
+
+      {/* SECTION 3: CARDIO LOGGING (Incline Walk, StairMaster, Running) */}
+      <div className="rounded-3xl bg-zinc-900/90 border border-zinc-800 p-4 space-y-3.5 shadow-xl backdrop-blur-md">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
+              <Gauge className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-black text-white">Cardio Conditioning</h3>
+              <span className="text-[11px] text-zinc-400 font-medium">
+                Treadmill Incline • StairMaster • Running
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Cardio Type Switcher */}
+        <div className="grid grid-cols-3 gap-1.5 bg-zinc-950 p-1 rounded-2xl border border-zinc-800">
+          <button
+            type="button"
+            onClick={() => {
+              soundFx.playTapSound();
+              setCardioType('incline_walk');
+            }}
+            className={`py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 ${
+              cardioType === 'incline_walk'
+                ? 'bg-amber-500 text-slate-950 font-black shadow-md'
+                : 'text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <span>⛰️ Incline</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              soundFx.playTapSound();
+              setCardioType('stairmaster');
+            }}
+            className={`py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 ${
+              cardioType === 'stairmaster'
+                ? 'bg-amber-500 text-slate-950 font-black shadow-md'
+                : 'text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <span>🪜 Stairs</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              soundFx.playTapSound();
+              setCardioType('running');
+            }}
+            className={`py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 ${
+              cardioType === 'running'
+                ? 'bg-amber-500 text-slate-950 font-black shadow-md'
+                : 'text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <span>🏃 Run</span>
+          </button>
+        </div>
+
+        {/* Dynamic Metric Sliders / Inputs */}
+        <div className="bg-zinc-950/70 p-3.5 rounded-2xl border border-zinc-800/80 space-y-3">
+          {cardioType === 'incline_walk' && (
+            <>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-zinc-300">Treadmill Incline</span>
+                <span className="text-xs font-black text-amber-400 font-mono">{inclinePercentage}% Incline</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="20"
+                step="0.5"
+                value={inclinePercentage}
+                onChange={(e) => setInclinePercentage(parseFloat(e.target.value))}
+                className="w-full accent-amber-400 cursor-pointer"
+              />
+
+              <div className="grid grid-cols-2 gap-2.5 pt-1">
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Distance (km)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={cardioDistanceKm}
+                    onChange={(e) => setCardioDistanceKm(parseFloat(e.target.value) || 0)}
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Duration (min)</label>
+                  <input
+                    type="number"
+                    value={cardioDurationMins}
+                    onChange={(e) => setCardioDurationMins(parseInt(e.target.value, 10) || 0)}
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
+          {cardioType === 'stairmaster' && (
+            <div className="grid grid-cols-2 gap-2.5">
+              <div>
+                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Floors Climbed</label>
+                <input
+                  type="number"
+                  value={stairmasterFloors}
+                  onChange={(e) => setStairmasterFloors(parseInt(e.target.value, 10) || 0)}
+                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Speed Level (1-20)</label>
+                <input
+                  type="number"
+                  min="1"
+                  max="20"
+                  value={stairmasterLevel}
+                  onChange={(e) => setStairmasterLevel(parseInt(e.target.value, 10) || 1)}
+                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                />
+              </div>
+            </div>
+          )}
+
+          {cardioType === 'running' && (
+            <div className="grid grid-cols-2 gap-2.5">
+              <div>
+                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Distance (km)</label>
+                <input
+                  type="number"
+                  step="0.1"
+                  value={cardioDistanceKm}
+                  onChange={(e) => setCardioDistanceKm(parseFloat(e.target.value) || 0)}
+                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Duration (min)</label>
+                <input
+                  type="number"
+                  value={cardioDurationMins}
+                  onChange={(e) => setCardioDurationMins(parseInt(e.target.value, 10) || 0)}
+                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* SECTION 4: NUTRITION PHOTO LOGS */}
+      <div className="rounded-3xl bg-zinc-900/90 border border-zinc-800 p-4 space-y-3.5 shadow-xl backdrop-blur-md">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-400 shadow-md">
+              <Utensils className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-black text-white">Nutrition & Meals</h3>
+              <span className="text-[11px] text-zinc-400 font-medium">
+                Snap food photos for coach macro review
+              </span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setCameraModalMode('meal')}
+            className="px-2.5 py-1.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-black flex items-center space-x-1 shadow-md shadow-teal-500/20 transition active:scale-95"
+          >
+            <Camera className="w-3.5 h-3.5" />
+            <span>Snap Meal</span>
+          </button>
+        </div>
+
+        {/* Existing Meals Grid */}
+        {meals.length > 0 ? (
+          <div className="grid grid-cols-2 gap-2">
+            {meals.map((m, idx) => (
+              <div key={idx} className="relative rounded-2xl overflow-hidden border border-zinc-800 aspect-video bg-zinc-950 group">
+                <img src={m.imagePath} alt={m.caption} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
+                  <span className="text-[10px] font-black uppercase text-teal-300">{m.type}</span>
+                  <span className="text-[11px] text-white font-medium line-clamp-1">{m.caption || 'Meal logged'}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-zinc-950/60 rounded-2xl border border-zinc-800/80 p-4 text-center">
+            <p className="text-xs text-zinc-500 font-medium">No meals snapped yet today.</p>
+          </div>
+        )}
+      </div>
+
+      {/* SECTION 5: POST-WORKOUT SELFIE */}
+      <div className="rounded-3xl bg-zinc-900/90 border border-zinc-800 p-4 space-y-3.5 shadow-xl backdrop-blur-md">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-md">
+              <Camera className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-black text-white">Post-Session Selfie</h3>
+              <span className="text-[11px] text-zinc-400 font-medium">
+                Hold yourself accountable with your coach
+              </span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setCameraModalMode('selfie')}
+            className="px-2.5 py-1.5 rounded-xl bg-purple-500 hover:bg-purple-400 text-white text-xs font-black flex items-center space-x-1 shadow-md shadow-purple-500/20 transition active:scale-95"
+          >
+            <Camera className="w-3.5 h-3.5" />
+            <span>Take Selfie</span>
+          </button>
+        </div>
+
+        {sessionPhotoUrl ? (
+          <div className="relative rounded-2xl overflow-hidden border border-zinc-800 aspect-video bg-zinc-950">
+            <img src={sessionPhotoUrl} alt="Post session selfie" className="w-full h-full object-cover" />
+            <div className="absolute top-2 right-2 bg-emerald-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full flex items-center space-x-1">
+              <Check className="w-3 h-3 stroke-[3]" />
+              <span>Selfie Verified</span>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-zinc-950/60 rounded-2xl border border-zinc-800/80 p-4 text-center">
+            <p className="text-xs text-zinc-500 font-medium">Snap your post-workout pump photo.</p>
+          </div>
+        )}
+      </div>
+
+      {/* SECTION 6: DAILY AUDIO DEBRIEF (Voice Feedback Player) */}
+      <VoiceFeedbackPlayer
+        options={{
+          clientName: client.name ? client.name.split(' ')[0] : 'Athlete',
+          workoutTitle: workoutTitle || 'Session',
+          workoutIntensity,
+          workoutDuration: totalSessionDurationMinutes,
+          mealCount: meals.length + (mealFile ? 1 : 0),
+          hasSelfie: Boolean(sessionPhotoUrl || sessionPhotoFile),
+          streak: client.streak || 0,
+          coachName: 'Coach Kai',
+          activityType: cardioType,
+          distanceKm: cardioDistanceKm,
+          durationMinutes: cardioDurationMins,
+          stairmasterFloors,
+        }}
+      />
+
+      {/* SECTION 7: PRIMARY SUBMIT ACTION */}
+      <div className="pt-2 pb-6">
+        <button
+          type="button"
+          onClick={handleSaveDailyLog}
+          disabled={isSubmitting}
+          className={`w-full py-4 px-5 rounded-2xl text-sm font-black text-slate-950 shadow-2xl flex items-center justify-center space-x-2 transition-all ${
+            saveSuccess
+              ? 'bg-emerald-400 ring-4 ring-emerald-400/30'
+              : 'bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 hover:brightness-110 shadow-emerald-500/25 active:scale-[0.98]'
+          } disabled:opacity-50`}
+        >
+          {isSubmitting ? (
+            <span className="flex items-center space-x-2 text-slate-950 font-bold">
+              <RotateCcw className="w-5 h-5 animate-spin" />
+              <span>Syncing Daily Log & Audio to Coach...</span>
+            </span>
+          ) : saveSuccess ? (
+            <span className="flex items-center space-x-2 text-slate-950 font-black">
+              <CheckCircle2 className="w-5 h-5" />
+              <span>Daily Log Synced Successfully!</span>
+            </span>
+          ) : (
+            <>
+              <Send className="w-5 h-5" />
+              <span>Submit Daily Log ({completionScore}% Ready)</span>
+            </>
+          )}
+        </button>
+        <p className="text-center text-[11px] text-zinc-500 mt-2 font-medium">
+          Instant sync with Coach Kai's dashboard • Safe &amp; Encrypted
+        </p>
+      </div>
+
+      {/* Live Camera Modal */}
+      <LiveCameraModal
+        isOpen={cameraModalMode !== null}
+        onClose={() => setCameraModalMode(null)}
+        onCapture={handleLiveCameraCapture}
+        title={cameraModalMode === 'meal' ? 'Snap Nutrition Photo' : 'Capture Session Selfie'}
+        subtitle="Align within frame and tap shutter"
+        defaultFacingMode={cameraModalMode === 'selfie' ? 'user' : 'environment'}
+      />
+    </div>
+  );
+};

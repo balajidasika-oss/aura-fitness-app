@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "usr_1785925119406_li40j",
+    "name": "Coach Marcus Vance",
+    "email": "coach.marcus@aurafit.com",
+    "passwordHash": "8e62ccfa41674ab417ac07d1d7ce54198cbecbe6cb91aa427ea6a2af341cfcea797ad60eafda32b6907a9827e81400e9d39203af2add5b093e7c3127100c751c",
+    "passwordSalt": "8f4ba037a568ea602052542a6b6cb632",
+    "role": "coach",
+    "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Coach%20Marcus%20Vance&backgroundColor=059669",
+    "phone": "",
+    "coachCode": "COACH-COAC-2312",
+    "targetDailySteps": 10000,
+    "fitnessGoal": "Head Hypertrophy & Endurance Coach",
+    "streak": 0,
+    "createdAt": "2026-08-05T10:18:39.407Z",
+    "updatedAt": "2026-08-05T10:18:39.407Z"
+  },
+  {
+    "_id": "usr_1785925140234_o9fkx",
+    "name": "Alex Rivera",
+    "email": "alex.rivera@gmail.com",
+    "passwordHash": "eb1198d90398903bec778e5dae9646a7c3f36a2a2d60e00233a7d66c26936b2d9b0ec8bb00ad1a8b270cf5c5aeebb3b6c0f6c76a9e20525ecc54d79982ae11d8",
+    "passwordSalt": "70b140c580370f093637e977192940e0",
+    "role": "client",
+    "avatarUrl": "https://api.dicebear.com/7.x/initials/svg?seed=Alex%20Rivera&backgroundColor=059669",
+    "phone": "",
+    "coachId": "usr_1785925119406_li40j",
+    "targetDailySteps": 10000,
+    "fitnessGoal": "Sub-20 5K & 10kg Muscle Recomp",
+    "streak": 0,
+    "createdAt": "2026-08-05T10:19:00.234Z",
+    "updatedAt": "2026-08-05T10:19:29.913Z"
+  }
+]

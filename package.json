@@ -1,0 +1,28 @@
+{
+  "name": "fitness-coach-app-monorepo",
+  "version": "1.0.0",
+  "description": "Full-stack fitness coaching platform with Phone-Native Client Daily Logger & Coach Dashboard",
+  "scripts": {
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "install:all": "npm install --prefix server && npm install --prefix client",
+    "build": "npm run build --prefix client && npm run build --prefix server",
+    "start": "node server/dist/index.js"
+  },
+  "keywords": [
+    "fitness",
+    "coach",
+    "react",
+    "typescript",
+    "tailwind",
+    "express",
+    "mongodb",
+    "speech-synthesis",
+    "camera-capture"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "localtunnel": "^2.0.2"
+  }
+}

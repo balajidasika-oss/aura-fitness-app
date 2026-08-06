@@ -1,0 +1,85 @@
+[
+  {
+    "_id": "log_usr_1785925140234_o9fkx_2026-08-05",
+    "clientId": "usr_1785925140234_o9fkx",
+    "date": "2026-08-05",
+    "completed": false,
+    "notes": "Pushed hard on the last set of dumbbell press. Hydration and protein targets achieved!",
+    "workout": {
+      "title": "Strength Session",
+      "category": "push",
+      "totalSessionDurationMinutes": 45,
+      "durationMinutes": 45,
+      "intensity": "high",
+      "totalWorkoutReps": 0,
+      "muscleGroups": [
+        {
+          "exercises": [
+            {
+              "sets": [
+                {
+                  "weightKg": 34,
+                  "reps": 12,
+                  "setNumber": 1
+                },
+                {
+                  "weightKg": 36,
+                  "reps": 10,
+                  "setNumber": 2
+                },
+                {
+                  "weightKg": 38,
+                  "reps": 8,
+                  "setNumber": 3
+                }
+              ],
+              "name": "Incline Dumbbell Press"
+            }
+          ],
+          "muscle": "Chest & Triceps"
+        }
+      ],
+      "targetMuscles": [],
+      "summary": ""
+    },
+    "cardio": {
+      "activityType": "running",
+      "distanceKm": 0,
+      "durationMinutes": 0,
+      "pace": "",
+      "inclinePercentage": 0,
+      "stairmasterFloors": 0,
+      "stairmasterLevel": 0,
+      "heartRateAvg": 0,
+      "caloriesBurned": 0
+    },
+    "running": {
+      "activityType": "running",
+      "distanceKm": 0,
+      "durationMinutes": 0,
+      "pace": "",
+      "inclinePercentage": 0,
+      "stairmasterFloors": 0,
+      "stairmasterLevel": 0,
+      "heartRateAvg": 0,
+      "caloriesBurned": 0
+    },
+    "meals": [],
+    "completionScore": 35,
+    "isComplete": false,
+    "createdAt": "2026-08-05T10:19:29.913Z",
+    "updatedAt": "2026-08-05T10:21:30.269Z",
+    "coachCheer": {
+      "reactionEmoji": "??",
+      "message": "Phenomenal work on the 5.2km run and incline bench sets Alex! Keep this momentum going into tomorrow.",
+      "createdAt": "2026-08-05T10:21:30.267Z",
+      "cheeredAt": "2026-08-05T10:21:30.268Z"
+    },
+    "coachFeedback": {
+      "reactionEmoji": "??",
+      "message": "Phenomenal work on the 5.2km run and incline bench sets Alex! Keep this momentum going into tomorrow.",
+      "createdAt": "2026-08-05T10:21:30.267Z",
+      "cheeredAt": "2026-08-05T10:21:30.268Z"
+    }
+  }
+]
