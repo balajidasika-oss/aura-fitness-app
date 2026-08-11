@@ -7,11 +7,20 @@ interface PWAInstallPromptProps {
   onClose?: () => void;
 }
 
+let globalDeferredPrompt: any = null;
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    globalDeferredPrompt = e;
+  });
+}
+
 export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
   isOpen = false,
   onClose,
 }) => {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(globalDeferredPrompt);
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
   const [showModal, setShowModal] = useState(isOpen);
@@ -32,10 +41,15 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
     // Capture Android/Desktop PWA install prompt
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
+      globalDeferredPrompt = e;
       setDeferredPrompt(e);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    if (globalDeferredPrompt) {
+      setDeferredPrompt(globalDeferredPrompt);
+    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
