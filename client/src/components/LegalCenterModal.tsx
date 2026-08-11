@@ -179,6 +179,13 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
                   <li><strong className="text-zinc-200">Zero Ad-Network Tracking:</strong> We do not deploy third-party advertising cookies or track users across external websites.</li>
                 </ul>
               </div>
+
+              <div className="space-y-2">
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">4. Security Disclaimer & "As Is" Provision</h5>
+                <p>
+                  While we implement strict cryptographic measures (e.g., PBKDF2 hashing) to protect your account, this platform is provided "AS IS" and without warranties. You agree that the creators and operators of Aura Fitness OS are <strong className="text-white font-bold">strictly not liable</strong> for any unauthorized access, data loss, server interruptions, or account breaches. Do not store sensitive health records beyond general fitness tracking on this platform.
+                </p>
+              </div>
             </div>
           )}
 
@@ -213,6 +220,13 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
                 <h5 className="text-xs font-bold text-white uppercase tracking-wider">3. Coach-Athlete Communication</h5>
                 <p>
                   Voice feedback and emoji cheers provided by coaches within the app are professional guidance. Coaches are independent fitness professionals who adhere to high athletic standards.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <h5 className="text-xs font-bold text-red-400 uppercase tracking-wider">4. Limitation of Liability (Data & Security)</h5>
+                <p className="text-red-200/90 bg-red-950/20 p-2.5 rounded-xl border border-red-900/50">
+                  By using this application, you expressly agree that the developers, engineers, and platform hosts hold zero liability for data loss, accidental deletion, system downtime, or malicious security breaches resulting in data exposure. It is your sole responsibility to safeguard your account credentials.
                 </p>
               </div>
             </div>
