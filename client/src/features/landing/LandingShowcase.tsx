@@ -449,7 +449,21 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
             PAR-Q Waiver
           </button>
         </div>
-        <p>© {new Date().getFullYear()} Aura Fitness OS. All rights reserved.</p>
+      {/* Subtle Footer */}
+      <footer className="w-full text-center py-8 text-slate-500 text-[10px] sm:text-xs">
+        <p className="mb-2">
+          &copy; {new Date().getFullYear()} Aura Fitness OS. Designed and Engineered by{' '}
+          <a
+            href="https://github.com/balajidasika-oss"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-emerald-500 font-bold hover:text-emerald-400 transition-colors"
+          >
+            Balaji
+          </a>
+          .
+        </p>
+        <p className="text-[10px] text-slate-600">All rights reserved.</p>
       </footer>
 
       {/* Auth Modal */}
