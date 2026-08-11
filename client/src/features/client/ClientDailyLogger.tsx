@@ -494,20 +494,23 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   const currentMuscleGroup = muscleGroups.find((mg) => mg.muscle === activeMuscleTab);
 
   return (
-    <div className="space-y-4 pb-28 animate-in fade-in duration-300">
+    <div className="space-y-6 pb-28 animate-in fade-in duration-500 relative">
+      {/* Ambient Background Mesh */}
+      <div className="absolute inset-0 bg-mesh-dark opacity-40 pointer-events-none rounded-3xl" />
+      
       {/* Top Banner: Date Selector & Real-Time Habit Completion Ring */}
-      <div className="rounded-3xl bg-zinc-950/90 border border-zinc-800/90 p-4 backdrop-blur-xl shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="glass-panel-elevated rounded-3xl p-5 relative overflow-hidden group">
+        <div className="absolute top-[-50px] right-[-50px] w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-emerald-500/20 transition-colors duration-700" />
 
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-xs font-black uppercase tracking-wider text-emerald-400">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400">
                 Daily Athlete Log
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
             </div>
-            <h2 className="text-lg font-black text-white mt-0.5">Track Your Session</h2>
+            <h2 className="text-xl font-black mt-1 bg-gradient-to-br from-white via-emerald-100 to-emerald-400 bg-clip-text text-transparent">Track Your Session</h2>
             <input
               type="date"
               value={selectedDate}
@@ -630,17 +633,20 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         )}
 
       {/* WORKOUT MODE SWITCHER */}
-      <div className="flex bg-zinc-950 rounded-xl p-1 border border-zinc-800 shadow-inner">
+      <div className="flex p-1.5 glass-panel rounded-2xl relative shadow-xl shadow-black/40 mb-2">
         <button
           onClick={() => {
             soundFx.playTapSound();
             setWorkoutMode('strength');
           }}
-          className={`flex-1 py-2 rounded-lg text-xs font-black transition-all ${
-            workoutMode === 'strength' ? 'bg-emerald-500 text-slate-950 shadow-md' : 'text-zinc-500 hover:text-zinc-300'
+          className={`flex-1 py-3 rounded-xl text-xs font-black transition-all duration-300 relative z-10 flex items-center justify-center space-x-2 ${
+            workoutMode === 'strength' 
+            ? 'bg-emerald-500 text-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-[1.02]' 
+            : 'text-zinc-400 hover:text-white hover:bg-white/5'
           }`}
         >
-          💪 Strength Training
+          <span className="text-sm">💪</span>
+          <span>Strength Training</span>
         </button>
         <button
           onClick={() => {
@@ -648,22 +654,25 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             setWorkoutMode('yoga');
             setIsYogaActive(true);
           }}
-          className={`flex-1 py-2 rounded-lg text-xs font-black transition-all ${
-            workoutMode === 'yoga' ? 'bg-indigo-500 text-white shadow-md' : 'text-zinc-500 hover:text-zinc-300'
+          className={`flex-1 py-3 rounded-xl text-xs font-black transition-all duration-300 relative z-10 flex items-center justify-center space-x-2 ${
+            workoutMode === 'yoga' 
+            ? 'bg-indigo-500 text-white shadow-[0_0_20px_rgba(99,102,241,0.4)] scale-[1.02]' 
+            : 'text-zinc-400 hover:text-white hover:bg-white/5'
           }`}
         >
-          🧘‍♀️ Yoga & Mobility
+          <span className="text-sm">🧘‍♀️</span>
+          <span>Yoga & Mobility</span>
         </button>
       </div>
 
       {/* SECTION 1: STRENGTH TRAINING - MUSCLE GROUPS & REPS */}
       {workoutMode === 'strength' && (
-        <>
-          <div className={`rounded-3xl border p-4 space-y-4 shadow-xl backdrop-blur-md transition ${isRestDay ? 'bg-zinc-950/40 border-zinc-900 opacity-50 pointer-events-none' : 'bg-zinc-900/90 border-zinc-800'}`}>
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className={`glass-panel rounded-3xl p-5 space-y-5 transition-all duration-300 ${isRestDay ? 'opacity-40 grayscale pointer-events-none' : 'hover:border-emerald-500/30'}`}>
             {/* Header & Single Total Duration */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-md">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
               <Dumbbell className="w-5 h-5" />
             </div>
             <div>
@@ -949,7 +958,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
           </div>
         </div>
       )}
-      </>
+          </div>
       )}
 
       {/* SECTION 1B: YOGA & MOBILITY */}
