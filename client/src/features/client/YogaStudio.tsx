@@ -16,12 +16,12 @@ const YOGA_ASANAS = [
 ];
 
 const ZUMBA_VIDEOS = [
-  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400' },
-  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400' },
-  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400' },
-  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400' },
-  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400' },
-  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400' },
+  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400', videoId: '8DZktowZo_k' },
+  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400', videoId: 'QRZcZgZg7yI' },
+  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400', videoId: 'kwkXyHjgoOQ' },
+  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400', videoId: 'aOW20TzE1xQ' },
+  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400', videoId: 'kG202wQG6a0' },
+  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400', videoId: 'gC_L9qAHVJ8' },
 ];
 
 export const YogaStudio: React.FC = () => {
@@ -34,6 +34,9 @@ export const YogaStudio: React.FC = () => {
 
   // AI Coach State
   const [aiCoachAsana, setAiCoachAsana] = useState<{ name: string; image: string; duration: string; benefits: string } | null>(null);
+
+  // Zumba Video State
+  const [selectedZumbaVideo, setSelectedZumbaVideo] = useState<{ title: string; videoId: string } | null>(null);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -206,7 +209,14 @@ export const YogaStudio: React.FC = () => {
             </p>
             <div className="space-y-3">
               {ZUMBA_VIDEOS.map((video) => (
-                <div key={video.id} className="flex items-center p-2.5 rounded-2xl glass-panel hover:border-pink-500/40 hover:-translate-x-1 hover:shadow-[0_5px_15px_rgba(236,72,153,0.15)] transition-all duration-300 group cursor-pointer">
+                <div 
+                  key={video.id} 
+                  onClick={() => {
+                    soundFx.playTapSound();
+                    setSelectedZumbaVideo({ title: video.title, videoId: video.videoId });
+                  }}
+                  className="flex items-center p-2.5 rounded-2xl glass-panel hover:border-pink-500/40 hover:-translate-x-1 hover:shadow-[0_5px_15px_rgba(236,72,153,0.15)] transition-all duration-300 group cursor-pointer"
+                >
                   <div className="w-28 h-20 rounded-xl overflow-hidden relative shrink-0">
                     <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/10 transition-colors">
@@ -226,6 +236,36 @@ export const YogaStudio: React.FC = () => {
             </div>
           </div>
         )}
+        {/* PREMIUM VIDEO OVERLAY */}
+        {selectedZumbaVideo && (
+          <div className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-500">
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
+              <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20">
+                <h3 className="text-white font-black tracking-wide text-sm flex items-center gap-2">
+                  <Play className="w-4 h-4 text-pink-500 fill-pink-500" />
+                  {selectedZumbaVideo.title}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setSelectedZumbaVideo(null)}
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-rose-500/20 text-white hover:text-rose-400 border border-white/20 flex items-center justify-center transition"
+              >
+                <RotateCcw className="w-5 h-5 rotate-45" />
+              </button>
+            </div>
+            
+            <div className="w-full max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(236,72,153,0.3)] border border-pink-500/30">
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${selectedZumbaVideo.videoId}?autoplay=1&rel=0&modestbranding=1`}
+                title={selectedZumbaVideo.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );
