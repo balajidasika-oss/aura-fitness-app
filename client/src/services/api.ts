@@ -1,6 +1,6 @@
 import { IClientUser, IDailyLog, IUser } from '../types';
 
-const API_BASE = '/api';
+export const API_BASE = '/api';
 
 export interface AuthResponse {
   success: boolean;
@@ -125,11 +125,27 @@ export async function submitDailyLog(formData: FormData): Promise<IDailyLog> {
   return data.data;
 }
 
-export async function sendCoachCheer(logId: string, reactionEmoji: string, message?: string): Promise<IDailyLog> {
-  const res = await fetch(`${API_BASE}/logs/${logId}/cheer`, {
+export async function sendCoachCheer(
+  clientId: string,
+  logId: string | null | undefined,
+  reactionEmoji: string,
+  message?: string,
+  audioBlob?: Blob
+): Promise<IDailyLog> {
+  const formData = new FormData();
+  if (logId) formData.append('logId', logId);
+  formData.append('reactionEmoji', reactionEmoji);
+  if (message) formData.append('message', message);
+  if (audioBlob) {
+    const audioFile = new File([audioBlob], `coach-voice-${clientId}-${Date.now()}.webm`, {
+      type: 'audio/webm',
+    });
+    formData.append('coachVoiceAudio', audioFile);
+  }
+
+  const res = await fetch(`${API_BASE}/logs/client/${clientId}/cheer`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ reactionEmoji, message }),
+    body: formData,
   });
   if (!res.ok) throw new Error('Failed to send coach feedback');
   const data = await res.json();

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { generateCoachCode } from '../utils/security.js';
 
 export interface IUserRecord {
   _id: string;
@@ -58,6 +59,11 @@ export interface IDailyLogRecord {
     message?: string;
     cheeredAt: string;
   };
+  coachFeedback?: {
+    message: string;
+    audioUrl?: string;
+    reactionEmoji?: string;
+  };
   createdAt: string;
   updatedAt: string;
 }
@@ -84,6 +90,18 @@ export class DurableStore {
       if (fs.existsSync(USERS_FILE)) {
         const rawUsers = fs.readFileSync(USERS_FILE, 'utf-8');
         this.users = JSON.parse(rawUsers);
+        
+        // MIGRATION: Ensure all coaches have a coachCode
+        let dirty = false;
+        this.users.forEach((u) => {
+          if (u.role === 'coach' && !u.coachCode) {
+            u.coachCode = generateCoachCode(u.name);
+            dirty = true;
+          }
+        });
+        if (dirty) {
+          this.saveUsers();
+        }
       } else {
         this.users = [];
         this.saveUsers();

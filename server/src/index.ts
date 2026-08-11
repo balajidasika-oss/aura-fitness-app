@@ -107,7 +107,13 @@ if (!fs.existsSync(clientDistPath)) {
 
 console.log(`📦 Serving client PWA bundle from: ${clientDistPath} (exists: ${fs.existsSync(clientDistPath)})`);
 
-app.use(express.static(clientDistPath));
+app.use(express.static(clientDistPath, {
+  setHeaders: (res, path) => {
+    if (path.endsWith('index.html') || path.endsWith('sw.js')) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    }
+  }
+}));
 
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
@@ -115,6 +121,7 @@ app.get('*', (req, res, next) => {
   }
   const indexPath = path.join(clientDistPath, 'index.html');
   if (fs.existsSync(indexPath)) {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     return res.sendFile(indexPath);
   }
   next();

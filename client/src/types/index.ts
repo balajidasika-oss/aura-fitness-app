@@ -47,6 +47,14 @@ export interface ICardioLog {
 
 export type IRunningLog = ICardioLog;
 
+export interface IYogaLog {
+  title: string;
+  durationMinutes: number;
+  videoUrl?: string;
+  notes?: string;
+  type: 'flexibility' | 'mobility' | 'recovery' | 'flow';
+}
+
 export interface IMuscleExercise {
   id?: string;
   name: string;
@@ -95,6 +103,7 @@ export interface IDailyLog {
   meals: IMealEntry[];
   running?: ICardioLog;
   cardio?: ICardioLog;
+  yoga?: IYogaLog;
   postWorkoutPhoto?: string;
   photoUrl?: string;
   voiceNoteUrl?: string;
@@ -106,8 +115,8 @@ export interface IDailyLog {
   notes?: string;
   coachFeedback?: {
     message: string;
+    audioUrl?: string;
     reactionEmoji?: string;
-    createdAt: string | Date;
   };
   coachCheer?: {
     message?: string;

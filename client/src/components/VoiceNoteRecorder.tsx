@@ -5,11 +5,15 @@ import { soundFx } from '../utils/audio';
 interface VoiceNoteRecorderProps {
   onAudioReady: (audioBlob: Blob | null, audioUrl: string | null) => void;
   coachName?: string;
+  title?: string;
+  subtitle?: string;
 }
 
 export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   onAudioReady,
   coachName = 'Coach Kai',
+  title,
+  subtitle,
 }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordingSeconds, setRecordingSeconds] = useState(0);
@@ -167,9 +171,9 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
             <Mic className="w-4 h-4" />
           </div>
           <div>
-            <h4 className="text-xs font-black text-white">Daily Voice Memo to {coachName}</h4>
+            <h4 className="text-xs font-black text-white">{title || `Daily Voice Memo to ${coachName}`}</h4>
             <span className="text-[10px] text-zinc-400 font-medium">
-              Explain how sets felt, energy levels, or soreness
+              {subtitle || 'Explain how sets felt, energy levels, or soreness'}
             </span>
           </div>
         </div>

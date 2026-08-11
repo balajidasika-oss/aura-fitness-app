@@ -95,11 +95,11 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
   }, [clients]);
 
   // Handle 1-tap quick cheer reaction
-  const handleQuickCheer = async (logId: string, emoji: string, defaultMsg: string) => {
+  const handleQuickCheer = async (clientId: string, logId: string, emoji: string, defaultMsg: string) => {
     try {
       soundFx.playCheerSound();
       const customMsg = customNotes[logId] || defaultMsg;
-      await sendCoachCheer(logId, emoji, customMsg);
+      await sendCoachCheer(clientId, logId, emoji, customMsg);
       setCheerSuccessLogId(logId);
       refreshAction();
       setTimeout(() => setCheerSuccessLogId(null), 2500);
@@ -496,7 +496,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                       <div className="grid grid-cols-3 gap-2">
                         <button
                           onClick={() =>
-                            handleQuickCheer(logId, '🔥', 'Crushed your strength & cardio goals today!')
+                            handleQuickCheer(client._id, logId, '🔥', 'Crushed your strength & cardio goals today!')
                           }
                           className="py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/40 text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
                         >
@@ -506,7 +506,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
 
                         <button
                           onClick={() =>
-                            handleQuickCheer(logId, '💪', 'Incredible lifting volume & cardio pacing!')
+                            handleQuickCheer(client._id, logId, '💪', 'Incredible lifting volume & cardio pacing!')
                           }
                           className="py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/40 text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
                         >
@@ -516,7 +516,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
 
                         <button
                           onClick={() =>
-                            handleQuickCheer(logId, '🥗', 'Spotless meal choices. Keep the fuel clean!')
+                            handleQuickCheer(client._id, logId, '🥗', 'Spotless meal choices. Keep the fuel clean!')
                           }
                           className="py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-emerald-500/40 text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
                         >

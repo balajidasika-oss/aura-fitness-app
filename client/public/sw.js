@@ -1,5 +1,5 @@
 // AuraFit Service Worker - Offline Resilience & Fast Mobile Caching
-const CACHE_NAME = 'aurafit-pwa-v3'; // Bumped version to force cache invalidation
+const CACHE_NAME = 'aurafit-pwa-v4'; // Bumped version to force cache invalidation
 const STATIC_ASSETS = [
   '/',
   '/index.html',

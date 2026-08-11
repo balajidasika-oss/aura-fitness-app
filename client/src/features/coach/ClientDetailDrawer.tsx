@@ -27,6 +27,7 @@ import {
 import { IClientUser, IDailyLog, IMuscleGroupLog } from '../../types';
 import { fetchClientDetail, sendCoachCheer } from '../../services/api';
 import { ComplianceBadge } from '../../components/ComplianceBadge';
+import { VoiceNoteRecorder } from '../../components/VoiceNoteRecorder';
 import { soundFx } from '../../utils/audio';
 
 interface ClientDetailDrawerProps {
@@ -50,6 +51,7 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
   const [reactionEmoji, setReactionEmoji] = useState<string>('🔥');
   const [isSendingFeedback, setIsSendingFeedback] = useState<boolean>(false);
   const [feedbackSentSuccess, setFeedbackSentSuccess] = useState<boolean>(false);
+  const [voiceBlob, setVoiceBlob] = useState<Blob | null>(null);
 
   // Audio Playback State for Voice Memos
   const [playingAudioUrl, setPlayingAudioUrl] = useState<string | null>(null);
@@ -130,12 +132,18 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
   };
 
   const handleSendFeedback = async () => {
-    if (!latestLog?._id) return;
     try {
       soundFx.playCheerSound();
       setIsSendingFeedback(true);
-      await sendCoachCheer(latestLog._id, reactionEmoji, feedbackText || 'Great session today!');
+      await sendCoachCheer(
+        clientId, 
+        latestLog?._id, 
+        reactionEmoji, 
+        feedbackText || (voiceBlob ? 'Voice Memo Attached' : 'Great session today!'), 
+        voiceBlob || undefined
+      );
       setFeedbackText('');
+      setVoiceBlob(null);
       setFeedbackSentSuccess(true);
       const refreshed = await fetchClientDetail(clientId);
       setClientDetail(refreshed);
@@ -185,6 +193,7 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
         <div className="flex border-b border-zinc-800 bg-zinc-950 px-3 pt-2 gap-1 overflow-x-auto no-scrollbar">
           {[
             { id: 'workouts', label: '🏋️ Strength', count: clientDetail?.logs?.filter(l => l.workout?.title || (l.workout?.exercises && l.workout.exercises.length > 0) || (l.workout?.muscleGroups && l.workout.muscleGroups.length > 0)).length || 0 },
+            { id: 'yoga', label: '🧘‍♀️ Yoga', count: clientDetail?.logs?.filter(l => l.yoga).length || 0 },
             { id: 'cardio', label: '⚡ Cardio', count: clientDetail?.logs?.filter(l => (l.cardio?.distanceKm && l.cardio.distanceKm > 0) || (l.cardio?.stairmasterFloors && l.cardio.stairmasterFloors > 0) || (l.running?.distanceKm && l.running.distanceKm > 0)).length || 0 },
             { id: 'voice', label: '🎙️ Voice Memos', count: allVoiceNotes.length },
             { id: 'meals', label: '🥗 Food', count: allMealsWithDates.length },
@@ -362,6 +371,42 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                 </div>
               )}
             </div>
+          ) : activeTab === 'yoga' ? (
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Yoga & Mobility History</h4>
+              {clientDetail?.logs?.filter(l => l.yoga).length === 0 ? (
+                <p className="text-xs text-zinc-500 py-8 text-center">No yoga sessions logged yet.</p>
+              ) : (
+                clientDetail?.logs?.filter(l => l.yoga).map((log) => {
+                  const y = log.yoga;
+                  return (
+                    <div key={log._id} className="p-3.5 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs">
+                            <Sparkles className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <h5 className="font-bold text-white text-xs">{y?.title || 'Yoga Session'}</h5>
+                            <span className="text-[10px] text-zinc-400 font-medium capitalize">
+                              {log.date} · {y?.durationMinutes || 15} mins · {y?.type || 'mobility'}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="text-[10px] font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
+                          {log.completionScore}% Done
+                        </span>
+                      </div>
+                      {y?.notes && (
+                        <p className="text-[11px] text-zinc-300 italic bg-zinc-950 p-2 rounded-xl border border-zinc-800 mt-2">
+                          {y.notes}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })
+              )}
+            </div>
           ) : activeTab === 'cardio' ? (
             <div className="space-y-3">
               <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Cardio & Conditioning History</h4>
@@ -464,42 +509,49 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
         </div>
 
         {/* Coach Quick Send Cheer Footer */}
-        {latestLog && (
-          <div className="p-3 border-t border-zinc-800 bg-zinc-950 space-y-2">
-            <div className="flex items-center gap-1.5">
-              {(['🔥', '💪', '🥗', '⚡', '👏'] as const).map((emoji) => (
-                <button
-                  key={emoji}
-                  onClick={() => setReactionEmoji(emoji)}
-                  className={`text-base p-1 rounded-xl transition ${
-                    reactionEmoji === emoji ? 'bg-zinc-800 ring-2 ring-emerald-400' : 'opacity-70 hover:opacity-100'
-                  }`}
-                >
-                  {emoji}
-                </button>
-              ))}
-              <input
-                type="text"
-                placeholder="Quick cheer message to athlete..."
-                value={feedbackText}
-                onChange={(e) => setFeedbackText(e.target.value)}
-                className="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500"
-              />
-              <button
-                onClick={handleSendFeedback}
-                disabled={isSendingFeedback}
-                className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold p-2 rounded-xl text-xs transition active:scale-95 disabled:opacity-50"
-              >
-                <Send className="w-3.5 h-3.5 stroke-[2.5]" />
-              </button>
-            </div>
-            {feedbackSentSuccess && (
-              <span className="text-[10px] text-emerald-400 font-bold block text-center">
-                Cheer sent to athlete's feed!
-              </span>
-            )}
+        <div className="p-3 border-t border-zinc-800 bg-zinc-950 space-y-2">
+          
+          <div className="mb-2">
+            <VoiceNoteRecorder 
+              onAudioReady={(blob) => setVoiceBlob(blob)} 
+              title="Record Coach Feedback" 
+              subtitle="Send a quick voice tip to this athlete"
+            />
           </div>
-        )}
+
+          <div className="flex items-center gap-1.5">
+            {(['🔥', '💪', '🥗', '⚡', '👏'] as const).map((emoji) => (
+              <button
+                key={emoji}
+                onClick={() => setReactionEmoji(emoji)}
+                className={`text-base p-1 rounded-xl transition ${
+                  reactionEmoji === emoji ? 'bg-zinc-800 ring-2 ring-emerald-400' : 'opacity-70 hover:opacity-100'
+                }`}
+              >
+                {emoji}
+              </button>
+            ))}
+            <input
+              type="text"
+              placeholder={voiceBlob ? "Audio attached! Add optional text..." : "Quick cheer message to athlete..."}
+              value={feedbackText}
+              onChange={(e) => setFeedbackText(e.target.value)}
+              className="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500"
+            />
+            <button
+              onClick={handleSendFeedback}
+              disabled={isSendingFeedback || (!feedbackText.trim() && !voiceBlob)}
+              className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold p-2 rounded-xl text-xs transition active:scale-95 disabled:opacity-50"
+            >
+              <Send className="w-3.5 h-3.5 stroke-[2.5]" />
+            </button>
+          </div>
+          {feedbackSentSuccess && (
+            <span className="text-[10px] text-emerald-400 font-bold block text-center">
+              Cheer sent to athlete's feed!
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

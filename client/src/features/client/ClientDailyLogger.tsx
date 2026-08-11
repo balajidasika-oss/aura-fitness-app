@@ -42,13 +42,14 @@ import {
   IMuscleExercise,
   MuscleCategory,
 } from '../../types';
-import { submitDailyLog, fetchTodayLog, joinCoach } from '../../services/api';
+import { submitDailyLog, fetchTodayLog, joinCoach, API_BASE } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import { ProgressRing } from '../../components/ProgressRing';
 import { LiveCameraModal } from '../../components/LiveCameraModal';
 import { VoiceFeedbackPlayer } from '../../components/VoiceFeedbackPlayer';
 import { VoiceNoteRecorder } from '../../components/VoiceNoteRecorder';
 import { soundFx } from '../../utils/audio';
+import { YogaStudio } from './YogaStudio';
 
 interface ClientDailyLoggerProps {
   client: IClientUser;
@@ -99,38 +100,24 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   const [workoutTitle, setWorkoutTitle] = useState<string>('Heavy Upper Hypertrophy');
   const [workoutCategory, setWorkoutCategory] = useState<WorkoutCategory>('push');
   const [workoutIntensity, setWorkoutIntensity] = useState<WorkoutIntensity>('high');
-  // Single total session duration in minutes (no per-day duration duplication)
-  const [totalSessionDurationMinutes, setTotalSessionDurationMinutes] = useState<number>(55);
-  const [workoutSummary, setWorkoutSummary] = useState<string>('Intense chest stretch and strict lockout on presses.');
-
-  // Muscle Groups structure
-  const [muscleGroups, setMuscleGroups] = useState<IMuscleGroupLog[]>([
-    {
-      muscle: 'chest',
-      label: 'Chest / Pectorals',
-      totalMuscleReps: 64,
-      exercises: [
-        { name: 'Incline Barbell Bench Press', sets: 4, reps: '8', totalReps: 32, weightKg: 80, notes: 'Top set 80kg felt strong' },
-        { name: 'Cable Chest Flyes', sets: 4, reps: '8', totalReps: 32, weightKg: 18, notes: 'Deep stretch at bottom' },
-      ],
-    },
-    {
-      muscle: 'shoulders',
-      label: 'Shoulders & Delts',
-      totalMuscleReps: 40,
-      exercises: [
-        { name: 'Dumbbell Overhead Press', sets: 4, reps: '10', totalReps: 40, weightKg: 24, notes: 'Strict form with full lockout' },
-      ],
-    },
-  ]);
-
-  // Active muscle section being edited
+  const [totalSessionDurationMinutes, setTotalSessionDurationMinutes] = useState<number>(45);
+  const [workoutSummary, setWorkoutSummary] = useState<string>('');
+  
+  const [muscleGroups, setMuscleGroups] = useState<IMuscleGroupLog[]>([]);
   const [activeMuscleTab, setActiveMuscleTab] = useState<MuscleCategory>('chest');
+
   const [newExName, setNewExName] = useState<string>('');
-  const [newExSets, setNewExSets] = useState<number>(4);
-  const [newExReps, setNewExReps] = useState<string>('10');
-  const [newExWeight, setNewExWeight] = useState<number>(20);
+  const [newExSets, setNewExSets] = useState<number>(3);
+  const [newExReps, setNewExReps] = useState<string>('8-10');
+  const [newExWeight, setNewExWeight] = useState<number>(0);
   const [newExNotes, setNewExNotes] = useState<string>('');
+
+  // Yoga State
+  const [isYogaActive, setIsYogaActive] = useState<boolean>(false);
+  const [yogaType, setYogaType] = useState<'flexibility' | 'mobility' | 'recovery' | 'flow'>('mobility');
+  const [yogaTitle, setYogaTitle] = useState<string>('Daily Yoga Flow');
+  const [yogaDuration, setYogaDuration] = useState<number>(15);
+  const [yogaVideoUrl, setYogaVideoUrl] = useState<string>('https://www.youtube.com/embed/v7AYKMP6rOE'); // default morning mobility
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
 
   // 2. CARDIO SESSION STATE
@@ -142,13 +129,14 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   const [stairmasterLevel, setStairmasterLevel] = useState<number>(8);
   const [heartRateAvg, setHeartRateAvg] = useState<number>(140);
 
-  // 3. FOOD & NUTRITION PHOTOS
+  // 3. NUTRITION & MEALS
   const [meals, setMeals] = useState<IMealEntry[]>([]);
-  const [currentMealType, setCurrentMealType] = useState<MealType>('lunch');
-  const [mealCaption, setMealCaption] = useState<string>('');
-  const [isAddingMeal, setIsAddingMeal] = useState<boolean>(false);
+  const [isAddingMeal, setIsAddingMeal] = useState(false);
   const [mealFile, setMealFile] = useState<File | null>(null);
+  const [pendingMealFiles, setPendingMealFiles] = useState<File[]>([]);
   const [mealPreviewUrl, setMealPreviewUrl] = useState<string | null>(null);
+  const [currentMealType, setCurrentMealType] = useState<MealType>('snack');
+  const [mealCaption, setMealCaption] = useState<string>('');
 
   // 4. POST-SESSION SELFIE
   const [sessionPhotoFile, setSessionPhotoFile] = useState<File | null>(null);
@@ -211,6 +199,15 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             setHeartRateAvg(cardio.heartRateAvg || 0);
           }
 
+          if (log.yoga) {
+            setIsYogaActive(true);
+            setWorkoutMode('yoga');
+            setYogaTitle(log.yoga.title || 'Daily Yoga Flow');
+            setYogaType(log.yoga.type || 'mobility');
+            setYogaDuration(log.yoga.durationMinutes || 15);
+            if (log.yoga.videoUrl) setYogaVideoUrl(log.yoga.videoUrl);
+          }
+
           setMeals(log.meals || []);
           setSessionPhotoUrl(log.postWorkoutPhoto || null);
           setVoiceNoteUrl(log.voiceNoteUrl || null);
@@ -246,7 +243,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   if (isRestDay) {
     completionScore += 50; // Waive workout and cardio
   } else {
-    if (hasWorkout) completionScore += 25;
+    if (workoutMode === 'strength' && hasWorkout) completionScore += 25;
+    if (workoutMode === 'yoga' && isYogaActive) completionScore += 25;
     if (hasCardio) completionScore += 25;
   }
   if (hasMeals) completionScore += 25;
@@ -352,7 +350,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   };
 
   const handleAddMealItem = () => {
-    if (!mealPreviewUrl) return;
+    if (!mealPreviewUrl || !mealFile) return;
     soundFx.playSuccessChime();
     const newMeal: IMealEntry = {
       type: currentMealType,
@@ -361,8 +359,10 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       loggedAt: new Date(),
     };
     setMeals((prev) => [...prev, newMeal]);
+    setPendingMealFiles((prev) => [...prev, mealFile]);
     setMealCaption('');
     setMealPreviewUrl(null);
+    setMealFile(null);
     setIsAddingMeal(false);
   };
 
@@ -431,11 +431,24 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       };
       formData.append('cardio', JSON.stringify(cardioPayload));
 
+      if (isYogaActive) {
+        formData.append('yoga', JSON.stringify({
+          title: yogaTitle,
+          durationMinutes: yogaDuration,
+          type: yogaType,
+          videoUrl: yogaVideoUrl,
+        }));
+      }
+
       // Existing Meals + New Meal Photo
-      formData.append('meals', JSON.stringify(meals));
-      if (mealFile) {
-        formData.append('mealPhotos', mealFile);
-        formData.append('mealTypes', JSON.stringify([currentMealType]));
+      const existingMeals = meals.filter((m) => !m.imagePath?.startsWith('blob:'));
+      const newMeals = meals.filter((m) => m.imagePath?.startsWith('blob:'));
+
+      formData.append('existingMeals', JSON.stringify(existingMeals));
+      if (pendingMealFiles.length > 0) {
+        pendingMealFiles.forEach((file) => formData.append('mealPhotos', file));
+        formData.append('mealTypes', JSON.stringify(newMeals.map((m) => m.type)));
+        formData.append('mealCaptions', JSON.stringify(newMeals.map((m) => m.caption)));
       }
 
       // Post-workout selfie
@@ -587,18 +600,66 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
         {/* Coach Cheer Alert if available */}
         {coachCheer && (
-          <div className="mt-3.5 p-3 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 flex items-start space-x-3">
-            <span className="text-2xl">{coachCheer.reactionEmoji || '🔥'}</span>
-            <div>
-              <span className="text-xs font-black text-indigo-300 block">Coach Kai Cheer</span>
-              <p className="text-xs text-zinc-300 font-medium mt-0.5">{coachCheer.message}</p>
+          <div className="mt-4 animate-in slide-in-from-bottom-2 fade-in duration-300">
+            <div className="flex items-end space-x-2">
+              <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-sm shadow-md border border-indigo-400">
+                {coachCheer.reactionEmoji || '🏆'}
+              </div>
+              <div className="relative bg-indigo-950/80 border border-indigo-500/40 rounded-2xl rounded-bl-sm p-3.5 max-w-[85%] shadow-lg">
+                <span className="text-[10px] font-black text-indigo-300 uppercase tracking-wider block mb-1">
+                  Coach {client.coachName || 'Kai'} says:
+                </span>
+                {coachCheer.message && (
+                  <p className="text-xs text-white font-medium leading-relaxed">
+                    {coachCheer.message}
+                  </p>
+                )}
+                {coachCheer.audioUrl && (
+                  <div className="mt-2.5 bg-indigo-900/50 rounded-xl p-2 border border-indigo-500/30">
+                    <audio 
+                      controls 
+                      src={`${API_BASE.replace('/api', '')}${coachCheer.audioUrl}`} 
+                      className="w-full h-8 outline-none" 
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
 
+      {/* WORKOUT MODE SWITCHER */}
+      <div className="flex bg-zinc-950 rounded-xl p-1 border border-zinc-800 shadow-inner">
+        <button
+          onClick={() => {
+            soundFx.playTapSound();
+            setWorkoutMode('strength');
+          }}
+          className={`flex-1 py-2 rounded-lg text-xs font-black transition-all ${
+            workoutMode === 'strength' ? 'bg-emerald-500 text-slate-950 shadow-md' : 'text-zinc-500 hover:text-zinc-300'
+          }`}
+        >
+          💪 Strength Training
+        </button>
+        <button
+          onClick={() => {
+            soundFx.playTapSound();
+            setWorkoutMode('yoga');
+            setIsYogaActive(true);
+          }}
+          className={`flex-1 py-2 rounded-lg text-xs font-black transition-all ${
+            workoutMode === 'yoga' ? 'bg-indigo-500 text-white shadow-md' : 'text-zinc-500 hover:text-zinc-300'
+          }`}
+        >
+          🧘‍♀️ Yoga & Mobility
+        </button>
+      </div>
+
       {/* SECTION 1: STRENGTH TRAINING - MUSCLE GROUPS & REPS */}
-      <div className={`rounded-3xl border p-4 space-y-4 shadow-xl backdrop-blur-md transition ${isRestDay ? 'bg-zinc-950/40 border-zinc-900 opacity-50 pointer-events-none' : 'bg-zinc-900/90 border-zinc-800'}`}>
-        {/* Header & Single Total Duration */}
+      {workoutMode === 'strength' && (
+        <>
+          <div className={`rounded-3xl border p-4 space-y-4 shadow-xl backdrop-blur-md transition ${isRestDay ? 'bg-zinc-950/40 border-zinc-900 opacity-50 pointer-events-none' : 'bg-zinc-900/90 border-zinc-800'}`}>
+            {/* Header & Single Total Duration */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
             <div className="w-9 h-9 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-md">
@@ -887,6 +948,13 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
           </div>
         </div>
       )}
+      </>
+      )}
+
+      {/* SECTION 1B: YOGA & MOBILITY */}
+      {workoutMode === 'yoga' && (
+        <YogaStudio />
+      )}
 
       {/* SECTION 2: CLIENT DAILY VOICE NOTE (Microphone Access) */}
       <VoiceNoteRecorder onAudioReady={handleVoiceAudioReady} coachName="Coach Kai" />
@@ -1083,12 +1151,95 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   <span className="text-[10px] font-black uppercase text-teal-300">{m.type}</span>
                   <span className="text-[11px] text-white font-medium line-clamp-1">{m.caption || 'Meal logged'}</span>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newMeals = [...meals];
+                    newMeals.splice(idx, 1);
+                    setMeals(newMeals);
+                    
+                    // If it was a pending meal, remove the file too
+                    if (m.imagePath?.startsWith('blob:')) {
+                      // Find which blob it was
+                      const blobIdx = meals.filter(x => x.imagePath?.startsWith('blob:')).indexOf(m);
+                      if (blobIdx > -1) {
+                        const newFiles = [...pendingMealFiles];
+                        newFiles.splice(blobIdx, 1);
+                        setPendingMealFiles(newFiles);
+                      }
+                    }
+                  }}
+                  className="absolute top-2 right-2 w-7 h-7 bg-red-500/80 hover:bg-red-500 text-white rounded-full flex items-center justify-center backdrop-blur-md opacity-0 group-hover:opacity-100 transition"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
               </div>
             ))}
           </div>
         ) : (
           <div className="bg-zinc-950/60 rounded-2xl border border-zinc-800/80 p-4 text-center">
             <p className="text-xs text-zinc-500 font-medium">No meals snapped yet today.</p>
+          </div>
+        )}
+
+        {/* Add Meal Detail Modal */}
+        {isAddingMeal && mealPreviewUrl && (
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 w-full max-w-sm relative">
+              <button 
+                onClick={() => {
+                  setIsAddingMeal(false);
+                  setMealPreviewUrl(null);
+                  setMealFile(null);
+                }}
+                className="absolute top-4 right-4 text-zinc-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              <h3 className="text-lg font-black text-white mb-3 flex items-center space-x-2">
+                <Utensils className="w-5 h-5 text-teal-400" />
+                <span>Log Meal</span>
+              </h3>
+              
+              <div className="aspect-video w-full rounded-2xl overflow-hidden mb-4 border border-zinc-800">
+                <img src={mealPreviewUrl} alt="Meal Preview" className="w-full h-full object-cover" />
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Meal Type</label>
+                  <select
+                    value={currentMealType}
+                    onChange={(e) => setCurrentMealType(e.target.value as MealType)}
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500 font-bold"
+                  >
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snack">Snack</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Caption / Macros (optional)</label>
+                  <input
+                    type="text"
+                    value={mealCaption}
+                    onChange={(e) => setMealCaption(e.target.value)}
+                    placeholder="e.g. 2 eggs, avocado toast (400 cal)"
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500"
+                  />
+                </div>
+
+                <button
+                  onClick={handleAddMealItem}
+                  className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-black flex items-center justify-center space-x-2 shadow-lg shadow-teal-500/25 transition active:scale-95"
+                >
+                  <CheckCircle2 className="w-5 h-5" />
+                  <span>Save to Daily Log</span>
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>

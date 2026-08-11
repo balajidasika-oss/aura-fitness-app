@@ -9,6 +9,7 @@ import { fetchClients } from './services/api';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 import { LegalCenterModal } from './components/LegalCenterModal';
 import { PrivacyDataSettingsModal } from './components/PrivacyDataSettingsModal';
+import { soundFx } from './utils/audio';
 
 const MainAppContent: React.FC = () => {
   const { currentUser, isAuthenticated, activeRole } = useAuth();
@@ -37,8 +38,28 @@ const MainAppContent: React.FC = () => {
   useEffect(() => {
     if (isAuthenticated) {
       loadRoster();
+      
+      // Request notification permissions and schedule reminder for clients
+      if (currentUser?.role === 'client' && 'Notification' in window) {
+        if (Notification.permission === 'default') {
+          Notification.requestPermission();
+        }
+        
+        // Simulating a reminder alert if they haven't logged recently
+        const reminderTimer = setTimeout(() => {
+          if (Notification.permission === 'granted') {
+            new Notification('Coach Reminder!', {
+              body: "Don't break your streak! Time to log your daily fitness and meals.",
+              icon: 'https://cdn-icons-png.flaticon.com/512/2964/2964514.png'
+            });
+            soundFx.playCheerSound();
+          }
+        }, 120000); // Trigger after 2 mins for demo purposes
+        
+        return () => clearTimeout(reminderTimer);
+      }
     }
-  }, [isAuthenticated, currentUser?._id]);
+  }, [isAuthenticated, currentUser?._id, currentUser?.role]);
 
   // Convert current user to IClientUser format for ClientDailyLogger
   const activeClient: IClientUser | null = (currentUser && currentUser.role === 'client')

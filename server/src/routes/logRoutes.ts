@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.fieldname === 'sessionPhoto') {
       cb(null, sessionsDir);
-    } else if (file.fieldname === 'voiceNoteAudio') {
+    } else if (file.fieldname === 'voiceNoteAudio' || file.fieldname === 'coachVoiceAudio') {
       cb(null, audioDir);
     } else if (file.fieldname === 'avatarPhoto') {
       cb(null, avatarsDir);
@@ -148,6 +148,16 @@ router.post(
         caloriesBurned: parseInt(req.body.cardioCalories, 10) || 0,
       };
 
+      // 2.5 Parse Yoga Metrics
+      let yogaData = undefined;
+      if (req.body.yoga) {
+        try {
+          yogaData = typeof req.body.yoga === 'string' ? JSON.parse(req.body.yoga) : req.body.yoga;
+        } catch {
+          // ignore
+        }
+      }
+
       // 3. Process Uploaded Files
       const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
 
@@ -161,30 +171,32 @@ router.post(
         voiceNoteUrl = `/uploads/audio/${files.voiceNoteAudio[0].filename}`;
       }
 
-      // 4. Parse Meals
-      let mealsData: any[] = [];
-      if (req.body.meals) {
+      let existingMeals: any[] = [];
+      if (req.body.existingMeals) {
         try {
-          mealsData = typeof req.body.meals === 'string' ? JSON.parse(req.body.meals) : req.body.meals;
+          existingMeals = typeof req.body.existingMeals === 'string' ? JSON.parse(req.body.existingMeals) : req.body.existingMeals;
         } catch {
-          mealsData = [];
+          existingMeals = [];
         }
       }
+
+      const mealTypes = req.body.mealTypes ? (typeof req.body.mealTypes === 'string' ? JSON.parse(req.body.mealTypes) : req.body.mealTypes) : [];
+      const mealCaptions = req.body.mealCaptions ? (typeof req.body.mealCaptions === 'string' ? JSON.parse(req.body.mealCaptions) : req.body.mealCaptions) : [];
 
       if (files?.mealPhotos) {
         files.mealPhotos.forEach((file, idx) => {
           const photoPath = `/uploads/meals/${file.filename}`;
-          if (mealsData[idx]) {
-            mealsData[idx].photoUrl = photoPath;
-          } else {
-            mealsData.push({
-              name: `Meal ${idx + 1}`,
-              mealType: idx === 0 ? 'breakfast' : idx === 1 ? 'lunch' : 'dinner',
-              photoUrl: photoPath,
-            });
-          }
+          existingMeals.push({
+            type: mealTypes[idx] || 'snack',
+            caption: mealCaptions[idx] || 'Meal logged',
+            imagePath: photoPath,
+            photoUrl: photoPath,
+            loggedAt: new Date().toISOString(),
+          });
         });
       }
+      
+      const mealsData = existingMeals;
 
       // Compute Completion Score
       let score = 0;
@@ -215,6 +227,7 @@ router.post(
         workout: workoutData,
         cardio: cardioData,
         running: cardioData,
+        yoga: yogaData,
         meals: mealsData,
         postWorkoutPhoto,
         photoUrl: postWorkoutPhoto,
@@ -245,36 +258,75 @@ router.post(
   }
 );
 
-// POST /api/logs/:id/cheer - Coach sends feedback / emoji reaction
-router.post('/:id/cheer', async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const { reactionEmoji, message, feedbackMessage } = req.body;
+// POST /api/logs/client/:clientId/cheer - Coach sends feedback / voice memo
+router.post(
+  '/client/:clientId/cheer',
+  upload.single('coachVoiceAudio'),
+  async (req: Request, res: Response) => {
+    try {
+      const { clientId } = req.params;
+      const { reactionEmoji, message, logId } = req.body;
+      const date = new Date().toISOString().split('T')[0];
 
-    const feedbackPayload = {
-      reactionEmoji: reactionEmoji || '🔥',
-      message: message || feedbackMessage || 'Great workout today! Keep pushing your limits.',
-      createdAt: new Date().toISOString(),
-      cheeredAt: new Date().toISOString(),
-    };
+      let coachAudioUrl: string | undefined = undefined;
+      if (req.file) {
+        coachAudioUrl = `/uploads/audio/${req.file.filename}`;
+      }
 
-    const updated = DurableStore.updateLogById(id, {
-      coachCheer: feedbackPayload,
-      coachFeedback: feedbackPayload,
-    } as any);
+      const feedbackPayload = {
+        reactionEmoji: reactionEmoji || '🔥',
+        message: message || 'Great work!',
+        audioUrl: coachAudioUrl,
+        createdAt: new Date().toISOString(),
+        cheeredAt: new Date().toISOString(),
+      };
 
-    if (!updated) {
-      return res.status(404).json({ success: false, message: 'Log not found' });
+      let targetLogId = logId;
+      let log = null;
+
+      if (targetLogId && targetLogId !== 'null' && targetLogId !== 'undefined') {
+        // Try to update specific log
+        const updated = DurableStore.updateLogById(targetLogId, {
+          coachCheer: feedbackPayload,
+          coachFeedback: feedbackPayload,
+        } as any);
+        if (updated) {
+          return res.json({ success: true, message: 'Cheer sent directly to athlete!', data: updated });
+        }
+      }
+
+      // If no logId provided or not found, try to find today's log or create a blank one
+      log = DurableStore.findLogByClientAndDate(clientId, date);
+      if (!log) {
+        // Create an empty check-in log
+        log = {
+          _id: `log_${clientId}_${date}`,
+          clientId,
+          date,
+          completed: false,
+          meals: [],
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          coachCheer: feedbackPayload,
+        };
+        DurableStore.createOrUpdateLog(log);
+      } else {
+        DurableStore.updateLogById(log._id, {
+          coachCheer: feedbackPayload,
+          coachFeedback: feedbackPayload,
+        } as any);
+        log = DurableStore.findLogByClientAndDate(clientId, date);
+      }
+
+      return res.json({
+        success: true,
+        message: 'Cheer sent directly to athlete!',
+        data: log,
+      });
+    } catch (error: any) {
+      return res.status(500).json({ success: false, error: error.message });
     }
-
-    return res.json({
-      success: true,
-      message: 'Cheer sent directly to athlete!',
-      data: updated,
-    });
-  } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
   }
-});
+);
 
 export default router;
