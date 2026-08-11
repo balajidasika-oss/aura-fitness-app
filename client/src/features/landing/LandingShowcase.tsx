@@ -487,17 +487,7 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
 
       {/* PWA Install Modal */}
       {showPWAInstall && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative w-full max-w-md">
-            <button
-              onClick={() => setShowPWAInstall(false)}
-              className="absolute -top-3 -right-3 z-20 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center border border-slate-700 shadow-lg"
-            >
-              ✕
-            </button>
-            <PWAInstallPrompt onClose={() => setShowPWAInstall(false)} />
-          </div>
-        </div>
+        <PWAInstallPrompt isOpen={true} onClose={() => setShowPWAInstall(false)} />
       )}
 
       {/* Legal Center Modal */}
