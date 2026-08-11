@@ -1,82 +1,99 @@
-# ⚡ AURA Fitness Coaching Platform
+<div align="center">
+  <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=1200&h=400" alt="Aura Fitness Banner" />
 
-Aura Fitness is a full-stack, phone-native fitness coaching web application (Progressive Web App). It provides personal trainers and fitness coaches with a centralized dashboard to manage athletes, while giving clients an intuitive, mobile-optimized experience to track their daily workouts, nutrition, cardio, and voice notes.
+  <br />
+  <br />
 
-![Aura Fitness Showcase](https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=1200&h=400)
+  <h1>⚡ AuraFit: AI-Powered Fitness Ecosystem</h1>
+  
+  <p>
+    <strong>Engineered by <a href="https://www.linkedin.com/in/balajidasika/">Balaji Dasika</a></strong>
+  </p>
 
-## ✨ Key Features
+  <p>
+    A next-generation, Edge AI-powered Progressive Web App (PWA) bridging the gap between professional coaching and intelligent home workouts.
+  </p>
 
-- **Coach-Client Architecture**: Cryptographic user authentication (PBKDF2 SHA-512). Coaches generate unique "Invite Codes" that clients use during registration to link directly to the coach's roster.
-- **Progressive Web App (PWA)**: Full-bleed mobile UI with iOS/Android safe-area insets. Installable directly to the home screen as a standalone app.
-- **Interactive Workout Logger**: Set-by-set weight and rep recording with live volume calculations and multi-muscle group tracking.
-- **Comprehensive Tracking**: Complete suite for cardio tracking (distance, pace, stairmaster), nutrition (macros, calories, photos), and Web Speech API integration for voice-transcribed training notes.
-- **Live Coach Feedback**: Coaches can send instant haptic cheers and feedback directly to athlete logs.
-- **Persistent Data Storage**: File-backed NoSQL JSON durable store handling schemas, relations, and continuous persistence.
-- **Legal & Compliance**: Built-in GDPR data exports, account deletion, and integrated Liability Waivers / Terms of Service.
+  <p>
+    <a href="#features"><strong>Explore the Features</strong></a> ·
+    <a href="#tech-stack"><strong>View Tech Stack</strong></a> ·
+    <a href="#installation"><strong>Installation</strong></a>
+  </p>
+</div>
+
+<hr />
+
+## 🌟 Vision & Architecture
+
+AuraFit was engineered to push the boundaries of what is possible in the browser. It features a complete **Coach-Client Architecture** allowing trainers to manage athletes remotely, while offering users an entirely on-device **AI Pose Coach** that runs without any server latency. 
+
+The application is built completely mobile-first, installable directly to your home screen as a standalone Progressive Web App (PWA) with offline resilience.
+
+## ✨ Highlight Features
+
+### 🤖 Edge AI Pose Coach (MoveNet Thunder)
+- **Zero-Latency Tracking:** Uses TensorFlow.js and MoveNet Thunder to run full-body pose estimation directly on the client's device GPU via WebGL.
+- **Split-Screen UX:** A beautiful, responsive split-screen UI displaying high-res reference poses next to the live camera feed.
+- **Buttery Smooth Sensor:** Implements a custom **Exponential Moving Average (EMA)** mathematical filter to act as a "shock absorber" for the AI data, completely eliminating skeleton jitter and providing a premium feel.
+- **Live Alignment Feedback:** Analyzes joint angles mathematically (e.g., elbow, shoulder, hip relationships) to guide users into perfect form.
+
+### 🏃‍♂️ Comprehensive Fitness Suite
+- **Premium Zumba Player:** Embedded, high-energy YouTube Dance and Zumba workouts inside a custom, glassmorphism modal player.
+- **Guided Meditation:** A visual and auditory silent meditation timer.
+- **Interactive Workout Logger:** Set-by-set weight and rep recording with live volume calculations and multi-muscle group tracking.
+- **Voice-Transcribed Notes:** Web Speech API integration allows athletes to dictate training notes dynamically.
+
+### 👥 Coach & Client Dashboards
+- **Cryptographic Auth:** Secure PBKDF2 SHA-512 authentication.
+- **Live Roster Management:** Coaches generate unique "Invite Codes" that instantly link new clients to their dashboard.
+- **Haptic Cheer System:** Coaches can send instant cheers and feedback directly to athlete logs.
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: React 18, TypeScript, Vite, TailwindCSS, Lucide Icons, Canvas Confetti.
-- **Backend**: Node.js, Express, TypeScript, custom `DurableStore` JSON persistence.
-- **Security**: Helmet HTTP Headers, Express Rate Limiter, strict CORS, and secure HTTP-only configurations.
-- **Deployment**: Docker multi-stage builds, Render/Railway ready.
+Designed for high performance, rapid iteration, and strict type safety:
+
+- **Frontend Core:** React 18, TypeScript, Vite
+- **Styling:** TailwindCSS, Lucide Icons, Glassmorphism UI patterns
+- **AI & ML:** TensorFlow.js, `@tensorflow-models/pose-detection`
+- **Backend & API:** Node.js, Express, TypeScript, custom NoSQL Durable JSON Store
+- **Web APIs:** Service Workers (PWA), Web Speech API, MediaDevices API
+- **Security:** Helmet HTTP Headers, Express Rate Limiter, strict CORS
 
 ---
 
-## 🚀 Infrastructure & Deployment
+## 🚀 Installation & Local Development
 
-The application is containerized and configured for modern PaaS (Platform as a Service) and IaaS environments. Multi-stage Docker builds ensure a minimal production footprint.
-
-### Cloud Native (PaaS)
-
-Deployment configurations for managed platforms are included in the repository.
-
-#### Render
-The repository includes a `render.yaml` for infrastructure-as-code deployment on Render.
-1. Connect this repository to your Render account.
-2. The Blueprint will automatically provision the Node web service using `npm run build` and `npm start`.
-
-#### Railway / Heroku
-A standard `Procfile` is included for seamless integration with Heroku or Railway. Simply connect the repository to your dashboard and deploy.
-
-### Containerization (Docker)
-
-For custom VPS or self-hosted environments, utilize the provided multi-stage `Dockerfile`:
-
+### 1. Clone & Install
 ```bash
-# Build the production image
-docker build -t aura-fitness-app .
-
-# Run the container (maps the persistent data volume)
-docker run -p 5000:5000 -v $(pwd)/data:/app/data aura-fitness-app
+git clone https://github.com/balajidasika-oss/aura-fitness-app.git
+cd aura-fitness-app
+npm run install:all
 ```
 
----
-
-## 🛠 Local Development & Verification
-
+### 2. Build for Production
+This compiles the Vite PWA frontend and the TypeScript backend server:
 ```bash
-# 1. Install dependencies
-npm run install:all
-
-# 2. Build for production (compiles Vite PWA & TypeScript server)
 npm run build
+```
 
-# 3. Run production server locally
+### 3. Run Locally
+```bash
 npm start
 ```
-
-Server runs on `http://localhost:5000`.
-
----
-
-## 🔑 Pre-Configured Test Accounts
-
-| Role | Email | Password | Invite Code |
-| :--- | :--- | :--- | :--- |
-| **Head Coach** | `coach.marcus@aurafit.com` | `secretpassword123` | `COACH-COAC-2312` |
-| **Athlete (Client)** | `alex.rivera@gmail.com` | `clientsecret123` | Linked to Coach Marcus |
+The app will serve on `http://localhost:5000`.
 
 ---
 
-*This project was designed and built to demonstrate advanced full-stack capabilities, responsive mobile UI/UX, and robust API design.*
+## ☁️ Deployment
+
+AuraFit is containerized and heavily optimized for modern PaaS providers. It includes configurations for instantaneous deployment:
+- **Render.com:** A `render.yaml` Blueprint is included for infrastructure-as-code deployment.
+- **Docker:** A multi-stage `Dockerfile` is provided for highly optimized VPS or self-hosted deployment.
+
+## 🤝 Connect with the Developer
+
+I am incredibly passionate about building beautiful, high-performance web applications that merge machine learning with top-tier user experiences.
+
+**Let's connect!**
+- **LinkedIn:** [Balaji Dasika](https://www.linkedin.com/in/balajidasika/)
+- **Open to Work:** Actively seeking Software Engineering opportunities!

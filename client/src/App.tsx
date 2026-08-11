@@ -123,6 +123,18 @@ const MainAppContent: React.FC = () => {
         )}
       </main>
 
+      {/* Footer Watermark */}
+      <footer className="w-full py-6 mt-auto border-t border-slate-800/50 bg-[#07090e]">
+        <div className="max-w-6xl mx-auto px-4 flex flex-col items-center justify-center space-y-2">
+          <p className="text-slate-400 text-sm font-medium flex items-center gap-1.5">
+            Engineered with <Heart className="w-4 h-4 text-rose-500 fill-rose-500" /> by
+            <a href="https://www.linkedin.com/in/balajidasika/" target="_blank" rel="noopener noreferrer" className="text-indigo-400 font-bold hover:text-indigo-300 hover:underline transition-colors ml-1">
+              Balaji Dasika
+            </a>
+          </p>
+        </div>
+      </footer>
+
       {/* PWA Install Modal */}
       {showPWAInstall && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
