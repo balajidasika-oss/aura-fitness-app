@@ -73,6 +73,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   const [showCoachModal, setShowCoachModal] = useState<boolean>(false);
   const [coachCodeInput, setCoachCodeInput] = useState<string>('');
   const [isJoiningCoach, setIsJoiningCoach] = useState<boolean>(false);
+  const [isRestDay, setIsRestDay] = useState<boolean>(false);
 
   const handleJoinCoach = async () => {
     if (!coachCodeInput.trim()) return;
@@ -190,6 +191,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               setMuscleGroups(log.workout.muscleGroups);
             }
           }
+          setIsRestDay(log.isRestDay || false);
 
           const cardio = log.cardio || log.running;
           if (cardio) {
@@ -241,8 +243,12 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   const hasSelfie = sessionPhotoUrl !== null || sessionPhotoFile !== null;
 
   let completionScore = 0;
-  if (hasWorkout) completionScore += 25;
-  if (hasCardio) completionScore += 25;
+  if (isRestDay) {
+    completionScore += 50; // Waive workout and cardio
+  } else {
+    if (hasWorkout) completionScore += 25;
+    if (hasCardio) completionScore += 25;
+  }
   if (hasMeals) completionScore += 25;
   if (hasSelfie) completionScore += 25;
 
@@ -375,6 +381,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       formData.append('clientId', client._id);
       formData.append('date', selectedDate);
       formData.append('notes', clientNotes);
+      formData.append('isRestDay', String(isRestDay));
 
       // Total Session Duration and Muscle Groups
       formData.append('totalSessionDurationMinutes', String(totalSessionDurationMinutes));
@@ -524,6 +531,25 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             {client.coachId ? 'Change Coach' : 'Connect to Coach'}
           </button>
         </div>
+
+        {/* Rest Day Toggle */}
+        <div className="mt-2 flex items-center justify-between bg-zinc-900/50 rounded-xl p-2 border border-zinc-800">
+          <div className="flex items-center space-x-2">
+            <div className={`w-6 h-6 rounded-full flex items-center justify-center transition ${isRestDay ? 'bg-indigo-500 text-slate-950' : 'bg-zinc-800 text-zinc-400'}`}>
+              <Layers className="w-3 h-3" />
+            </div>
+            <div>
+              <p className="text-[10px] text-zinc-400 uppercase tracking-wider font-bold">Active Recovery</p>
+              <p className="text-xs font-black text-white">Mark as Rest Day</p>
+            </div>
+          </div>
+          <button 
+            onClick={() => setIsRestDay(!isRestDay)}
+            className={`w-10 h-6 rounded-full relative transition-colors ${isRestDay ? 'bg-emerald-500' : 'bg-zinc-700'}`}
+          >
+            <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${isRestDay ? 'right-1' : 'left-1'}`} />
+          </button>
+        </div>
       </div>
 
       {/* Change Coach Modal */}
@@ -569,10 +595,9 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             </div>
           </div>
         )}
-      </div>
 
       {/* SECTION 1: STRENGTH TRAINING - MUSCLE GROUPS & REPS */}
-      <div className="rounded-3xl bg-zinc-900/90 border border-zinc-800 p-4 space-y-4 shadow-xl backdrop-blur-md">
+      <div className={`rounded-3xl border p-4 space-y-4 shadow-xl backdrop-blur-md transition ${isRestDay ? 'bg-zinc-950/40 border-zinc-900 opacity-50 pointer-events-none' : 'bg-zinc-900/90 border-zinc-800'}`}>
         {/* Header & Single Total Duration */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2.5">

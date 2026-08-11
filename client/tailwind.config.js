@@ -30,11 +30,11 @@ export default {
         display: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
       },
       boxShadow: {
-        'glow-emerald': '0 0 25px -5px rgba(16, 185, 129, 0.3)',
-        'glow-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.3)',
-        'glow-violet': '0 0 25px -5px rgba(139, 92, 246, 0.3)',
-        'glow-amber': '0 0 25px -5px rgba(245, 158, 11, 0.3)',
-        'glow-rose': '0 0 25px -5px rgba(244, 63, 94, 0.3)',
+        'glow-emerald': '0 0 25px -5px rgba(16, 185, 129, 0.15)',
+        'glow-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.15)',
+        'glow-violet': '0 0 25px -5px rgba(139, 92, 246, 0.15)',
+        'glow-amber': '0 0 25px -5px rgba(245, 158, 11, 0.15)',
+        'glow-rose': '0 0 25px -5px rgba(244, 63, 94, 0.15)',
         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
       },
       animation: {

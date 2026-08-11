@@ -101,6 +101,8 @@ router.post(
       if (!clientId) {
         return res.status(400).json({ success: false, message: 'clientId is required to submit a log' });
       }
+      
+      const isRestDay = req.body.isRestDay === 'true' || req.body.isRestDay === true;
 
       // 1. Parse Muscle Groups & Strength Workout Data
       let muscleGroups: any[] = [];
@@ -186,8 +188,12 @@ router.post(
 
       // Compute Completion Score
       let score = 0;
-      if (totalSessionDurationMinutes > 0 || totalWorkoutReps > 0) score += 35;
-      if (cardioData.distanceKm > 0 || cardioData.stairmasterFloors > 0) score += 25;
+      if (isRestDay) {
+        score += 60; // Waive workout and cardio requirement
+      } else {
+        if (totalSessionDurationMinutes > 0 || totalWorkoutReps > 0) score += 35;
+        if (cardioData.distanceKm > 0 || cardioData.stairmasterFloors > 0) score += 25;
+      }
       if (mealsData.length > 0) score += 20;
       if (voiceNoteUrl) score += 20;
       const isComplete = score >= 70;
@@ -214,6 +220,7 @@ router.post(
         photoUrl: postWorkoutPhoto,
         voiceNoteUrl,
         audioVoiceNoteUrl: voiceNoteUrl,
+        isRestDay,
         completionScore: score,
         isComplete,
         createdAt: new Date().toISOString(),

@@ -417,7 +417,7 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800/80 bg-slate-950/60 py-8 px-4 sm:px-8 text-center text-xs text-slate-500 space-y-2">
+      <footer className="border-t border-slate-800/80 bg-slate-950/60 pt-8 pb-4 px-4 sm:px-8 text-center text-xs text-slate-500 space-y-6">
         <div className="flex justify-center gap-4 text-slate-400">
           <button
             onClick={() => {
@@ -449,21 +449,21 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
             PAR-Q Waiver
           </button>
         </div>
-      {/* Subtle Footer */}
-      <footer className="w-full text-center py-8 text-slate-500 text-[10px] sm:text-xs">
-        <p className="mb-2">
-          &copy; {new Date().getFullYear()} Aura Fitness OS. Designed and Engineered by{' '}
-          <a
-            href="https://github.com/balajidasika-oss"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-emerald-500 font-bold hover:text-emerald-400 transition-colors"
-          >
-            Balaji
-          </a>
-          .
-        </p>
-        <p className="text-[10px] text-slate-600">All rights reserved.</p>
+        <div className="w-full text-center text-[10px] sm:text-xs">
+          <p className="mb-2">
+            &copy; {new Date().getFullYear()} Aura Fitness OS. Designed and Engineered by{' '}
+            <a
+              href="https://github.com/balajidasika-oss"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-500 font-bold hover:text-emerald-400 transition-colors"
+            >
+              Balaji
+            </a>
+            .
+          </p>
+          <p className="text-[10px] text-slate-600">All rights reserved.</p>
+        </div>
       </footer>
 
       {/* Auth Modal */}

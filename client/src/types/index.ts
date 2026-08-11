@@ -100,6 +100,7 @@ export interface IDailyLog {
   voiceNoteUrl?: string;
   audioVoiceNoteUrl?: string;
   steps?: number;
+  isRestDay?: boolean;
   isComplete: boolean;
   completionScore: number;
   notes?: string;
@@ -126,6 +127,7 @@ export interface DayStatus {
   hasRun: boolean;
   hasSelfie: boolean;
   hasVoiceNote?: boolean;
+  isRestDay?: boolean;
   workoutTitle?: string;
   totalReps?: number;
   cardioType?: CardioActivityType;

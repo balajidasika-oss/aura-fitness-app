@@ -11,6 +11,7 @@ export interface DayStatus {
   runMins: number;
   inclinePercentage?: number;
   stairmasterFloors?: number;
+  isRestDay?: boolean;
   status: 'complete' | 'partial' | 'missed';
 }
 
@@ -44,7 +45,7 @@ export function calculateClientCompliance(logs: any[]): ComplianceSummary {
     const log = logs.find((l) => l.date === dateStr);
 
     if (log) {
-      const hasWorkout = Boolean(log.workout && log.workout.title && log.workout.title.trim().length > 0);
+      let hasWorkout = Boolean(log.workout && log.workout.title && log.workout.title.trim().length > 0);
       const hasMeals = Array.isArray(log.meals) && log.meals.length > 0;
       
       const cardio = log.cardio || log.running || {};
@@ -53,8 +54,15 @@ export function calculateClientCompliance(logs: any[]): ComplianceSummary {
       const inclinePercentage = Number(cardio.inclinePercentage) || 0;
       const stairmasterFloors = Number(cardio.stairmasterFloors) || 0;
       
-      const hasRun = runKm > 0 || stairmasterFloors > 0 || runMins > 0;
+      let hasRun = runKm > 0 || stairmasterFloors > 0 || runMins > 0;
       const hasSelfie = Boolean(log.postWorkoutPhoto && log.postWorkoutPhoto.length > 0);
+      const isRestDay = Boolean(log.isRestDay);
+
+      if (isRestDay) {
+        // Waive the workout and cardio requirement for rest days
+        hasWorkout = true;
+        hasRun = true;
+      }
 
       let score = 0;
       if (hasWorkout) score += 25;
@@ -82,6 +90,7 @@ export function calculateClientCompliance(logs: any[]): ComplianceSummary {
         hasRun,
         hasSelfie,
         workoutTitle: log.workout?.title,
+        isRestDay,
         runKm,
         runMins,
         inclinePercentage,
