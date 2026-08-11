@@ -7,6 +7,10 @@ const YOGA_ASANAS = [
   { name: 'Downward Dog (Adho Mukha Svanasana)', benefits: 'Stretches hamstrings, calves, and spine. Builds upper body strength.', duration: '60s', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400' },
   { name: 'Warrior II (Virabhadrasana II)', benefits: 'Strengthens legs and ankles. Opens hips and chest.', duration: '45s/side', image: 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&q=80&w=400' },
   { name: 'Tree Pose (Vrksasana)', benefits: 'Improves balance and focus. Strengthens thighs and core.', duration: '30s/side', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Plank Pose (Kumbhakasana)', benefits: 'Strengthens the core, arms, and wrists. Improves posture.', duration: '45s', image: 'https://images.unsplash.com/photo-1566501206188-5dd0cf160a0e?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Cobra Pose (Bhujangasana)', benefits: 'Strengthens the spine. Stretches chest and lungs.', duration: '30s', image: 'https://images.unsplash.com/photo-1593164842264-854604db2260?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Triangle Pose (Trikonasana)', benefits: 'Stretches and strengthens the thighs, knees, and ankles.', duration: '40s/side', image: 'https://images.unsplash.com/photo-1552286450-516cb3c75eb3?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Bridge Pose (Setu Bandhasana)', benefits: 'Calms the brain. Stretches chest, neck, and spine.', duration: '45s', image: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&q=80&w=400' },
   { name: 'Childs Pose (Balasana)', benefits: 'Rests the lower back. Calms the mind and central nervous system.', duration: '90s', image: 'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?auto=format&fit=crop&q=80&w=400' },
 ];
 
@@ -14,6 +18,9 @@ const ZUMBA_VIDEOS = [
   { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400' },
   { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400' },
   { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400' },
+  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400' },
+  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400' },
+  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400' },
 ];
 
 export const YogaStudio: React.FC = () => {
