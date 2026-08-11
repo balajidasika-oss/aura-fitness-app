@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, RotateCcw, Volume2, Bell, Heart, Sparkles, Activity, Clock, Image as ImageIcon, ScanEye } from 'lucide-react';
+import { Play, Pause, RotateCcw, Volume2, Bell, Heart, Sparkles, Activity, Clock, Image as ImageIcon, ScanEye, ArrowLeft } from 'lucide-react';
 import { soundFx } from '../../utils/audio';
 import { AIPoseCoach } from './AIPoseCoach';
 
@@ -16,12 +16,12 @@ const YOGA_ASANAS = [
 ];
 
 const ZUMBA_VIDEOS = [
-  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400', videoId: '8DZktowZo_k' },
-  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400', videoId: 'QRZcZgZg7yI' },
-  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400', videoId: 'kwkXyHjgoOQ' },
-  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400', videoId: 'aOW20TzE1xQ' },
-  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400', videoId: 'kG202wQG6a0' },
-  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400', videoId: 'gC_L9qAHVJ8' },
+  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400', videoId: 'kqemoar6Tbk' },
+  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400', videoId: 'brjOFJIcdfU' },
+  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400', videoId: 'B2R8X5luvSU' },
+  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400', videoId: 'wbJxRfSZYr4' },
+  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400', videoId: 's3wZQ3B0ko4' },
+  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400', videoId: 'ZCSGRrzHS7g' },
 ];
 
 export const YogaStudio: React.FC = () => {
@@ -248,9 +248,10 @@ export const YogaStudio: React.FC = () => {
               </div>
               <button 
                 onClick={() => setSelectedZumbaVideo(null)}
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-rose-500/20 text-white hover:text-rose-400 border border-white/20 flex items-center justify-center transition"
+                className="px-4 py-2 rounded-full bg-white/10 hover:bg-rose-500/20 text-white hover:text-rose-400 border border-white/20 flex items-center justify-center gap-2 transition"
               >
-                <RotateCcw className="w-5 h-5 rotate-45" />
+                <ArrowLeft className="w-5 h-5" />
+                <span className="font-bold text-sm">Back</span>
               </button>
             </div>
             

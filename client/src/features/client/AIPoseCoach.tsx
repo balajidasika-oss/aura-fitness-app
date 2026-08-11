@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
-import { Camera, X, Activity, Maximize2, Minimize2, ScanEye, CheckCircle2, Info } from 'lucide-react';
+import { Camera, Activity, Maximize2, Minimize2, ScanEye, CheckCircle2, Info, ArrowLeft } from 'lucide-react';
 import { soundFx } from '../../utils/audio';
 
 interface AIPoseCoachProps {
@@ -305,9 +305,10 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }
             </button>
             <button 
               onClick={() => { soundFx.playTapSound(); onClose(); }}
-              className="p-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 transition backdrop-blur-sm border border-rose-500/30 shadow-[0_0_15px_rgba(244,63,94,0.2)]"
+              className="px-4 py-2 flex items-center gap-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 transition backdrop-blur-sm border border-rose-500/30 shadow-[0_0_15px_rgba(244,63,94,0.2)]"
             >
-              <X className="w-4 h-4" />
+              <ArrowLeft className="w-4 h-4" />
+              <span className="font-bold text-sm">Back</span>
             </button>
           </div>
         </div>
