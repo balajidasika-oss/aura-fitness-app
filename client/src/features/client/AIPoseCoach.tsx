@@ -7,7 +7,7 @@ import { soundFx } from '../../utils/audio';
 
 interface AIPoseCoachProps {
   onClose: () => void;
-  targetAsana: { name: string; image: string; duration: string; benefits: string };
+  targetAsana: { name: string; image: string; duration: string; benefits: string; videoId?: string };
 }
 
 // Utility to calculate angle between three points (A, B, C) where B is the vertex
@@ -110,7 +110,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }
         const rawKeypoints = poses[0].keypoints;
         
         // Apply EMA Smoothing
-        const EMA_ALPHA = 0.4;
+        const EMA_ALPHA = 0.7; // Increased for faster "smarter" responsiveness
         const keypoints = rawKeypoints.map(kp => {
           if (!kp.name) return kp;
           const prev = smoothedKeypointsRef.current[kp.name];
@@ -313,17 +313,26 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }
         </div>
 
         {/* Content Body - Split Screen */}
-        <div className="flex-1 flex flex-col md:flex-row relative w-full h-full bg-zinc-950 overflow-hidden pt-[88px]">
+        <div className="flex-1 flex flex-row relative w-full h-full bg-zinc-950 overflow-hidden pt-[88px]">
           
           {/* LEFT PANEL: Reference Image & Instructions */}
-          <div className="w-full h-[40%] md:h-full md:w-1/3 border-b md:border-b-0 md:border-r border-white/5 bg-zinc-900/50 flex flex-col overflow-y-auto">
-            {/* Reference Image */}
+          <div className="w-[40%] md:w-1/3 h-full border-r border-white/5 bg-zinc-900/50 flex flex-col overflow-y-auto">
+            {/* Reference Image / Video */}
             <div className="relative h-48 md:h-2/5 shrink-0 bg-zinc-900 p-4 flex flex-col justify-center items-center">
-              <img 
-                src={targetAsana.image} 
-                alt={targetAsana.name} 
-                className="w-full h-full object-cover rounded-xl shadow-lg border border-white/10"
-              />
+              {targetAsana.videoId ? (
+                <iframe
+                  className="w-full h-full rounded-xl shadow-lg border border-white/10 pointer-events-none"
+                  src={`https://www.youtube.com/embed/${targetAsana.videoId}?autoplay=1&loop=1&playlist=${targetAsana.videoId}&mute=1&controls=0`}
+                  title={targetAsana.name}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                />
+              ) : (
+                <img 
+                  src={targetAsana.image} 
+                  alt={targetAsana.name} 
+                  className="w-full h-full object-cover rounded-xl shadow-lg border border-white/10"
+                />
+              )}
               <div className="absolute bottom-6 bg-black/70 backdrop-blur px-3 py-1.5 rounded-lg border border-white/10 text-xs font-bold text-white flex items-center gap-2">
                 <Info className="w-3.5 h-3.5 text-indigo-400" />
                 Target Reference
@@ -364,7 +373,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }
           </div>
 
           {/* RIGHT PANEL: Live Camera Tracking */}
-          <div className="w-full h-[60%] md:h-full md:w-2/3 relative flex items-center justify-center bg-black">
+          <div className="w-[60%] md:w-2/3 h-full relative flex items-center justify-center bg-black">
             {/* Ambient background glow */}
             <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 via-transparent to-purple-500/10" />
 
