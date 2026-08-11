@@ -113,6 +113,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   const [newExNotes, setNewExNotes] = useState<string>('');
 
   // Yoga State
+  const [workoutMode, setWorkoutMode] = useState<'strength' | 'yoga'>('strength');
   const [isYogaActive, setIsYogaActive] = useState<boolean>(false);
   const [yogaType, setYogaType] = useState<'flexibility' | 'mobility' | 'recovery' | 'flow'>('mobility');
   const [yogaTitle, setYogaTitle] = useState<string>('Daily Yoga Flow');
