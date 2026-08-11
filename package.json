@@ -23,6 +23,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "localtunnel": "^2.0.2"
+    "localtunnel": "^2.0.2",
+    "puppeteer": "^25.5.0",
+    "puppeteer-core": "^25.5.0"
   }
 }
