@@ -254,7 +254,7 @@ export const YogaStudio: React.FC = () => {
               </button>
             </div>
             
-            <div className="w-full max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(236,72,153,0.3)] border border-pink-500/30">
+            <div className="w-full max-w-5xl mx-4 aspect-video rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(236,72,153,0.3)] border border-pink-500/30">
               <iframe
                 className="w-full h-full"
                 src={`https://www.youtube.com/embed/${selectedZumbaVideo.videoId}?autoplay=1&rel=0&modestbranding=1`}

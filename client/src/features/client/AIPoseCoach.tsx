@@ -316,7 +316,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }
         <div className="flex-1 flex flex-col md:flex-row relative w-full h-full bg-zinc-950 overflow-hidden pt-[88px]">
           
           {/* LEFT PANEL: Reference Image & Instructions */}
-          <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-white/5 bg-zinc-900/50 flex flex-col">
+          <div className="w-full h-[40%] md:h-full md:w-1/3 border-b md:border-b-0 md:border-r border-white/5 bg-zinc-900/50 flex flex-col overflow-y-auto">
             {/* Reference Image */}
             <div className="relative h-48 md:h-2/5 shrink-0 bg-zinc-900 p-4 flex flex-col justify-center items-center">
               <img 
@@ -364,7 +364,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }
           </div>
 
           {/* RIGHT PANEL: Live Camera Tracking */}
-          <div className="w-full md:w-2/3 relative h-[60vh] md:h-full flex items-center justify-center bg-black">
+          <div className="w-full h-[60%] md:h-full md:w-2/3 relative flex items-center justify-center bg-black">
             {/* Ambient background glow */}
             <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 via-transparent to-purple-500/10" />
 
