@@ -42,7 +42,8 @@ import {
   IMuscleExercise,
   MuscleCategory,
 } from '../../types';
-import { submitDailyLog, fetchTodayLog } from '../../services/api';
+import { submitDailyLog, fetchTodayLog, joinCoach } from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
 import { ProgressRing } from '../../components/ProgressRing';
 import { LiveCameraModal } from '../../components/LiveCameraModal';
 import { VoiceFeedbackPlayer } from '../../components/VoiceFeedbackPlayer';
@@ -67,6 +68,31 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().split('T')[0]
   );
+
+  const { updateUserLocally } = useAuth();
+  const [showCoachModal, setShowCoachModal] = useState<boolean>(false);
+  const [coachCodeInput, setCoachCodeInput] = useState<string>('');
+  const [isJoiningCoach, setIsJoiningCoach] = useState<boolean>(false);
+
+  const handleJoinCoach = async () => {
+    if (!coachCodeInput.trim()) return;
+    setIsJoiningCoach(true);
+    try {
+      const res = await joinCoach(client._id, coachCodeInput.trim());
+      if (res.success && res.user) {
+        soundFx.playSuccessChime();
+        updateUserLocally(res.user);
+        setShowCoachModal(false);
+        setCoachCodeInput('');
+        alert(`Successfully connected to coach ${res.coach?.name || ''}!`);
+        window.location.reload();
+      }
+    } catch (err: any) {
+      alert(err.message || 'Invalid coach code');
+    } finally {
+      setIsJoiningCoach(false);
+    }
+  };
 
   // 1. STRENGTH TRAINING WORKOUT STATE
   const [workoutTitle, setWorkoutTitle] = useState<string>('Heavy Upper Hypertrophy');
@@ -479,6 +505,59 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             <span className="text-[10px] font-bold text-zinc-400 mt-1">4 Habits</span>
           </div>
         </div>
+
+        {/* Change Coach Button */}
+        <div className="mt-3 flex items-center justify-between bg-zinc-900/50 rounded-xl p-2 border border-zinc-800">
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center">
+              <Award className="w-3 h-3 text-indigo-400" />
+            </div>
+            <div>
+              <p className="text-[10px] text-zinc-400 uppercase tracking-wider font-bold">Assigned Coach</p>
+              <p className="text-xs font-black text-white">{client.coachName || 'None'}</p>
+            </div>
+          </div>
+          <button 
+            onClick={() => setShowCoachModal(true)}
+            className="text-xs font-bold text-emerald-400 px-3 py-1.5 rounded-lg border border-emerald-500/30 hover:bg-emerald-500/10 transition cursor-pointer"
+          >
+            {client.coachId ? 'Change Coach' : 'Connect to Coach'}
+          </button>
+        </div>
+      </div>
+
+      {/* Change Coach Modal */}
+      {showCoachModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 w-full max-w-sm relative">
+            <button 
+              onClick={() => setShowCoachModal(false)}
+              className="absolute top-4 right-4 text-zinc-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-lg font-black text-white mb-2">Connect to a Coach</h3>
+            <p className="text-xs text-zinc-400 mb-4">
+              Enter the unique invite code provided by your coach to sync your logs and receive daily feedback.
+            </p>
+            <input 
+              type="text"
+              placeholder="e.g. COACH-A1B2C3"
+              value={coachCodeInput}
+              onChange={(e) => setCoachCodeInput(e.target.value.toUpperCase())}
+              className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-sm text-white font-mono font-bold tracking-wider mb-4 placeholder-zinc-600 focus:outline-none focus:border-emerald-500 uppercase"
+            />
+            <button
+              onClick={handleJoinCoach}
+              disabled={isJoiningCoach || !coachCodeInput.trim()}
+              className="w-full py-3 rounded-xl bg-emerald-500 text-slate-950 font-black flex items-center justify-center space-x-2 disabled:opacity-50 transition cursor-pointer"
+            >
+              {isJoiningCoach ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+              <span>{isJoiningCoach ? 'Connecting...' : 'Connect Now'}</span>
+            </button>
+          </div>
+        </div>
+      )}
 
         {/* Coach Cheer Alert if available */}
         {coachCheer && (
