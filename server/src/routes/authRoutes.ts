@@ -39,7 +39,12 @@ const uploadAvatar = multer({
 // Helper to sanitize user object
 function sanitizeUser(user: IUserRecord) {
   const { passwordHash, passwordSalt, ...safeUser } = user;
-  return safeUser;
+  let coachName;
+  if (user.coachId) {
+    const coach = DurableStore.findUserById(user.coachId);
+    if (coach) coachName = coach.name;
+  }
+  return { ...safeUser, coachName };
 }
 
 // GET /api/auth/coaches - List registered coaches for client pairing

@@ -1,10 +1,12 @@
 // AuraFit Service Worker - Offline Resilience & Fast Mobile Caching
-const CACHE_NAME = 'aurafit-pwa-v2'; // Bumped version to force cache invalidation
+const CACHE_NAME = 'aurafit-pwa-v3'; // Bumped version to force cache invalidation
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
   '/icon.svg',
+  '/icon-192.png',
+  '/icon-512.png',
 ];
 
 // Install Event - Pre-cache essential static assets
