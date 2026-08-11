@@ -33,7 +33,7 @@ export const YogaStudio: React.FC = () => {
   const [selectedDuration, setSelectedDuration] = useState(300);
 
   // AI Coach State
-  const [aiCoachAsana, setAiCoachAsana] = useState<string | null>(null);
+  const [aiCoachAsana, setAiCoachAsana] = useState<{ name: string; image: string; duration: string; benefits: string } | null>(null);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -146,7 +146,7 @@ export const YogaStudio: React.FC = () => {
                     <button
                       onClick={() => {
                         soundFx.playTapSound();
-                        setAiCoachAsana(asana.name);
+                        setAiCoachAsana(asana);
                       }}
                       className="w-full py-2 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-[11px] font-bold text-indigo-400 flex items-center justify-center gap-1.5 transition active:scale-95"
                     >
