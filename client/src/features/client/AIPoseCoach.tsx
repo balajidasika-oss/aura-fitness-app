@@ -4,10 +4,11 @@ import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
 import { Camera, Activity, Maximize2, Minimize2, ScanEye, CheckCircle2, Info, ArrowLeft } from 'lucide-react';
 import { soundFx } from '../../utils/audio';
+import confetti from 'canvas-confetti';
 
 interface AIPoseCoachProps {
   onClose: () => void;
-  targetAsana: { name: string; image: string; duration: string; benefits: string; videoId?: string };
+  targetAsana: { name: string; image: string; duration: string; benefits: string };
 }
 
 // Utility to calculate angle between three points (A, B, C) where B is the vertex
@@ -318,22 +319,13 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }
           
           {/* LEFT PANEL: Reference Image & Instructions */}
           <div className="w-[40%] md:w-1/3 h-full border-r border-white/5 bg-zinc-900/50 flex flex-col overflow-y-auto">
-            {/* Reference Image / Video */}
+            {/* Reference Image */}
             <div className="relative h-48 md:h-2/5 shrink-0 bg-zinc-900 p-4 flex flex-col justify-center items-center">
-              {targetAsana.videoId ? (
-                <iframe
-                  className="w-full h-full rounded-xl shadow-lg border border-white/10 pointer-events-none"
-                  src={`https://www.youtube.com/embed/${targetAsana.videoId}?autoplay=1&loop=1&playlist=${targetAsana.videoId}&mute=1&controls=0`}
-                  title={targetAsana.name}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                />
-              ) : (
-                <img 
-                  src={targetAsana.image} 
-                  alt={targetAsana.name} 
-                  className="w-full h-full object-cover rounded-xl shadow-lg border border-white/10"
-                />
-              )}
+              <img 
+                src={targetAsana.image} 
+                alt={targetAsana.name} 
+                className="w-full h-full object-cover rounded-xl shadow-lg border border-white/10"
+              />
               <div className="absolute bottom-6 bg-black/70 backdrop-blur px-3 py-1.5 rounded-lg border border-white/10 text-xs font-bold text-white flex items-center gap-2">
                 <Info className="w-3.5 h-3.5 text-indigo-400" />
                 Target Reference
@@ -346,32 +338,44 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }
                 <Activity className="w-4 h-4 text-indigo-400" />
                 Coach's Instructions
               </h4>
-              <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20 shadow-inner">
-                  <p className="text-xs text-indigo-200 leading-relaxed">
-                    <span className="font-bold text-white block mb-1">Benefits:</span>
+                <div className="flex-1 mt-auto">
+                  <h4 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                    <Activity className="w-4 h-4 text-rose-500" /> Benefits
+                  </h4>
+                  <p className="text-sm text-zinc-400 leading-relaxed mb-6">
                     {targetAsana.benefits}
                   </p>
-                </div>
-                <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 shadow-inner">
-                  <p className="text-xs text-emerald-200 leading-relaxed">
-                    <span className="font-bold text-white block mb-1">Duration:</span>
-                    Hold for {targetAsana.duration}. Focus on deep, rhythmic breathing.
-                  </p>
-                </div>
-                
-                {/* Dynamic Alignment Guide based on pose */}
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10 shadow-inner mt-auto">
-                  <span className="font-bold text-white text-xs block mb-2">Live Alignment Guide:</span>
-                  <ul className="text-xs text-zinc-400 space-y-2 list-disc list-inside">
-                    <li>Align your body exactly like the reference image.</li>
-                    <li>Watch the neon skeleton on the right.</li>
-                    <li>Wait for the skeleton to turn green.</li>
-                  </ul>
+
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 shadow-inner mb-6">
+                    <span className="font-bold text-white text-xs block mb-2">Live Alignment Guide:</span>
+                    <ul className="text-xs text-zinc-400 space-y-2 list-disc list-inside">
+                      <li>Align your body exactly like the reference image.</li>
+                      <li>Watch the neon skeleton on the right.</li>
+                      <li>Wait for the skeleton to turn green.</li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-auto pt-4 border-t border-white/5">
+                    <button 
+                      onClick={() => {
+                        confetti({
+                          particleCount: 150,
+                          spread: 70,
+                          origin: { y: 0.6 },
+                          colors: ['#10B981', '#3B82F6', '#8B5CF6']
+                        });
+                        soundFx.playSuccessChime();
+                        setTimeout(() => onClose(), 1500);
+                      }}
+                      className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-black tracking-wide shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all active:scale-95 flex items-center justify-center gap-2"
+                    >
+                      <CheckCircle2 className="w-5 h-5" />
+                      Asana Complete!
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
           {/* RIGHT PANEL: Live Camera Tracking */}
           <div className="w-[60%] md:w-2/3 h-full relative flex items-center justify-center bg-black">
