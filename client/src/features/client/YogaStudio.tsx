@@ -4,6 +4,7 @@ import { soundFx } from '../../utils/audio';
 import { AIPoseCoach } from './AIPoseCoach';
 
 const YOGA_ASANAS = [
+  { name: 'Sun Salutation (Surya Namaskar)', benefits: 'Complete body workout. Improves circulation and flexibility.', duration: '2 Min (3 Rounds)', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400' },
   { name: 'Downward Dog (Adho Mukha Svanasana)', benefits: 'Stretches hamstrings, calves, and spine. Builds upper body strength.', duration: '60s', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400' },
   { name: 'Warrior II (Virabhadrasana II)', benefits: 'Strengthens legs and ankles. Opens hips and chest.', duration: '45s/side', image: 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&q=80&w=400' },
   { name: 'Tree Pose (Vrksasana)', benefits: 'Improves balance and focus. Strengthens thighs and core.', duration: '30s/side', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400' },
