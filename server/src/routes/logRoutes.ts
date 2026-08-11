@@ -6,8 +6,8 @@ import { DurableStore } from '../config/durableStore.js';
 
 const router = Router();
 
-// Ensure upload folders exist
-const uploadBaseDir = path.join(process.cwd(), 'uploads');
+// Ensure upload folders exist (Respect environment variables for persistent storage mounts)
+const uploadBaseDir = process.env.UPLOADS_DIR || path.join(process.cwd(), 'uploads');
 const mealsDir = path.join(uploadBaseDir, 'meals');
 const sessionsDir = path.join(uploadBaseDir, 'sessions');
 const audioDir = path.join(uploadBaseDir, 'audio');

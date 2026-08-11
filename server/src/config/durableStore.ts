@@ -62,7 +62,8 @@ export interface IDailyLogRecord {
   updatedAt: string;
 }
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+// Respect environment variables for persistent storage mounts (e.g. Render Persistent Disk)
+const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), 'data');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const LOGS_FILE = path.join(DATA_DIR, 'logs.json');
 
