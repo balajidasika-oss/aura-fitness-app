@@ -23,47 +23,31 @@ Aura Fitness is a full-stack, phone-native fitness coaching web application (Pro
 
 ---
 
-## 🚀 Permanent 24/7 Cloud Deployment Guide
+## 🚀 Infrastructure & Deployment
 
-To have this app running **permanently online 24/7** with its own permanent URL (e.g., `https://my-fitness-app.onrender.com` or `https://my-fitness-app.up.railway.app`) without needing your personal computer to stay on:
+The application is containerized and configured for modern PaaS (Platform as a Service) and IaaS environments. Multi-stage Docker builds ensure a minimal production footprint.
 
-### Option 1: Render.com (Recommended — 100% Free & Automatic)
+### Cloud Native (PaaS)
 
-1. Create a free account at [https://render.com](https://render.com).
-2. Create a new GitHub repository (e.g. `fitness-coach-app`) at [https://github.com/new](https://github.com/new).
-3. In your local project terminal, link and push your code to your GitHub repo:
-   ```bash
-   git remote add origin https://github.com/<YOUR_USERNAME>/fitness-coach-app.git
-   git branch -M main
-   git push -u origin main
-   ```
-4. On Render Dashboard:
-   - Click **New +** -> **Web Service**.
-   - Connect your `fitness-coach-app` GitHub repository.
-   - Render will auto-detect the configuration (`render.yaml` is included), or enter:
-     - **Build Command**: `npm run build`
-     - **Start Command**: `npm start`
-     - **Environment**: `Node`
-   - Click **Deploy Web Service**.
-5. Your permanent live URL will be active within 2 minutes with free SSL HTTPS enabled!
+Deployment configurations for managed platforms are included in the repository.
 
-### Option 2: Railway.app (1-Click Instant Deploy)
+#### Render
+The repository includes a `render.yaml` for infrastructure-as-code deployment on Render.
+1. Connect this repository to your Render account.
+2. The Blueprint will automatically provision the Node web service using `npm run build` and `npm start`.
 
-1. Go to [https://railway.app](https://railway.app).
-2. Click **New Project** -> **Deploy from GitHub repo**.
-3. Select your repository.
-4. Railway will automatically build and start the app using `npm run build` and `npm start`.
-5. Under service settings, click **Generate Domain** to get your permanent `.up.railway.app` URL.
+#### Railway / Heroku
+A standard `Procfile` is included for seamless integration with Heroku or Railway. Simply connect the repository to your dashboard and deploy.
 
-### Option 3: Docker Container Deployment
+### Containerization (Docker)
 
-You can run or deploy the multi-stage Docker container on any server, VPS, or cloud host:
+For custom VPS or self-hosted environments, utilize the provided multi-stage `Dockerfile`:
 
 ```bash
-# Build the Docker image
+# Build the production image
 docker build -t aura-fitness-app .
 
-# Run the container locally or on your VPS
+# Run the container (maps the persistent data volume)
 docker run -p 5000:5000 -v $(pwd)/data:/app/data aura-fitness-app
 ```
 
