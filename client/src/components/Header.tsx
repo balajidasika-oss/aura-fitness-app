@@ -30,6 +30,14 @@ export const Header: React.FC<HeaderProps> = ({
   const { currentUser, logout, activeRole } = useAuth();
   const [isMuted, setIsMuted] = useState(soundFx.getMuted());
   const [copiedCode, setCopiedCode] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+      setIsStandalone(isStandaloneMode);
+    }
+  }, []);
 
   const handleToggleMute = () => {
     const muted = soundFx.toggleMute();
@@ -120,7 +128,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {/* Install PWA Button */}
-            {onOpenPWAInstall && (
+            {onOpenPWAInstall && !isStandalone && (
               <button
                 onClick={() => {
                   soundFx.playTapSound();

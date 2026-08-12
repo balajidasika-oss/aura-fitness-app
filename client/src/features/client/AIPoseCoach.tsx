@@ -8,6 +8,7 @@ import confetti from 'canvas-confetti';
 
 interface AIPoseCoachProps {
   onClose: () => void;
+  onComplete: (asana: { name: string; duration: string }) => void;
   targetAsana: { name: string; image: string; duration: string; benefits: string };
 }
 
@@ -25,7 +26,7 @@ const calculateAngle = (
   return angle;
 };
 
-export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }) => {
+export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, targetAsana }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
@@ -365,7 +366,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, targetAsana }
                           colors: ['#10B981', '#3B82F6', '#8B5CF6']
                         });
                         soundFx.playSuccessChime();
-                        setTimeout(() => onClose(), 1500);
+                        onComplete(targetAsana);
                       }}
                       className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-black tracking-wide shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all active:scale-95 flex items-center justify-center gap-2"
                     >

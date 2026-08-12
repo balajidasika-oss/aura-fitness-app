@@ -963,7 +963,16 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
       {/* SECTION 1B: YOGA & MOBILITY */}
       {workoutMode === 'yoga' && (
-        <YogaStudio />
+        <YogaStudio 
+          onCompleteSession={(details) => {
+            setYogaType(details.type);
+            setYogaTitle(details.title);
+            setYogaDuration(details.duration);
+            if (details.videoUrl) setYogaVideoUrl(details.videoUrl);
+            setIsYogaActive(true);
+            alert(`Achievement Unlocked! Added ${details.title} to your daily log.`);
+          }}
+        />
       )}
 
       {/* SECTION 2: CLIENT DAILY VOICE NOTE (Microphone Access) */}

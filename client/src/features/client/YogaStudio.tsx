@@ -3,6 +3,11 @@ import { Play, Pause, RotateCcw, Volume2, Bell, Heart, Sparkles, Activity, Clock
 import { soundFx } from '../../utils/audio';
 import { AIPoseCoach } from './AIPoseCoach';
 
+interface YogaStudioProps {
+  onCompleteSession?: (details: { type: 'flow' | 'mobility' | 'flexibility' | 'recovery'; title: string; duration: number; videoUrl?: string }) => void;
+}
+
+
 const YOGA_ASANAS = [
   { name: 'Sun Salutation (Surya Namaskar)', benefits: 'Complete body workout. Improves circulation and flexibility.', duration: '2 Min (3 Rounds)', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400' },
   { name: 'Downward Dog (Adho Mukha Svanasana)', benefits: 'Stretches hamstrings, calves, and spine. Builds upper body strength.', duration: '60s', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400' },
@@ -16,15 +21,15 @@ const YOGA_ASANAS = [
 ];
 
 const ZUMBA_VIDEOS = [
-  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400', videoId: 'kqemoar6Tbk' },
-  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400', videoId: 'brjOFJIcdfU' },
-  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400', videoId: 'B2R8X5luvSU' },
-  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400', videoId: 'wbJxRfSZYr4' },
-  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400', videoId: 's3wZQ3B0ko4' },
-  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400', videoId: 'ZCSGRrzHS7g' },
+  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400', videoId: 'kR6Dk10915U' },
+  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400', videoId: 'F3S01J-F-80' },
+  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400', videoId: 'vV_X1-Y3-9w' },
+  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400', videoId: 'Vl8W489x20c' },
+  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400', videoId: '9_H8p-H-HjA' },
+  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400', videoId: 'QRZcZwgvbXw' },
 ];
 
-export const YogaStudio: React.FC = () => {
+export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => {
   const [activeTab, setActiveTab] = useState<'yoga' | 'meditation' | 'zumba'>('yoga');
   
   // Meditation Timer State
@@ -83,6 +88,16 @@ export const YogaStudio: React.FC = () => {
         <AIPoseCoach 
           targetAsana={aiCoachAsana} 
           onClose={() => setAiCoachAsana(null)} 
+          onComplete={(asana) => {
+            setAiCoachAsana(null);
+            if (onCompleteSession) {
+              onCompleteSession({
+                type: 'mobility',
+                title: `Yoga Asana: ${asana.name}`,
+                duration: parseInt(asana.duration) || 2
+              });
+            }
+          }}
         />
       )}
       
@@ -250,6 +265,14 @@ export const YogaStudio: React.FC = () => {
                 <button 
                   onClick={() => {
                     soundFx.playSuccessChime();
+                    if (onCompleteSession) {
+                      onCompleteSession({
+                        type: 'flow',
+                        title: `Zumba: ${selectedZumbaVideo.title}`,
+                        duration: parseInt(selectedZumbaVideo.duration) || 15,
+                        videoUrl: `https://www.youtube.com/watch?v=${selectedZumbaVideo.videoId}`
+                      });
+                    }
                     setSelectedZumbaVideo(null);
                   }}
                   className="px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-sm shadow-[0_0_15px_rgba(16,185,129,0.4)] flex items-center gap-2 transition"
