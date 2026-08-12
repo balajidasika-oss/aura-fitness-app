@@ -516,7 +516,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="mt-1 bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-emerald-500 font-medium"
+              className="mt-1 bg-white/5 border border-white/10 rounded-xl px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-emerald-500 font-medium"
             />
           </div>
 
@@ -532,7 +532,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Change Coach Button */}
-        <div className="mt-3 flex items-center justify-between bg-zinc-900/50 rounded-xl p-2 border border-zinc-800">
+        <div className="mt-3 flex items-center justify-between bg-white/5 backdrop-blur-md rounded-xl p-2 border border-white/10">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center">
               <Award className="w-3 h-3 text-indigo-400" />
@@ -551,7 +551,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Rest Day Toggle */}
-        <div className="mt-2 flex items-center justify-between bg-zinc-900/50 rounded-xl p-2 border border-zinc-800">
+        <div className="mt-2 flex items-center justify-between bg-white/5 backdrop-blur-md rounded-xl p-2 border border-white/10">
           <div className="flex items-center space-x-2">
             <div className={`w-6 h-6 rounded-full flex items-center justify-center transition ${isRestDay ? 'bg-indigo-500 text-slate-950' : 'bg-zinc-800 text-zinc-400'}`}>
               <Layers className="w-3 h-3" />
@@ -573,7 +573,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       {/* Change Coach Modal */}
       {showCoachModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 w-full max-w-sm relative">
+          <div className="bg-black/40 border border-white/10 rounded-3xl p-5 w-full max-w-sm relative">
             <button 
               onClick={() => setShowCoachModal(false)}
               className="absolute top-4 right-4 text-zinc-400 hover:text-white"
@@ -589,7 +589,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               placeholder="e.g. COACH-A1B2C3"
               value={coachCodeInput}
               onChange={(e) => setCoachCodeInput(e.target.value.toUpperCase())}
-              className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-sm text-white font-mono font-bold tracking-wider mb-4 placeholder-zinc-600 focus:outline-none focus:border-emerald-500 uppercase"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white font-mono font-bold tracking-wider mb-4 placeholder-zinc-600 focus:outline-none focus:border-emerald-500 uppercase"
             />
             <button
               onClick={handleJoinCoach}
@@ -691,7 +691,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Workout Meta: Title & Single Session Duration */}
-        <div className="grid grid-cols-2 gap-2.5 bg-zinc-950/70 p-3 rounded-2xl border border-zinc-800/80">
+        <div className="grid grid-cols-2 gap-2.5 bg-black/30 backdrop-blur-lg p-3 rounded-2xl border border-white/5">
           <div>
             <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
               Workout Focus
@@ -701,7 +701,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               value={workoutTitle}
               onChange={(e) => setWorkoutTitle(e.target.value)}
               placeholder="e.g. Chest & Shoulders"
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 font-bold"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 font-bold"
             />
           </div>
 
@@ -709,7 +709,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
               Total Duration (Mins)
             </label>
-            <div className="flex items-center space-x-1.5 bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5">
+            <div className="flex items-center space-x-1.5 bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5">
               <Timer className="w-3.5 h-3.5 text-emerald-400" />
               <input
                 type="number"
@@ -748,7 +748,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   className={`p-2 rounded-2xl border text-left transition flex flex-col justify-between relative overflow-hidden ${
                     isActive
                       ? 'bg-gradient-to-tr from-emerald-950/60 to-zinc-900 border-emerald-500/60 shadow-lg shadow-emerald-500/10 ring-1 ring-emerald-400/30'
-                      : 'bg-zinc-950/60 border-zinc-800/80 hover:border-zinc-700'
+                      : 'bg-black/20 border-white/5 hover:border-white/10'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -769,8 +769,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Active Muscle Group Exercise Roster & Reps Counter */}
-        <div className="bg-zinc-950/80 rounded-2xl border border-zinc-800 p-3.5 space-y-3">
-          <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+        <div className="bg-black/40 rounded-2xl border border-white/10 p-3.5 space-y-3">
+          <div className="flex items-center justify-between border-b border-white/10 pb-2">
             <div className="flex items-center space-x-2">
               <span className="text-lg">
                 {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.icon}
@@ -804,7 +804,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               {currentMuscleGroup.exercises.map((ex, idx) => (
                 <div
                   key={idx}
-                  className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center justify-between group"
+                  className="p-2.5 rounded-xl bg-white/10 border border-white/10 flex items-center justify-between group"
                 >
                   <div className="flex-1 pr-2">
                     <div className="flex items-center space-x-2">
@@ -850,8 +850,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       {/* Add Exercise Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-4 w-full max-w-sm space-y-3 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-4 w-full max-w-sm space-y-3 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
               <h4 className="text-xs font-black text-white flex items-center space-x-1.5">
                 <span>Add Exercise to</span>
                 <span className="text-emerald-400">
@@ -876,7 +876,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   placeholder="e.g. Incline DB Bench Press"
                   value={newExName}
                   onChange={(e) => setNewExName(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-bold"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-bold"
                 />
 
                 {/* Quick suggestions */}
@@ -903,7 +903,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                     max="20"
                     value={newExSets}
                     onChange={(e) => setNewExSets(parseInt(e.target.value, 10) || 1)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
                   />
                 </div>
 
@@ -914,7 +914,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                     value={newExReps}
                     onChange={(e) => setNewExReps(e.target.value)}
                     placeholder="8-10"
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
                   />
                 </div>
 
@@ -926,7 +926,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                     max="500"
                     value={newExWeight}
                     onChange={(e) => setNewExWeight(parseFloat(e.target.value) || 0)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -938,7 +938,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   placeholder="e.g. Clean lockout, 3s eccentric tempo"
                   value={newExNotes}
                   onChange={(e) => setNewExNotes(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
@@ -1311,7 +1311,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             </div>
           </div>
         ) : (
-          <div className="bg-zinc-950/60 rounded-2xl border border-zinc-800/80 p-4 text-center">
+          <div className="bg-black/20 rounded-2xl border border-white/5 p-4 text-center">
             <p className="text-xs text-zinc-500 font-medium">Snap your post-workout pump photo.</p>
           </div>
         )}
