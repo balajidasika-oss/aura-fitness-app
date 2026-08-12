@@ -127,7 +127,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenPWAInstall();
                 }}
                 title="Install PWA / Add to Home Screen"
-                className="hidden sm:flex p-1.5 sm:p-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-emerald-400 hover:border-emerald-500/30 transition active:scale-95"
+                className="flex p-1.5 sm:p-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-emerald-400 hover:border-emerald-500/30 transition active:scale-95"
               >
                 <Smartphone className="w-4 h-4" />
               </button>
