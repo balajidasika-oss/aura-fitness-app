@@ -977,10 +977,10 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       )}
 
       {/* SECTION 2: CLIENT DAILY VOICE NOTE (Microphone Access) */}
-      <VoiceNoteRecorder onAudioReady={handleVoiceAudioReady} coachName="Coach Kai" />
+      <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/5 shadow-2xl relative overflow-hidden mt-8"><VoiceNoteRecorder onAudioReady={handleVoiceAudioReady} coachName="Coach Kai" /></div>
 
       {/* SECTION 3: CARDIO LOGGING (Incline Walk, StairMaster, Running) */}
-      <div className="rounded-3xl bg-zinc-900/90 border border-zinc-800 p-4 space-y-3.5 shadow-xl backdrop-blur-md">
+      <div className="rounded-3xl bg-black/40 border border-white/5 p-4 space-y-3.5 shadow-2xl backdrop-blur-xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
             <div className="w-9 h-9 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
@@ -996,7 +996,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Cardio Type Switcher */}
-        <div className="grid grid-cols-3 gap-1.5 bg-zinc-950 p-1 rounded-2xl border border-zinc-800">
+        <div className="grid grid-cols-3 gap-1.5 bg-black/40 p-1 rounded-2xl border border-white/5">
           <button
             type="button"
             onClick={() => {
@@ -1044,7 +1044,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Dynamic Metric Sliders / Inputs */}
-        <div className="bg-zinc-950/70 p-3.5 rounded-2xl border border-zinc-800/80 space-y-3">
+        <div className="bg-black/40 p-3.5 rounded-2xl border border-white/5 space-y-3">
           {cardioType === 'incline_walk' && (
             <>
               <div className="flex items-center justify-between">
@@ -1069,7 +1069,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                     step="0.1"
                     value={cardioDistanceKm}
                     onChange={(e) => setCardioDistanceKm(parseFloat(e.target.value) || 0)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                    className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                   />
                 </div>
                 <div>
@@ -1078,7 +1078,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                     type="number"
                     value={cardioDurationMins}
                     onChange={(e) => setCardioDurationMins(parseInt(e.target.value, 10) || 0)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                    className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                   />
                 </div>
               </div>
@@ -1093,7 +1093,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   type="number"
                   value={stairmasterFloors}
                   onChange={(e) => setStairmasterFloors(parseInt(e.target.value, 10) || 0)}
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                 />
               </div>
               <div>
@@ -1104,7 +1104,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   max="20"
                   value={stairmasterLevel}
                   onChange={(e) => setStairmasterLevel(parseInt(e.target.value, 10) || 1)}
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                 />
               </div>
             </div>
@@ -1119,7 +1119,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   step="0.1"
                   value={cardioDistanceKm}
                   onChange={(e) => setCardioDistanceKm(parseFloat(e.target.value) || 0)}
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                 />
               </div>
               <div>
@@ -1128,7 +1128,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   type="number"
                   value={cardioDurationMins}
                   onChange={(e) => setCardioDurationMins(parseInt(e.target.value, 10) || 0)}
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                 />
               </div>
             </div>
@@ -1137,35 +1137,48 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       </div>
 
       {/* SECTION 4: NUTRITION PHOTO LOGS */}
-      <div className="rounded-3xl bg-zinc-900/90 border border-zinc-800 p-4 space-y-3.5 shadow-xl backdrop-blur-md">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-400 shadow-md">
-              <Utensils className="w-5 h-5" />
+        <div className="rounded-3xl bg-black/40 border border-white/5 p-5 space-y-4 shadow-2xl backdrop-blur-xl mt-8">
+          <div className="flex items-center justify-between border-b border-white/5 pb-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.15)]">
+                <Utensils className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-black text-white tracking-wide">Nutrition & Meals</h3>
+                <span className="text-xs text-slate-400 font-medium">
+                  Snap food photos for coach macro review
+                </span>
+              </div>
             </div>
-            <div>
-              <h3 className="text-sm font-black text-white">Nutrition & Meals</h3>
-              <span className="text-[11px] text-zinc-400 font-medium">
-                Snap food photos for coach macro review
-              </span>
+  
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  soundFx.playTapSound();
+                  alert("Scanning meal with Aura AI... \n\nEstimated Macros:\n- Calories: 450 kcal\n- Protein: 35g\n- Carbs: 45g\n- Fats: 12g\n\n(Coach will verify this result)");
+                }}
+                className="px-3 py-1.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/20 text-xs font-black flex items-center space-x-1.5 transition active:scale-95 shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>AI Scan Meal</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setCameraModalMode('meal')}
+                className="px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-black flex items-center space-x-1.5 shadow-md shadow-teal-500/20 transition active:scale-95"
+              >
+                <Camera className="w-3.5 h-3.5" />
+                <span>Snap Photo</span>
+              </button>
             </div>
           </div>
-
-          <button
-            type="button"
-            onClick={() => setCameraModalMode('meal')}
-            className="px-2.5 py-1.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-black flex items-center space-x-1 shadow-md shadow-teal-500/20 transition active:scale-95"
-          >
-            <Camera className="w-3.5 h-3.5" />
-            <span>Snap Meal</span>
-          </button>
-        </div>
 
         {/* Existing Meals Grid */}
         {meals.length > 0 ? (
           <div className="grid grid-cols-2 gap-2">
             {meals.map((m, idx) => (
-              <div key={idx} className="relative rounded-2xl overflow-hidden border border-zinc-800 aspect-video bg-zinc-950 group">
+              <div key={idx} className="relative rounded-2xl overflow-hidden border border-white/5 aspect-video bg-black/40 group">
                 <img src={m.imagePath} alt={m.caption} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
                   <span className="text-[10px] font-black uppercase text-teal-300">{m.type}</span>
@@ -1197,7 +1210,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             ))}
           </div>
         ) : (
-          <div className="bg-zinc-950/60 rounded-2xl border border-zinc-800/80 p-4 text-center">
+          <div className="bg-white/5 rounded-2xl border border-white/5 p-4 text-center">
             <p className="text-xs text-zinc-500 font-medium">No meals snapped yet today.</p>
           </div>
         )}
@@ -1205,7 +1218,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         {/* Add Meal Detail Modal */}
         {isAddingMeal && mealPreviewUrl && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="bg-zinc-950 border border-zinc-800 rounded-3xl p-5 w-full max-w-sm relative">
+            <div className="bg-black/80 border border-white/10 rounded-3xl p-5 w-full max-w-sm relative backdrop-blur-xl">
               <button 
                 onClick={() => {
                   setIsAddingMeal(false);
@@ -1221,7 +1234,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                 <span>Log Meal</span>
               </h3>
               
-              <div className="aspect-video w-full rounded-2xl overflow-hidden mb-4 border border-zinc-800">
+              <div className="aspect-video w-full rounded-2xl overflow-hidden mb-4 border border-white/5">
                 <img src={mealPreviewUrl} alt="Meal Preview" className="w-full h-full object-cover" />
               </div>
 
@@ -1231,7 +1244,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   <select
                     value={currentMealType}
                     onChange={(e) => setCurrentMealType(e.target.value as MealType)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500 font-bold"
+                    className="w-full bg-black/40 border border-white/5 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500 font-bold"
                   >
                     <option value="breakfast">Breakfast</option>
                     <option value="lunch">Lunch</option>
@@ -1247,7 +1260,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                     value={mealCaption}
                     onChange={(e) => setMealCaption(e.target.value)}
                     placeholder="e.g. 2 eggs, avocado toast (400 cal)"
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500"
+                    className="w-full bg-black/40 border border-white/5 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500"
                   />
                 </div>
 
@@ -1265,7 +1278,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       </div>
 
       {/* SECTION 5: POST-WORKOUT SELFIE */}
-      <div className="rounded-3xl bg-zinc-900/90 border border-zinc-800 p-4 space-y-3.5 shadow-xl backdrop-blur-md">
+      <div className="rounded-3xl bg-black/40 border border-white/5 p-4 space-y-3.5 shadow-2xl backdrop-blur-xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
             <div className="w-9 h-9 rounded-2xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-md">
@@ -1290,7 +1303,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {sessionPhotoUrl ? (
-          <div className="relative rounded-2xl overflow-hidden border border-zinc-800 aspect-video bg-zinc-950">
+          <div className="relative rounded-2xl overflow-hidden border border-white/5 aspect-video bg-black/40">
             <img src={sessionPhotoUrl} alt="Post session selfie" className="w-full h-full object-cover" />
             <div className="absolute top-2 right-2 bg-emerald-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full flex items-center space-x-1">
               <Check className="w-3 h-3 stroke-[3]" />
