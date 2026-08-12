@@ -80,9 +80,9 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
   };
 
   return (
-    <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-indigo-950/80 via-slate-900/95 to-slate-950 border border-[#E6E4DD] p-4 shadow-none ">
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950/80 via-slate-900/95 to-slate-950 border border-[#EAEAEE] p-4 shadow-none ">
       {/* Glow Effect */}
-      <div className="absolute -top-10 -right-10 w-36 h-36 bg-[#EAF0EA] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-10 -right-10 w-36 h-36 bg-[#F5F5F7] rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-10 -left-10 w-36 h-36 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="flex items-center justify-between relative z-10">
@@ -92,25 +92,25 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
             <img
               src={avatarUrl}
               alt={coachName}
-              className="w-12 h-12 rounded-[32px] object-cover border-2 border-[#E6E4DD] shadow-lg shadow-indigo-500/20"
+              className="w-12 h-12 rounded-2xl object-cover border-2 border-[#EAEAEE] shadow-lg shadow-indigo-500/20"
             />
             {isPlaying ? (
-              <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#EAF0EA] ring-2 ring-slate-950 animate-ping" />
+              <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#F5F5F7] ring-2 ring-slate-950 animate-ping" />
             ) : (
-              <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#EAF0EA] ring-2 ring-slate-950 flex items-center justify-center text-[8px] text-[#2D332F] font-bold">
+              <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#F5F5F7] ring-2 ring-slate-950 flex items-center justify-center text-[8px] text-black font-bold">
                 <Mic className="w-2 h-2" />
               </span>
             )}
           </div>
           <div>
             <div className="flex items-center space-x-1.5">
-              <span className="text-xs font-bold text-[#2D332F] tracking-wide">{coachName}</span>
-              <span className="bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 text-[#4A5C4F] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#E6E4DD] flex items-center space-x-1">
+              <span className="text-xs font-bold text-black tracking-wide">{coachName}</span>
+              <span className="bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 text-[#1C1C1E] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#EAEAEE] flex items-center space-x-1">
                 <Sparkles className="w-2.5 h-2.5 text-cyan-400" />
                 <span>Daily Voice Coach</span>
               </span>
             </div>
-            <p className="text-[11px] text-[#7A8277] mt-0.5">
+            <p className="text-[11px] text-[#8E8E93] mt-0.5">
               {isPlaying ? '🎙️ Speaking your daily breakdown...' : 'Tap play for today\'s audio coaching'}
             </p>
           </div>
@@ -122,7 +122,7 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
             <button
               onClick={handleReplay}
               title="Replay Audio"
-              className="p-2.5 rounded-[32px] bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition-colors"
+              className="p-2.5 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -130,9 +130,9 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
 
           <button
             onClick={handlePlayToggle}
-            className={`w-11 h-11 rounded-[32px] flex items-center justify-center font-bold text-[#2D332F] transition-all shadow-lg ${
+            className={`w-11 h-11 rounded-2xl flex items-center justify-center font-bold text-black transition-all shadow-lg ${
               isPlaying
-                ? 'bg-[#EAF0EA] hover:bg-[#EAF0EA] shadow-amber-500/30 scale-105 animate-pulse'
+                ? 'bg-[#F5F5F7] hover:bg-[#F5F5F7] shadow-amber-500/30 scale-105 animate-pulse'
                 : 'bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 hover:from-indigo-400 hover:to-cyan-400 shadow-indigo-500/30 active:scale-95'
             }`}
           >
@@ -142,7 +142,7 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
       </div>
 
       {/* Animated Sound Wave Equalizer */}
-      <div className="mt-3.5 flex items-center space-x-2 py-2 px-3 rounded-[32px] bg-slate-950/70 border border-slate-800/90 relative z-10">
+      <div className="mt-3.5 flex items-center space-x-2 py-2 px-3 rounded-2xl bg-slate-950/70 border border-slate-800/90 relative z-10">
         <Volume2 className={`w-4 h-4 ${isPlaying ? 'text-cyan-400 animate-bounce' : 'text-slate-500'}`} />
         
         <div className="flex-1 flex items-center justify-between h-5 px-2">
@@ -167,7 +167,7 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
             soundFx.playTapSound();
             setShowTranscript(!showTranscript);
           }}
-          className="text-[11px] text-[#4A5C4F] hover:text-[#4A5C4F] font-bold flex items-center space-x-1 ml-1 transition-colors px-2 py-1 rounded-lg bg-[#EAF0EA] hover:bg-[#EAF0EA] border border-[#E6E4DD]"
+          className="text-[11px] text-[#1C1C1E] hover:text-[#1C1C1E] font-bold flex items-center space-x-1 ml-1 transition-colors px-2 py-1 rounded-lg bg-[#F5F5F7] hover:bg-[#F5F5F7] border border-[#EAEAEE]"
         >
           <span>{showTranscript ? 'Hide Script' : 'Read Script'}</span>
           {showTranscript ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
@@ -176,8 +176,8 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
 
       {/* Expandable Spoken Transcript */}
       {showTranscript && (
-        <div className="mt-3 p-3.5 rounded-[32px] bg-slate-950/90 border border-[#E6E4DD] text-xs text-slate-300 leading-relaxed animate-in fade-in slide-in-from-top-1 duration-200 space-y-1.5">
-          <div className="flex items-center space-x-1.5 text-[#4A5C4F] text-[11px] font-bold uppercase tracking-wider">
+        <div className="mt-3 p-3.5 rounded-2xl bg-slate-950/90 border border-[#EAEAEE] text-xs text-slate-300 leading-relaxed animate-in fade-in slide-in-from-top-1 duration-200 space-y-1.5">
+          <div className="flex items-center space-x-1.5 text-[#1C1C1E] text-[11px] font-bold uppercase tracking-wider">
             <Sparkles className="w-3 h-3" />
             <span>Voice Coach Script</span>
           </div>

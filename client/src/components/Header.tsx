@@ -68,17 +68,17 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between h-14 sm:h-16 gap-2 sm:gap-4">
           {/* Logo & Brand */}
           <div className="flex items-center gap-2.5 flex-shrink-0">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-[32px] bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 font-bold">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-2xl bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg shadow-[#FF3B30]/20 text-slate-950 font-bold">
               <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-slate-950 text-slate-950" />
             </div>
             <div>
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="font-extrabold text-sm sm:text-base tracking-wider text-[#2D332F]">AURAFIT</span>
-                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-tight tracking-wider px-1.5 py-0.5 rounded bg-[#EAF0EA] text-[#4A5C4F] border border-[#E6E4DD]">
+                <span className="font-extrabold text-sm sm:text-base tracking-wider text-black">AURAFIT</span>
+                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-tight tracking-wider px-1.5 py-0.5 rounded bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE]">
                   {activeRole === 'coach' ? 'Coach Portal' : 'Athlete'}
                 </span>
               </div>
-              <p className="text-[10px] text-[#7A8277] hidden sm:block">Performance Habit Logger &amp; Coach OS</p>
+              <p className="text-[10px] text-[#8E8E93] hidden sm:block">Performance Habit Logger &amp; Coach OS</p>
             </div>
           </div>
 
@@ -89,34 +89,34 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={handleCopyCoachCode}
                 title="Copy Coach Invite Code to share with athletes"
-                className="hidden sm:flex items-center gap-1.5 bg-slate-900 border border-[#E6E4DD] hover:border-[#E6E4DD] rounded-[32px] px-2.5 py-1 text-xs text-[#4A5C4F] font-bold transition active:scale-95"
+                className="hidden sm:flex items-center gap-1.5 bg-slate-900 border border-[#EAEAEE] hover:border-[#EAEAEE] rounded-2xl px-2.5 py-1 text-xs text-[#1C1C1E] font-bold transition active:scale-95"
               >
                 <Award className="w-3.5 h-3.5" />
                 <span>{currentUser.coachCode}</span>
-                {copiedCode ? <Check className="w-3 h-3 text-[#4A5C4F]" /> : <Copy className="w-3 h-3 text-[#7A8277]" />}
+                {copiedCode ? <Check className="w-3 h-3 text-[#1C1C1E]" /> : <Copy className="w-3 h-3 text-[#8E8E93]" />}
               </button>
             )}
 
             {/* Active User Info */}
             {currentUser && (
-              <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-800 rounded-[32px] sm:rounded-[32px] px-2 sm:px-2.5 py-1 sm:py-1.5 shadow-sm">
+              <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-800 rounded-2xl sm:rounded-2xl px-2 sm:px-2.5 py-1 sm:py-1.5 shadow-sm">
                 <div className="relative">
                   <img
                     src={currentUser.avatarUrl}
                     alt={currentUser.name}
-                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-[#E6E4DD]"
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-[#EAEAEE]"
                   />
                   {currentUser.streak && currentUser.streak > 0 ? (
-                    <span className="absolute -bottom-1 -right-1 bg-[#EAF0EA] text-slate-950 font-bold text-[7px] sm:text-[8px] px-1 rounded-full flex items-center">
+                    <span className="absolute -bottom-1 -right-1 bg-[#F5F5F7] text-slate-950 font-bold text-[7px] sm:text-[8px] px-1 rounded-full flex items-center">
                       <Flame className="w-1.5 h-1.5 sm:w-2 sm:h-2 fill-slate-950" />
                     </span>
                   ) : null}
                 </div>
                 <div className="text-left hidden md:block">
-                  <p className="text-xs font-bold text-[#2D332F] truncate max-w-[120px]">
+                  <p className="text-xs font-bold text-black truncate max-w-[120px]">
                     {currentUser.name}
                   </p>
-                  <p className="text-[10px] text-[#7A8277] capitalize">
+                  <p className="text-[10px] text-[#8E8E93] capitalize">
                     {currentUser.role === 'coach' ? 'Coach' : `${currentUser.streak || 0}d streak`}
                   </p>
                 </div>
@@ -127,10 +127,10 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={handleToggleMute}
               title={isMuted ? 'Unmute Sound FX' : 'Mute Sound FX'}
-              className={`p-1.5 sm:p-2 rounded-[32px] border text-xs transition active:scale-95 ${
+              className={`p-1.5 sm:p-2 rounded-2xl border text-xs transition active:scale-95 ${
                 isMuted
                   ? 'bg-slate-900 text-slate-500 border-slate-800'
-                  : 'bg-slate-900 text-[#4A5C4F] border-[#E6E4DD]'
+                  : 'bg-slate-900 text-[#1C1C1E] border-[#EAEAEE]'
               }`}
             >
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -144,7 +144,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenPWAInstall();
                 }}
                 title="Install PWA / Add to Home Screen"
-                className="flex p-1.5 sm:p-2 rounded-[32px] border border-slate-800 bg-slate-900 text-slate-300 hover:text-[#4A5C4F] hover:border-[#E6E4DD] transition active:scale-95"
+                className="flex p-1.5 sm:p-2 rounded-2xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-[#1C1C1E] hover:border-[#EAEAEE] transition active:scale-95"
               >
                 <Smartphone className="w-4 h-4" />
               </button>
@@ -158,7 +158,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenLegal();
                 }}
                 title="Legal & Safety Policy"
-                className="hidden md:flex p-1.5 sm:p-2 rounded-[32px] border border-slate-800 bg-slate-900 text-slate-300 hover:text-[#4A5C4F] hover:border-[#E6E4DD] transition active:scale-95"
+                className="hidden md:flex p-1.5 sm:p-2 rounded-2xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-[#1C1C1E] hover:border-[#EAEAEE] transition active:scale-95"
               >
                 <Shield className="w-4 h-4" />
               </button>
@@ -170,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({
                 logout();
               }}
               title="Sign Out"
-              className="p-1.5 sm:p-2 rounded-[32px] border border-rose-500/30 bg-slate-900 text-rose-400 hover:bg-rose-500/10 transition active:scale-95"
+              className="p-1.5 sm:p-2 rounded-2xl border border-rose-500/30 bg-slate-900 text-rose-400 hover:bg-rose-500/10 transition active:scale-95"
             >
               <LogOut className="w-4 h-4" />
             </button>

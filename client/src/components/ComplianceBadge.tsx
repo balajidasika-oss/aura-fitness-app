@@ -19,19 +19,19 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
 }) => {
   const tierConfig = {
     green: {
-      bg: 'bg-[#EAF0EA]',
-      border: 'border-[#E6E4DD]',
-      text: 'text-[#4A5C4F]',
-      glow: 'shadow-emerald-500/20',
-      dot: 'bg-[#EAF0EA]',
+      bg: 'bg-[#F5F5F7]',
+      border: 'border-[#EAEAEE]',
+      text: 'text-[#1C1C1E]',
+      glow: 'shadow-[#FF3B30]/20',
+      dot: 'bg-[#F5F5F7]',
       label: 'High Compliance',
     },
     yellow: {
-      bg: 'bg-[#EAF0EA]',
-      border: 'border-[#E6E4DD]',
-      text: 'text-[#4A5C4F]',
+      bg: 'bg-[#F5F5F7]',
+      border: 'border-[#EAEAEE]',
+      text: 'text-[#1C1C1E]',
       glow: 'shadow-amber-500/20',
-      dot: 'bg-[#EAF0EA]',
+      dot: 'bg-[#F5F5F7]',
       label: 'Moderate',
     },
     red: {
@@ -58,18 +58,18 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
       >
         <span className={`w-2 h-2 rounded-full ${tierConfig.dot} animate-pulse`} />
         <span>{score}%</span>
-        {showDetails && <span className="font-normal text-[#7A8277] text-[11px]">· {tierConfig.label}</span>}
+        {showDetails && <span className="font-normal text-[#8E8E93] text-[11px]">· {tierConfig.label}</span>}
       </div>
 
       {/* 7-Day Mini Heatmap Dots */}
       {weeklyHistory && weeklyHistory.length > 0 && (
         <div className="flex items-center gap-1 mt-0.5" title="Last 7 Days Logging History">
           {weeklyHistory.map((day, idx) => {
-            let dotBg = 'bg-white shadow-sm border-[#E6E4DD] text-zinc-600';
+            let dotBg = 'bg-white border border-[#EAEAEE] shadow-sm border-[#EAEAEE] text-zinc-600';
             if (day.status === 'complete') {
-              dotBg = 'bg-[#EAF0EA] border-[#E6E4DD] text-[#4A5C4F]';
+              dotBg = 'bg-[#F5F5F7] border-[#EAEAEE] text-[#1C1C1E]';
             } else if (day.status === 'partial') {
-              dotBg = 'bg-[#EAF0EA] border-[#E6E4DD] text-[#4A5C4F]';
+              dotBg = 'bg-[#F5F5F7] border-[#EAEAEE] text-[#1C1C1E]';
             }
 
             return (

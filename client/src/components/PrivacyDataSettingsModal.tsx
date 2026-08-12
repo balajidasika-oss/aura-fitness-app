@@ -106,20 +106,20 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#F4F2EC]  animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md overflow-hidden rounded-[32px] bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-950 border border-[#E6E4DD] p-5 shadow-none space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#FFFFFF]  animate-in fade-in duration-200">
+      <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-950 border border-[#EAEAEE] p-5 shadow-none space-y-4">
         {/* Glow Accent */}
-        <div className="absolute top-0 right-0 w-36 h-36 bg-[#EAF0EA] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-36 h-36 bg-[#F5F5F7] rounded-full blur-3xl pointer-events-none" />
 
         {/* Top Header */}
         <div className="flex items-center justify-between relative z-10">
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-[32px] bg-[#EAF0EA] text-[#4A5C4F] flex items-center justify-center shadow-md">
+            <div className="w-8 h-8 rounded-2xl bg-[#F5F5F7] text-[#1C1C1E] flex items-center justify-center shadow-md">
               <Shield className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold tracking-tight text-[#2D332F]">GDPR Privacy & Data Controls</h3>
-              <p className="text-[10px] text-[#7A8277] font-medium">Manage and export your personal athlete data</p>
+              <h3 className="text-sm font-bold tracking-tight text-black">GDPR Privacy & Data Controls</h3>
+              <p className="text-[10px] text-[#8E8E93] font-medium">Manage and export your personal athlete data</p>
             </div>
           </div>
 
@@ -129,45 +129,45 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
               soundFx.playTapSound();
               onClose();
             }}
-            className="p-1.5 rounded-[32px] bg-white shadow-sm text-[#7A8277] hover:text-[#2D332F] transition"
+            className="p-1.5 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm text-[#8E8E93] hover:text-black transition"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* User Identity Pill */}
-        <div className="p-3 rounded-[32px] bg-white shadow-sm border border-[#E6E4DD] flex items-center space-x-3">
+        <div className="p-3 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] flex items-center space-x-3">
           <img
             src={currentUser.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'}
             alt={currentUser.name}
-            className="w-10 h-10 rounded-[32px] object-cover border border-[#E6E4DD]"
+            className="w-10 h-10 rounded-2xl object-cover border border-[#EAEAEE]"
           />
           <div className="flex-1">
-            <span className="text-xs font-bold tracking-tight text-[#2D332F] block">{currentUser.name}</span>
-            <span className="text-[10px] text-[#7A8277] font-medium">{currentUser.email}</span>
+            <span className="text-xs font-bold tracking-tight text-black block">{currentUser.name}</span>
+            <span className="text-[10px] text-[#8E8E93] font-medium">{currentUser.email}</span>
           </div>
-          <span className="text-[9px] font-bold tracking-tight uppercase tracking-wider text-[#4A5C4F] bg-[#EAF0EA] px-2 py-0.5 rounded-full border border-[#E6E4DD]">
+          <span className="text-[9px] font-bold tracking-tight uppercase tracking-wider text-[#1C1C1E] bg-[#F5F5F7] px-2 py-0.5 rounded-full border border-[#EAEAEE]">
             {currentUser.role}
           </span>
         </div>
 
         {/* Action 1: Export My Data (Right to Portability) */}
-        <div className="p-3.5 rounded-[32px] bg-white shadow-sm border border-[#E6E4DD] space-y-2">
+        <div className="p-3.5 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] space-y-2">
           <div className="flex items-center space-x-2">
-            <Download className="w-4 h-4 text-[#4A5C4F]" />
-            <h4 className="text-xs font-bold tracking-tight text-[#2D332F]">Export My Data Archive (GDPR Art. 20)</h4>
+            <Download className="w-4 h-4 text-[#1C1C1E]" />
+            <h4 className="text-xs font-bold tracking-tight text-black">Export My Data Archive (GDPR Art. 20)</h4>
           </div>
-          <p className="text-[11px] text-[#7A8277]">
+          <p className="text-[11px] text-[#8E8E93]">
             Download a full, machine-readable JSON copy of your profile, daily muscle workouts, cardio sessions, and meal history.
           </p>
           <button
             type="button"
             onClick={handleExportData}
             disabled={isExporting}
-            className="w-full py-2.5 rounded-[32px] bg-white shadow-sm hover:bg-white shadow-sm text-[#2D332F] text-xs font-bold flex items-center justify-center space-x-2 transition active:scale-98"
+            className="w-full py-2.5 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm hover:bg-white border border-[#EAEAEE] shadow-sm text-black text-xs font-bold flex items-center justify-center space-x-2 transition active:scale-98"
           >
             {exportSuccess ? (
-              <span className="flex items-center space-x-1 text-[#4A5C4F] font-bold">
+              <span className="flex items-center space-x-1 text-[#1C1C1E] font-bold">
                 <Check className="w-3.5 h-3.5" />
                 <span>Downloaded Successfully!</span>
               </span>
@@ -175,7 +175,7 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
               <span>Preparing Archive...</span>
             ) : (
               <span className="flex items-center space-x-1.5">
-                <FileSpreadsheet className="w-3.5 h-3.5 text-[#4A5C4F]" />
+                <FileSpreadsheet className="w-3.5 h-3.5 text-[#1C1C1E]" />
                 <span>Download JSON Data Archive</span>
               </span>
             )}
@@ -183,12 +183,12 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
         </div>
 
         {/* Action 2: Permanent Account Erasure (GDPR Art. 17) */}
-        <div className="p-3.5 rounded-[32px] bg-red-950/20 border border-red-500/30 space-y-2">
+        <div className="p-3.5 rounded-2xl bg-red-950/20 border border-red-500/30 space-y-2">
           <div className="flex items-center space-x-2 text-red-400">
             <Trash2 className="w-4 h-4" />
             <h4 className="text-xs font-bold tracking-tight">Right to Erasure (Delete Account)</h4>
           </div>
-          <p className="text-[11px] text-[#7A8277]">
+          <p className="text-[11px] text-[#8E8E93]">
             Permanently purge your account, all daily workout entries, cardio logs, uploaded meal photos, and voice memos. This action cannot be undone.
           </p>
 
@@ -199,27 +199,27 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
                 soundFx.playTapSound();
                 setShowDeleteConfirm(true);
               }}
-              className="w-full py-2 rounded-[32px] bg-red-950/60 hover:bg-red-900/60 text-red-300 border border-red-500/40 text-xs font-bold transition"
+              className="w-full py-2 rounded-2xl bg-red-950/60 hover:bg-red-900/60 text-red-300 border border-red-500/40 text-xs font-bold transition"
             >
               Request Account & Data Deletion
             </button>
           ) : (
             <div className="space-y-2 pt-1">
-              <div className="p-2 rounded-[32px] bg-red-950/80 border border-red-500/60 text-[11px] text-red-200">
-                Type <strong className="text-[#2D332F] font-mono font-bold tracking-tight">DELETE</strong> below to permanently erase:
+              <div className="p-2 rounded-2xl bg-red-950/80 border border-red-500/60 text-[11px] text-red-200">
+                Type <strong className="text-black font-mono font-bold tracking-tight">DELETE</strong> below to permanently erase:
               </div>
               <input
                 type="text"
                 value={deleteConfirmationText}
                 onChange={(e) => setDeleteConfirmationText(e.target.value)}
                 placeholder="Type DELETE"
-                className="w-full bg-white shadow-sm border border-red-500/40 rounded-[32px] px-3 py-1.5 text-xs text-[#2D332F] uppercase focus:outline-none focus:border-red-400 font-mono font-bold"
+                className="w-full bg-white border border-[#EAEAEE] shadow-sm border border-red-500/40 rounded-2xl px-3 py-1.5 text-xs text-black uppercase focus:outline-none focus:border-red-400 font-mono font-bold"
               />
               <div className="flex items-center space-x-2">
                 <button
                   type="button"
                   onClick={() => setShowDeleteConfirm(false)}
-                  className="flex-1 py-2 rounded-[32px] bg-white shadow-sm text-zinc-300 text-xs font-bold hover:bg-white shadow-sm transition"
+                  className="flex-1 py-2 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm text-zinc-300 text-xs font-bold hover:bg-white border border-[#EAEAEE] shadow-sm transition"
                 >
                   Cancel
                 </button>
@@ -227,7 +227,7 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
                   type="button"
                   onClick={handleDeleteAccount}
                   disabled={isDeleting}
-                  className="flex-1 py-2 rounded-[32px] bg-red-600 hover:bg-red-500 text-[#2D332F] text-xs font-bold tracking-tight shadow-lg shadow-red-600/30 transition active:scale-95 disabled:opacity-50"
+                  className="flex-1 py-2 rounded-2xl bg-red-600 hover:bg-red-500 text-black text-xs font-bold tracking-tight shadow-lg shadow-red-600/30 transition active:scale-95 disabled:opacity-50"
                 >
                   {isDeleting ? 'Deleting...' : 'Erase Forever'}
                 </button>
