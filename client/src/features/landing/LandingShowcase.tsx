@@ -88,41 +88,90 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
       {/* Main Hero & Showcase Container */}
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-16">
         {/* Hero Section */}
-        <section className="text-center max-w-3xl mx-auto space-y-6">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold shadow-inner">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-            <span>High-Performance Athlete &amp; Coach Ecosystem</span>
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center max-w-6xl mx-auto min-h-[70vh]">
+          {/* Left Column - Typography & CTA */}
+          <div className="lg:col-span-7 space-y-8 text-left">
+            <h1 className="text-5xl sm:text-7xl font-black text-white tracking-tight leading-[1.1] font-outfit">
+              Master Your <br /> Training. <br />
+              <span className="text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">
+                Direct to Your Coach
+              </span>
+            </h1>
+
+            <p className="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed">
+              AURA PRO OS is a comprehensive, high-performance fitness platform with advanced features for deep training tracking. Elevate your muscle volume progress, analyze precise metrics, and prevent plateaus with direct coach oversight.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+              <button
+                onClick={handleOpenAuth}
+                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 group"
+              >
+                <span>Get Started</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+              
+              <button
+                onClick={() => setShowPWAInstall(true)}
+                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900/50 backdrop-blur-md border border-white/10 text-slate-300 hover:text-white hover:bg-slate-800/80 font-bold text-sm transition-all"
+              >
+                Install App
+              </button>
+            </div>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
-            Master Your Training. <br />
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
-              Direct to Your Coach.
-            </span>
-          </h1>
+          {/* Right Column - Bento Box Cards */}
+          <div className="lg:col-span-5 relative h-[400px] sm:h-[500px] w-full mt-8 lg:mt-0 flex justify-center items-center perspective-1000">
+            {/* Ambient Background Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/20 blur-[100px] rounded-full pointer-events-none" />
 
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            A production-ready fitness operating system. Log muscle-by-muscle volume, track cardio incline &amp; stair climbs, record live 2-minute voice memos, verify meals, and sync seamlessly with your coach.
-          </p>
+            {/* Card 1: Voice Memo */}
+            <div className="absolute z-30 left-0 top-10 sm:left-4 sm:top-12 w-48 sm:w-56 p-4 rounded-2xl bg-slate-950/60 backdrop-blur-2xl border-t border-white/20 border-x border-b border-white/5 shadow-2xl transform hover:-translate-y-2 transition-transform duration-500">
+              <div className="flex items-center gap-2 mb-6">
+                <Mic className="w-4 h-4 text-emerald-400" />
+                <span className="text-sm font-bold text-white">Voice Memo</span>
+              </div>
+              {/* Fake Waveform */}
+              <div className="h-16 flex items-center gap-1 justify-center">
+                {[4, 8, 12, 16, 24, 16, 12, 20, 32, 16, 8, 4].map((h, i) => (
+                  <div key={i} className="w-1.5 bg-emerald-400/80 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.8)]" style={{ height: `${h}px` }} />
+                ))}
+              </div>
+              <div className="mt-6 flex justify-center gap-4">
+                <button className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/50"><ChevronRight className="w-3 h-3 rotate-180" /></button>
+                <button className="p-2 rounded-full bg-white/10 text-white"><div className="w-3 h-3 flex gap-0.5 justify-center items-center"><div className="w-1 h-2.5 bg-white rounded-sm"/><div className="w-1 h-2.5 bg-white rounded-sm"/></div></button>
+                <button className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/50"><ChevronRight className="w-3 h-3" /></button>
+              </div>
+            </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-            <button
-              onClick={handleOpenAuth}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-slate-950 font-black text-sm shadow-xl shadow-emerald-500/25 hover:brightness-110 active:scale-95 transition flex items-center justify-center space-x-2"
-            >
-              <UserPlus className="w-4 h-4" />
-              <span>Get Started Now</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            {/* Card 2: Muscle Volume */}
+            <div className="absolute z-20 right-4 sm:right-8 top-32 sm:top-24 w-52 sm:w-60 p-5 rounded-2xl bg-slate-950/60 backdrop-blur-xl border-t border-white/20 border-x border-b border-white/5 shadow-2xl transform hover:-translate-y-2 transition-transform duration-500 delay-75">
+              <span className="text-sm font-bold text-white mb-6 block">Muscle Volume</span>
+              <div className="flex items-end justify-between h-24 gap-1.5 border-b border-white/10 pb-2">
+                {[40, 30, 80, 50, 95, 60].map((val, i) => (
+                  <div key={i} className={`w-full rounded-sm ${i === 4 ? 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]' : 'bg-slate-700/50'}`} style={{ height: `${val}%` }} />
+                ))}
+              </div>
+              <div className="flex justify-between mt-2 text-[8px] text-slate-500 font-medium">
+                <span>12</span><span>06</span><span>18</span><span>22</span><span>20</span>
+              </div>
+              <p className="mt-4 text-[10px] text-slate-400 text-center">Muscle volume progress</p>
+            </div>
 
-            <button
-              onClick={() => setShowPWAInstall(true)}
-              className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-700 text-white font-bold text-sm transition active:scale-95 flex items-center justify-center space-x-2"
-            >
-              <Smartphone className="w-4 h-4 text-emerald-400" />
-              <span>Install to Phone</span>
-            </button>
+            {/* Card 3: Sync Status */}
+            <div className="absolute z-10 -right-4 sm:-right-8 bottom-10 sm:bottom-20 w-40 sm:w-48 p-6 rounded-2xl bg-slate-950/60 backdrop-blur-lg border-t border-white/20 border-x border-b border-white/5 shadow-2xl flex flex-col items-center gap-4 transform hover:-translate-y-2 transition-transform duration-500 delay-150">
+              <div className="relative">
+                <div className="absolute inset-0 bg-emerald-500/20 blur-md rounded-full" />
+                <div className="w-12 h-12 rounded-full border-2 border-white/10 flex items-center justify-center">
+                  <div className="w-8 h-8 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-emerald-400 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <span className="text-xs font-bold text-slate-300">Sync Status</span>
+            </div>
           </div>
         </section>
 
