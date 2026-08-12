@@ -21,12 +21,12 @@ const YOGA_ASANAS = [
 ];
 
 const ZUMBA_VIDEOS = [
-  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
-  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
-  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4' },
-  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
-  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4' },
-  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4' },
+  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://www.youtube.com/embed/QRZcZcgQxOk' },
+  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://www.youtube.com/embed/k78L-I6bX0U' },
+  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://www.youtube.com/embed/8DzktiJz6xM' },
+  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://www.youtube.com/embed/QRZcZcgQxOk' },
+  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://www.youtube.com/embed/k78L-I6bX0U' },
+  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://www.youtube.com/embed/8DzktiJz6xM' },
 ];
 
 export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => {
@@ -41,7 +41,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
   const [aiCoachAsana, setAiCoachAsana] = useState<{ name: string; image: string; duration: string; benefits: string } | null>(null);
 
   // Zumba Video State
-  const [selectedZumbaVideo, setSelectedZumbaVideo] = useState<{ title: string; videoId: string } | null>(null);
+  const [selectedZumbaVideo, setSelectedZumbaVideo] = useState<{ title: string; videoUrl: string; duration: string } | null>(null);
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
@@ -102,20 +102,20 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
       )}
       
       {/* Studio Header */}
-      <div className="relative z-10 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 p-5 border-b border-[#EAEAEE] ">
+      <div className="relative z-10 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 p-5 border-b border-[var(--border)] ">
         <h2 className="text-xl font-bold tracking-tight flex items-center gap-2 bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent">
-          <Sparkles className="w-5 h-5 text-[#1C1C1E] drop-shadow-none" />
+          <Sparkles className="w-5 h-5 text-gray-200 drop-shadow-none" />
           Mind & Body Studio
         </h2>
-        <p className="text-xs text-[#1C1C1E]/80 mt-1 font-medium tracking-wide">Holistic wellness, yoga, meditation, and dance.</p>
+        <p className="text-xs text-gray-200/80 mt-1 font-medium tracking-wide">Holistic wellness, yoga, meditation, and dance.</p>
       </div>
 
       {/* Tabs */}
-      <div className="relative z-10 flex border-b border-[#EAEAEE] p-2 gap-2 bg-[#FFFFFF]  shadow-inner">
+      <div className="relative z-10 flex border-b border-[var(--border)] p-2 gap-2 bg-transparent  shadow-inner">
         <button
           onClick={() => { soundFx.playTapSound(); setActiveTab('yoga'); }}
           className={`flex-1 py-2.5 rounded-2xl text-[11px] font-bold tracking-tight transition-all duration-300 flex items-center justify-center gap-1.5 ${
-            activeTab === 'yoga' ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE] shadow-none' : 'text-[#8E8E93] hover:bg-white border border-[#EAEAEE] shadow-sm'
+            activeTab === 'yoga' ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)] shadow-none' : 'text-[#8E8E93] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
           }`}
         >
           <Activity className="w-3.5 h-3.5" /> Yoga Asanas
@@ -123,7 +123,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         <button
           onClick={() => { soundFx.playTapSound(); setActiveTab('meditation'); }}
           className={`flex-1 py-2.5 rounded-2xl text-[11px] font-bold tracking-tight transition-all duration-300 flex items-center justify-center gap-1.5 ${
-            activeTab === 'meditation' ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE] shadow-none' : 'text-[#8E8E93] hover:bg-white border border-[#EAEAEE] shadow-sm'
+            activeTab === 'meditation' ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)] shadow-none' : 'text-[#8E8E93] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
           }`}
         >
           <Clock className="w-3.5 h-3.5" /> Meditation
@@ -131,7 +131,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         <button
           onClick={() => { soundFx.playTapSound(); setActiveTab('zumba'); }}
           className={`flex-1 py-2.5 rounded-2xl text-[11px] font-bold tracking-tight transition-all duration-300 flex items-center justify-center gap-1.5 ${
-            activeTab === 'zumba' ? 'bg-pink-500/30 text-pink-300 border border-pink-500/40 shadow-none' : 'text-[#8E8E93] hover:bg-white border border-[#EAEAEE] shadow-sm'
+            activeTab === 'zumba' ? 'bg-pink-500/30 text-pink-300 border border-pink-500/40 shadow-none' : 'text-[#8E8E93] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
           }`}
         >
           <Heart className="w-3.5 h-3.5" /> Zumba Class
@@ -148,25 +148,25 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {YOGA_ASANAS.map((asana, idx) => (
-                <div key={idx} className="glass-panel rounded-2xl overflow-hidden group hover:border-[#EAEAEE] hover:-translate-y-1 transition-all duration-300 hover:shadow-none">
-                  <div className="h-36 bg-white border border-[#EAEAEE] shadow-sm relative overflow-hidden">
+                <div key={idx} className="glass-panel rounded-2xl overflow-hidden group hover:border-[var(--border)] hover:-translate-y-1 transition-all duration-300 hover:shadow-none">
+                  <div className="h-36 bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] relative overflow-hidden">
                     <img src={asana.image} alt={asana.name} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                     <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                      <div className="text-[10px] font-bold tracking-tight bg-[#F5F5F7] text-black px-2 py-0.5 rounded shadow-none">
+                      <div className="text-[10px] font-bold tracking-tight bg-[var(--surface)] text-white px-2 py-0.5 rounded shadow-none">
                         {asana.duration}
                       </div>
                     </div>
                   </div>
                   <div className="p-4 space-y-2">
-                    <h4 className="text-sm font-bold tracking-tight text-black group-hover:text-[#1C1C1E] transition-colors">{asana.name}</h4>
+                    <h4 className="text-sm font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors">{asana.name}</h4>
                     <p className="text-[11px] text-[#8E8E93] leading-relaxed min-h-[40px]">{asana.benefits}</p>
                     <button
                       onClick={() => {
                         soundFx.playTapSound();
                         setAiCoachAsana(asana);
                       }}
-                      className="w-full py-2 rounded-2xl bg-[#F5F5F7] hover:bg-[#F5F5F7] border border-[#EAEAEE] text-[11px] font-bold text-[#1C1C1E] flex items-center justify-center gap-1.5 transition active:scale-95"
+                      className="w-full py-2 rounded-2xl bg-[var(--surface)] hover:bg-[var(--surface)] border border-[var(--border)] text-[11px] font-bold text-gray-200 flex items-center justify-center gap-1.5 transition active:scale-95"
                     >
                       <ScanEye className="w-3.5 h-3.5" />
                       Start AI Coach
@@ -182,33 +182,33 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         {activeTab === 'meditation' && (
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300 text-center py-4">
             <div className="space-y-2">
-              <h3 className="text-lg font-bold tracking-tight text-black">Guided Silent Meditation</h3>
+              <h3 className="text-lg font-bold tracking-tight text-white">Guided Silent Meditation</h3>
               <p className="text-xs text-[#8E8E93]">Clear your mind. A bell will sound when your session ends.</p>
             </div>
             
             <div className="relative w-48 h-48 mx-auto flex items-center justify-center">
-              <div className={`absolute inset-0 rounded-full border-4 border-[#EAEAEE] ${isMeditating ? 'animate-pulse border-[#EAEAEE]' : ''}`} />
-              <div className="text-5xl font-bold tracking-tight text-black tabular-nums tracking-tighter">
+              <div className={`absolute inset-0 rounded-full border-4 border-[var(--border)] ${isMeditating ? 'animate-pulse border-[var(--border)]' : ''}`} />
+              <div className="text-5xl font-bold tracking-tight text-white tabular-nums tracking-tighter">
                 {formatTime(meditationTimeRemaining)}
               </div>
             </div>
 
             <div className="flex justify-center gap-3">
-              <button onClick={() => changeDuration(3)} className="px-3 py-1.5 rounded-lg bg-white border border-[#EAEAEE] shadow-sm hover:bg-white border border-[#EAEAEE] shadow-sm text-xs font-bold text-zinc-300">3 Min</button>
-              <button onClick={() => changeDuration(5)} className="px-3 py-1.5 rounded-lg bg-white border border-[#EAEAEE] shadow-sm hover:bg-white border border-[#EAEAEE] shadow-sm text-xs font-bold text-zinc-300">5 Min</button>
-              <button onClick={() => changeDuration(10)} className="px-3 py-1.5 rounded-lg bg-white border border-[#EAEAEE] shadow-sm hover:bg-white border border-[#EAEAEE] shadow-sm text-xs font-bold text-zinc-300">10 Min</button>
+              <button onClick={() => changeDuration(3)} className="px-3 py-1.5 rounded-lg bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-xs font-bold text-zinc-300">3 Min</button>
+              <button onClick={() => changeDuration(5)} className="px-3 py-1.5 rounded-lg bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-xs font-bold text-zinc-300">5 Min</button>
+              <button onClick={() => changeDuration(10)} className="px-3 py-1.5 rounded-lg bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-xs font-bold text-zinc-300">10 Min</button>
             </div>
 
             <div className="flex justify-center gap-4 pt-4">
               <button
                 onClick={toggleMeditation}
-                className="w-14 h-14 rounded-full bg-[#F5F5F7] hover:bg-[#F5F5F7] text-black flex items-center justify-center shadow-lg shadow-purple-500/20 transition active:scale-95"
+                className="w-14 h-14 rounded-full bg-[var(--surface)] hover:bg-[var(--surface)] text-white flex items-center justify-center shadow-lg shadow-purple-500/20 transition active:scale-95"
               >
                 {isMeditating ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
               </button>
               <button
                 onClick={resetMeditation}
-                className="w-14 h-14 rounded-full bg-white border border-[#EAEAEE] shadow-sm hover:bg-white border border-[#EAEAEE] shadow-sm text-zinc-300 flex items-center justify-center transition active:scale-95"
+                className="w-14 h-14 rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-zinc-300 flex items-center justify-center transition active:scale-95"
               >
                 <RotateCcw className="w-5 h-5" />
               </button>
@@ -228,20 +228,20 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
                   key={video.id} 
                   onClick={() => {
                     soundFx.playTapSound();
-                    setSelectedZumbaVideo({ title: video.title, videoId: video.videoId });
+                    setSelectedZumbaVideo({ title: video.title, videoUrl: video.videoUrl, duration: video.duration });
                   }}
                   className="flex items-center p-2.5 rounded-2xl glass-panel hover:border-pink-500/40 hover:-translate-x-1 hover:shadow-none transition-all duration-300 group cursor-pointer"
                 >
                   <div className="w-28 h-20 rounded-2xl overflow-hidden relative shrink-0">
                     <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
-                    <div className="absolute inset-0 flex items-center justify-center bg-[#FFFFFF] group-hover:bg-[#FFFFFF] transition-colors">
+                    <div className="absolute inset-0 flex items-center justify-center bg-transparent group-hover:bg-transparent transition-colors">
                       <div className="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center shadow-none group-hover:scale-110 transition-transform">
-                        <Play className="w-4 h-4 text-black ml-0.5" />
+                        <Play className="w-4 h-4 text-white ml-0.5" />
                       </div>
                     </div>
                   </div>
                   <div className="ml-4 flex-1">
-                    <h4 className="text-sm font-bold tracking-tight text-black group-hover:text-pink-300 transition-colors">{video.title}</h4>
+                    <h4 className="text-sm font-bold tracking-tight text-white group-hover:text-pink-300 transition-colors">{video.title}</h4>
                     <span className="text-[10px] text-pink-400 font-bold tracking-tight bg-pink-500/10 border border-pink-500/20 px-2 py-0.5 rounded mt-2 inline-block">
                       {video.duration}
                     </span>
@@ -253,10 +253,10 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         )}
         {/* PREMIUM VIDEO OVERLAY */}
         {selectedZumbaVideo && (
-          <div className="fixed inset-0 z-[200] bg-[#FFFFFF] backdrop-blur-3xl flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-500">
+          <div className="fixed inset-0 z-[200] bg-transparent backdrop-blur-3xl flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-500">
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-              <div className="bg-white border border-[#EAEAEE] shadow-sm  px-4 py-2 rounded-2xl border border-[#EAEAEE]">
-                <h3 className="text-black font-bold tracking-tight tracking-wide text-sm flex items-center gap-2">
+              <div className="bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]  px-4 py-2 rounded-2xl border border-[var(--border)]">
+                <h3 className="text-white font-bold tracking-tight tracking-wide text-sm flex items-center gap-2">
                   <Play className="w-4 h-4 text-pink-500 fill-pink-500" />
                   {selectedZumbaVideo.title}
                 </h3>
@@ -275,14 +275,14 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
                     }
                     setSelectedZumbaVideo(null);
                   }}
-                  className="px-4 py-2 rounded-full bg-[#F5F5F7] hover:bg-[#F5F5F7] text-black font-bold text-sm shadow-none flex items-center gap-2 transition"
+                  className="px-4 py-2 rounded-full bg-[var(--surface)] hover:bg-[var(--surface)] text-white font-bold text-sm shadow-none flex items-center gap-2 transition"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   Complete Zumba
                 </button>
                 <button 
                   onClick={() => setSelectedZumbaVideo(null)}
-                  className="px-4 py-2 rounded-full bg-white border border-[#EAEAEE] shadow-sm hover:bg-rose-500/20 text-black hover:text-rose-400 border border-[#EAEAEE] flex items-center justify-center gap-2 transition"
+                  className="px-4 py-2 rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] hover:bg-rose-500/20 text-white hover:text-rose-400 border border-[var(--border)] flex items-center justify-center gap-2 transition"
                 >
                   <ArrowLeft className="w-5 h-5" />
                   <span className="font-bold text-sm">Back</span>
@@ -291,12 +291,12 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
             </div>
             
             <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden shadow-none border border-pink-500/30 mt-16 bg-black relative">
-              <video
+              <iframe
                 className="w-full h-full object-contain"
-                src={selectedZumbaVideo.videoUrl}
-                controls
-                autoPlay
-                controlsList="nodownload"
+                src={`${selectedZumbaVideo.videoUrl}?autoplay=1`}
+                title={selectedZumbaVideo.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
               />
             </div>
           </div>

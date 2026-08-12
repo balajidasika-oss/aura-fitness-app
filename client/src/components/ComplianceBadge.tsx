@@ -19,19 +19,19 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
 }) => {
   const tierConfig = {
     green: {
-      bg: 'bg-[#F5F5F7]',
-      border: 'border-[#EAEAEE]',
-      text: 'text-[#1C1C1E]',
+      bg: 'bg-[var(--surface)]',
+      border: 'border-[var(--border)]',
+      text: 'text-gray-200',
       glow: 'shadow-[#FF3B30]/20',
-      dot: 'bg-[#F5F5F7]',
+      dot: 'bg-[var(--surface)]',
       label: 'High Compliance',
     },
     yellow: {
-      bg: 'bg-[#F5F5F7]',
-      border: 'border-[#EAEAEE]',
-      text: 'text-[#1C1C1E]',
+      bg: 'bg-[var(--surface)]',
+      border: 'border-[var(--border)]',
+      text: 'text-gray-200',
       glow: 'shadow-amber-500/20',
-      dot: 'bg-[#F5F5F7]',
+      dot: 'bg-[var(--surface)]',
       label: 'Moderate',
     },
     red: {
@@ -54,7 +54,7 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
     <div className="flex flex-col gap-1.5">
       {/* Pill Badge */}
       <div
-        className={`inline-flex items-center gap-1.5 rounded-full border font-semibold shadow-sm ${tierConfig.bg} ${tierConfig.border} ${tierConfig.text} ${tierConfig.glow} ${sizeClasses} w-fit`}
+        className={`inline-flex items-center gap-1.5 rounded-full border font-semibold shadow-[0_4px_20px_rgba(0,0,0,0.2)] ${tierConfig.bg} ${tierConfig.border} ${tierConfig.text} ${tierConfig.glow} ${sizeClasses} w-fit`}
       >
         <span className={`w-2 h-2 rounded-full ${tierConfig.dot} animate-pulse`} />
         <span>{score}%</span>
@@ -65,11 +65,11 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
       {weeklyHistory && weeklyHistory.length > 0 && (
         <div className="flex items-center gap-1 mt-0.5" title="Last 7 Days Logging History">
           {weeklyHistory.map((day, idx) => {
-            let dotBg = 'bg-white border border-[#EAEAEE] shadow-sm border-[#EAEAEE] text-zinc-600';
+            let dotBg = 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border-[var(--border)] text-zinc-600';
             if (day.status === 'complete') {
-              dotBg = 'bg-[#F5F5F7] border-[#EAEAEE] text-[#1C1C1E]';
+              dotBg = 'bg-[var(--surface)] border-[var(--border)] text-gray-200';
             } else if (day.status === 'partial') {
-              dotBg = 'bg-[#F5F5F7] border-[#EAEAEE] text-[#1C1C1E]';
+              dotBg = 'bg-[var(--surface)] border-[var(--border)] text-gray-200';
             }
 
             return (

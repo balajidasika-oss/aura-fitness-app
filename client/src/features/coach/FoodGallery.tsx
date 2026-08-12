@@ -25,8 +25,8 @@ export const FoodGallery: React.FC<FoodGalleryProps> = ({ mealsWithDates }) => {
             onClick={() => setSelectedFilter(filter)}
             className={`text-xs font-semibold px-3 py-1.5 rounded-2xl capitalize transition ${
               selectedFilter === filter
-                ? 'bg-[#F5F5F7] text-zinc-950 font-bold shadow-sm shadow-[#FF3B30]/30'
-                : 'bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] text-[#8E8E93] hover:text-zinc-200'
+                ? 'bg-[var(--surface)] text-zinc-950 font-bold shadow-[0_4px_20px_rgba(0,0,0,0.2)] shadow-[#FF3B30]/30'
+                : 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] text-[#8E8E93] hover:text-zinc-200'
             }`}
           >
             {filter === 'all' ? `All Meals (${mealsWithDates.length})` : filter}
@@ -36,7 +36,7 @@ export const FoodGallery: React.FC<FoodGalleryProps> = ({ mealsWithDates }) => {
 
       {/* Grid of Food Images */}
       {filteredMeals.length === 0 ? (
-        <div className="bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] rounded-2xl p-8 text-center">
+        <div className="bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] rounded-2xl p-8 text-center">
           <Utensils className="w-8 h-8 text-zinc-600 mx-auto mb-2" />
           <p className="text-sm font-semibold text-[#8E8E93]">No meal photos logged for this filter</p>
           <p className="text-xs text-zinc-600 mt-1">Meals logged by the client will appear here in high-res</p>
@@ -47,7 +47,7 @@ export const FoodGallery: React.FC<FoodGalleryProps> = ({ mealsWithDates }) => {
             <div
               key={index}
               onClick={() => setZoomedImage({ url: meal.imagePath, caption: meal.caption, date, type: meal.type })}
-              className="group relative aspect-square rounded-2xl overflow-hidden border border-[#EAEAEE] bg-white border border-[#EAEAEE] shadow-sm cursor-pointer hover:border-[#EAEAEE] transition-all duration-300 shadow-sm"
+              className="group relative aspect-square rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] cursor-pointer hover:border-[var(--border)] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
             >
               <img
                 src={meal.imagePath}
@@ -58,12 +58,12 @@ export const FoodGallery: React.FC<FoodGalleryProps> = ({ mealsWithDates }) => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
 
               {/* Tag Badge */}
-              <span className="absolute top-2 left-2 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-[#FFFFFF] text-[#1C1C1E] border border-[#EAEAEE] backdrop-blur">
+              <span className="absolute top-2 left-2 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-transparent text-gray-200 border border-[var(--border)] backdrop-blur">
                 {meal.type}
               </span>
 
               {/* Zoom Icon on Hover */}
-              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#FFFFFF] p-1 rounded-md text-black">
+              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-transparent p-1 rounded-md text-white">
                 <Maximize2 className="w-3.5 h-3.5" />
               </div>
 
@@ -86,23 +86,23 @@ export const FoodGallery: React.FC<FoodGalleryProps> = ({ mealsWithDates }) => {
       {zoomedImage && (
         <div
           onClick={() => setZoomedImage(null)}
-          className="fixed inset-0 z-50 bg-[#FFFFFF]  flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-transparent  flex items-center justify-center p-4"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-2xl w-full bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] rounded-2xl overflow-hidden shadow-none"
+            className="relative max-w-2xl w-full bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-none"
           >
             <button
               onClick={() => setZoomedImage(null)}
-              className="absolute top-3 right-3 z-10 bg-[#FFFFFF] hover:bg-black p-2 rounded-full text-zinc-300 hover:text-black transition"
+              className="absolute top-3 right-3 z-10 bg-transparent hover:bg-black p-2 rounded-full text-zinc-300 hover:text-white transition"
             >
               <X className="w-5 h-5" />
             </button>
             <img src={zoomedImage.url} alt="Enlarged meal" className="w-full max-h-[65vh] object-cover" />
-            <div className="p-4 bg-white border border-[#EAEAEE] shadow-sm flex items-center justify-between border-t border-[#EAEAEE]">
+            <div className="p-4 bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] flex items-center justify-between border-t border-[var(--border)]">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold uppercase text-[#1C1C1E] bg-[#F5F5F7] px-2 py-0.5 rounded border border-[#EAEAEE]">
+                  <span className="text-xs font-bold uppercase text-gray-200 bg-[var(--surface)] px-2 py-0.5 rounded border border-[var(--border)]">
                     {zoomedImage.type}
                   </span>
                   <span className="text-xs text-[#8E8E93]">{zoomedImage.date}</span>

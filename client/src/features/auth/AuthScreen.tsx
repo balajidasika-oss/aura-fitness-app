@@ -171,15 +171,15 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
     <div className={`w-full max-w-xl mx-auto ${isModal ? 'p-0' : 'p-4 sm:p-6'}`}>
       <div className="bg-slate-900/90 backdrop-blur-2xl border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-none relative overflow-hidden">
         {/* Ambient Top Glow */}
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-40 bg-[#F5F5F7] blur-3xl pointer-events-none rounded-full" />
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-40 bg-[var(--surface)] blur-3xl pointer-events-none rounded-full" />
 
         {/* Header Branding */}
         <div className="text-center mb-8 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F5F5F7] border border-[#EAEAEE] text-[#1C1C1E] text-xs font-semibold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--surface)] border border-[var(--border)] text-gray-200 text-xs font-semibold uppercase tracking-wider mb-3">
             <Zap className="w-3.5 h-3.5" />
             <span>Aura Fitness OS</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-black tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white tracking-tight">
             {mode === 'login' ? 'Sign In to Your Account' : 'Create Your Aura Profile'}
           </h2>
           <p className="text-sm text-[#8E8E93] mt-1 max-w-sm mx-auto">
@@ -200,8 +200,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
             }}
             className={`flex-1 py-2.5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
               mode === 'login'
-                ? 'bg-[#F5F5F7] text-slate-950 shadow-lg shadow-[#FF3B30]/20 font-bold tracking-tight'
-                : 'text-[#8E8E93] hover:text-black'
+                ? 'bg-[var(--surface)] text-white shadow-lg shadow-[#FF3B30]/20 font-bold tracking-tight'
+                : 'text-[#8E8E93] hover:text-white'
             }`}
           >
             <LogIn className="w-4 h-4" />
@@ -216,8 +216,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
             }}
             className={`flex-1 py-2.5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
               mode === 'register'
-                ? 'bg-[#F5F5F7] text-slate-950 shadow-lg shadow-[#FF3B30]/20 font-bold tracking-tight'
-                : 'text-[#8E8E93] hover:text-black'
+                ? 'bg-[var(--surface)] text-white shadow-lg shadow-[#FF3B30]/20 font-bold tracking-tight'
+                : 'text-[#8E8E93] hover:text-white'
             }`}
           >
             <UserPlus className="w-4 h-4" />
@@ -233,7 +233,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
               <div className="font-bold text-rose-200">Attention Needed</div>
               <div>{errorMsg}</div>
             </div>
-            <button onClick={() => setErrorMsg(null)} className="text-rose-400 hover:text-black">
+            <button onClick={() => setErrorMsg(null)} className="text-rose-400 hover:text-white">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -254,7 +254,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   placeholder="your.email@domain.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-black placeholder-slate-500 text-sm focus:outline-none focus:border-[#EAEAEE] focus:ring-1 focus:ring-emerald-500 transition-colors"
+                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[var(--border)] focus:ring-1 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
@@ -273,7 +273,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-12 py-3.5 text-black placeholder-slate-500 text-sm focus:outline-none focus:border-[#EAEAEE] focus:ring-1 focus:ring-emerald-500 transition-colors"
+                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-12 py-3.5 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[var(--border)] focus:ring-1 focus:ring-emerald-500 transition-colors"
                 />
                 <button
                   type="button"
@@ -288,7 +288,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-emerald-300 text-slate-950 font-bold tracking-tight text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-none shadow-[#FF3B30]/25 transition-all transform active:scale-98 disabled:opacity-50 mt-2"
+              className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-emerald-300 text-white font-bold tracking-tight text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-none shadow-[#FF3B30]/25 transition-all transform active:scale-98 disabled:opacity-50 mt-2"
             >
               {isSubmitting ? (
                 <>
@@ -308,7 +308,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
               <button
                 type="button"
                 onClick={() => setMode('register')}
-                className="text-xs font-bold text-[#1C1C1E] hover:underline"
+                className="text-xs font-bold text-gray-200 hover:underline"
               >
                 Create one now
               </button>
@@ -333,13 +333,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   }}
                   className={`p-3.5 rounded-2xl border flex items-center gap-3 transition-all text-left ${
                     selectedRole === 'client'
-                      ? 'bg-[#F5F5F7] border-[#EAEAEE] text-black shadow-lg shadow-[#FF3B30]/10'
+                      ? 'bg-[var(--surface)] border-[var(--border)] text-white shadow-lg shadow-[#FF3B30]/10'
                       : 'bg-slate-950/60 border-slate-800 text-[#8E8E93] hover:border-slate-700'
                   }`}
                 >
                   <div
                     className={`w-9 h-9 rounded-2xl flex items-center justify-center ${
-                      selectedRole === 'client' ? 'bg-[#F5F5F7] text-slate-950 font-bold' : 'bg-slate-800 text-[#8E8E93]'
+                      selectedRole === 'client' ? 'bg-[var(--surface)] text-white font-bold' : 'bg-slate-800 text-[#8E8E93]'
                     }`}
                   >
                     <Dumbbell className="w-5 h-5" />
@@ -358,13 +358,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   }}
                   className={`p-3.5 rounded-2xl border flex items-center gap-3 transition-all text-left ${
                     selectedRole === 'coach'
-                      ? 'bg-[#F5F5F7] border-[#EAEAEE] text-black shadow-lg shadow-[#FF3B30]/10'
+                      ? 'bg-[var(--surface)] border-[var(--border)] text-white shadow-lg shadow-[#FF3B30]/10'
                       : 'bg-slate-950/60 border-slate-800 text-[#8E8E93] hover:border-slate-700'
                   }`}
                 >
                   <div
                     className={`w-9 h-9 rounded-2xl flex items-center justify-center ${
-                      selectedRole === 'coach' ? 'bg-[#F5F5F7] text-slate-950 font-bold' : 'bg-slate-800 text-[#8E8E93]'
+                      selectedRole === 'coach' ? 'bg-[var(--surface)] text-white font-bold' : 'bg-slate-800 text-[#8E8E93]'
                     }`}
                   >
                     <Award className="w-5 h-5" />
@@ -383,7 +383,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                 Profile Photo (Optional)
               </label>
               <div className="flex items-center gap-4 p-3 bg-slate-950/60 border border-slate-800 rounded-2xl">
-                <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-800 border-2 border-[#EAEAEE] shrink-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-800 border-2 border-[var(--border)] shrink-0 flex items-center justify-center">
                   {avatarPreview ? (
                     <img src={avatarPreview} alt="Avatar Preview" className="w-full h-full object-cover" />
                   ) : (
@@ -398,7 +398,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                       onClick={() => fileInputRef.current?.click()}
                       className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-colors"
                     >
-                      <Upload className="w-3.5 h-3.5 text-[#1C1C1E]" />
+                      <Upload className="w-3.5 h-3.5 text-gray-200" />
                       <span>Choose File</span>
                     </button>
                     <button
@@ -406,7 +406,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                       onClick={() => setIsCameraOpen(true)}
                       className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-colors"
                     >
-                      <Camera className="w-3.5 h-3.5 text-[#1C1C1E]" />
+                      <Camera className="w-3.5 h-3.5 text-gray-200" />
                       <span>Take Photo</span>
                     </button>
                     <input
@@ -434,7 +434,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   placeholder="e.g. Sarah Jenkins"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-black placeholder-slate-500 text-sm focus:outline-none focus:border-[#EAEAEE] focus:ring-1 focus:ring-emerald-500 transition-colors"
+                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[var(--border)] focus:ring-1 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
@@ -452,7 +452,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   placeholder="your.email@domain.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-black placeholder-slate-500 text-sm focus:outline-none focus:border-[#EAEAEE] focus:ring-1 focus:ring-emerald-500 transition-colors"
+                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[var(--border)] focus:ring-1 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
@@ -470,7 +470,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   placeholder="Create a strong password (6+ chars)"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-12 py-3.5 text-black placeholder-slate-500 text-sm focus:outline-none focus:border-[#EAEAEE] focus:ring-1 focus:ring-emerald-500 transition-colors"
+                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-12 py-3.5 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[var(--border)] focus:ring-1 focus:ring-emerald-500 transition-colors"
                 />
                 <button
                   type="button"
@@ -498,7 +498,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   }
                   value={fitnessGoal}
                   onChange={(e) => setFitnessGoal(e.target.value)}
-                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-black placeholder-slate-500 text-sm focus:outline-none focus:border-[#EAEAEE] focus:ring-1 focus:ring-emerald-500 transition-colors"
+                  className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[var(--border)] focus:ring-1 focus:ring-emerald-500 transition-colors"
                 />
               </div>
             </div>
@@ -516,7 +516,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                     placeholder="e.g. COACH-ALEX-8392"
                     value={coachCode}
                     onChange={(e) => setCoachCode(e.target.value.toUpperCase())}
-                    className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-black placeholder-slate-500 text-sm uppercase tracking-wider focus:outline-none focus:border-[#EAEAEE] focus:ring-1 focus:ring-emerald-500 transition-colors"
+                    className="w-full bg-slate-950/80 border border-slate-700/80 rounded-2xl pl-12 pr-4 py-3.5 text-white placeholder-slate-500 text-sm uppercase tracking-wider focus:outline-none focus:border-[var(--border)] focus:ring-1 focus:ring-emerald-500 transition-colors"
                   />
                 </div>
                 {availableCoaches.length > 0 && (
@@ -527,7 +527,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                         key={c._id}
                         type="button"
                         onClick={() => setCoachCode(c.coachCode || '')}
-                        className="inline-block text-[#1C1C1E] hover:underline mr-2"
+                        className="inline-block text-gray-200 hover:underline mr-2"
                       >
                         {c.name} ({c.coachCode || 'No Code'})
                       </button>
@@ -544,7 +544,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   type="checkbox"
                   checked={legalAgreed}
                   onChange={(e) => setLegalAgreed(e.target.checked)}
-                  className="w-5 h-5 rounded-lg border-slate-700 text-[#1C1C1E] focus:ring-emerald-500 bg-slate-900 mt-0.5"
+                  className="w-5 h-5 rounded-lg border-slate-700 text-gray-200 focus:ring-emerald-500 bg-slate-900 mt-0.5"
                 />
                 <span className="text-xs text-slate-300 leading-relaxed">
                   I agree to the{' '}
@@ -555,7 +555,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                       setLegalInitialTab('parq');
                       setIsLegalOpen(true);
                     }}
-                    className="text-[#1C1C1E] underline font-semibold"
+                    className="text-gray-200 underline font-semibold"
                   >
                     PAR-Q Health Readiness
                   </button>
@@ -567,7 +567,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                       setLegalInitialTab('liability');
                       setIsLegalOpen(true);
                     }}
-                    className="text-[#1C1C1E] underline font-semibold"
+                    className="text-gray-200 underline font-semibold"
                   >
                     Liability Waiver
                   </button>{' '}
@@ -579,7 +579,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                       setLegalInitialTab('privacy');
                       setIsLegalOpen(true);
                     }}
-                    className="text-[#1C1C1E] underline font-semibold"
+                    className="text-gray-200 underline font-semibold"
                   >
                     Privacy Policy
                   </button>
@@ -592,7 +592,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-emerald-300 text-slate-950 font-bold tracking-tight text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-none shadow-[#FF3B30]/25 transition-all transform active:scale-98 disabled:opacity-50"
+              className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-emerald-300 text-white font-bold tracking-tight text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-none shadow-[#FF3B30]/25 transition-all transform active:scale-98 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
@@ -612,7 +612,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
               <button
                 type="button"
                 onClick={() => setMode('login')}
-                className="text-xs font-bold text-[#1C1C1E] hover:underline"
+                className="text-xs font-bold text-gray-200 hover:underline"
               >
                 Sign in here
               </button>

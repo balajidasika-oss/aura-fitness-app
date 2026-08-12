@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
+import '@tensorflow/tfjs-converter';
 import { Camera, Activity, Maximize2, Minimize2, ScanEye, CheckCircle2, Info, ArrowLeft } from 'lucide-react';
 import { soundFx } from '../../utils/audio';
 import confetti from 'canvas-confetti';
@@ -47,6 +48,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
 
     const setupCameraAndModel = async () => {
       try {
+        await tf.setBackend('webgl');
         await tf.ready();
         
         // Load MoveNet Thunder (More accurate for Yoga)
@@ -77,9 +79,9 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
             detectPose();
           };
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error('AI Coach Setup Error:', err);
-        setFeedbackMsg('Failed to initialize AI Coach. Please check camera permissions.');
+        setFeedbackMsg(`Error: ${err.message || 'Failed to initialize AI Coach. Check camera permissions.'}`);
       }
     };
 
@@ -281,27 +283,27 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
   }, [isCorrect]);
 
   return (
-    <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#FFFFFF] backdrop-blur-2xl p-2 md:p-6 animate-in fade-in zoom-in-95 duration-500 ${isFullscreen ? 'p-0' : ''}`}>
-      <div className={`relative bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] flex flex-col overflow-hidden shadow-none ${isFullscreen ? 'w-full h-full rounded-none' : 'w-full h-full max-w-7xl max-h-[900px] rounded-[2rem]'}`}>
+    <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-transparent backdrop-blur-2xl p-2 md:p-6 animate-in fade-in zoom-in-95 duration-500 ${isFullscreen ? 'p-0' : ''}`}>
+      <div className={`relative bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] flex flex-col overflow-hidden shadow-none ${isFullscreen ? 'w-full h-full rounded-none' : 'w-full h-full max-w-7xl max-h-[900px] rounded-[2rem]'}`}>
         
         {/* Header - Glassmorphism */}
-        <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between p-4 bg-white border border-[#EAEAEE] shadow-sm  border border-[#EAEAEE] rounded-2xl shadow-lg">
+        <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between p-4 bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]  border border-[var(--border)] rounded-2xl shadow-lg">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#F5F5F7] text-[#1C1C1E] flex items-center justify-center border border-[#EAEAEE] shadow-none">
+            <div className="w-10 h-10 rounded-2xl bg-[var(--surface)] text-gray-200 flex items-center justify-center border border-[var(--border)] shadow-none">
               <ScanEye className="w-5 h-5 animate-pulse" />
             </div>
             <div>
-              <h3 className="text-sm font-bold tracking-tight text-black flex items-center gap-2">
-                AuraFit AI Vision <span className="flex w-2 h-2 rounded-full bg-[#F5F5F7] shadow-none animate-pulse" />
+              <h3 className="text-sm font-bold tracking-tight text-white flex items-center gap-2">
+                AuraFit AI Vision <span className="flex w-2 h-2 rounded-full bg-[var(--surface)] shadow-none animate-pulse" />
               </h3>
-              <p className="text-[11px] text-[#1C1C1E] font-bold uppercase tracking-wider">{targetAsana.name}</p>
+              <p className="text-[11px] text-gray-200 font-bold uppercase tracking-wider">{targetAsana.name}</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-2">
             <button 
               onClick={() => { soundFx.playTapSound(); setIsFullscreen(!isFullscreen); }}
-              className="p-2.5 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm hover:bg-white border border-[#EAEAEE] shadow-sm text-black transition  border border-[#EAEAEE]"
+              className="p-2.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-white transition  border border-[var(--border)]"
             >
               {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
             </button>
@@ -315,48 +317,47 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
           </div>
         </div>
 
-        {/* Content Body - Split Screen */}
-        <div className="flex-1 flex flex-row relative w-full h-full bg-white border border-[#EAEAEE] shadow-sm overflow-hidden pt-[88px]">
+        {/* Content Body - Responsive Split Screen */}
+        <div className="flex-1 flex flex-col md:flex-row relative w-full h-full bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] overflow-hidden pt-[88px]">
           
-          {/* LEFT PANEL: Reference Image & Instructions */}
-          <div className="w-[40%] md:w-1/3 h-full border-r border-[#EAEAEE] bg-white border border-[#EAEAEE] shadow-sm flex flex-col overflow-y-auto">
-            {/* Reference Image */}
-            <div className="relative h-48 md:h-2/5 shrink-0 bg-white border border-[#EAEAEE] shadow-sm p-4 flex flex-col justify-center items-center">
+          {/* LEFT/BOTTOM PANEL: Reference Image & Instructions */}
+          <div className="order-2 md:order-1 w-full md:w-1/3 h-[45%] md:h-full border-t md:border-t-0 md:border-r border-[var(--border)] bg-[var(--surface)] flex flex-col overflow-y-auto z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.2)] md:shadow-none">
+            {/* Reference Image (Hidden on very small screens, visible on md+) */}
+            <div className="hidden sm:flex relative h-32 md:h-2/5 shrink-0 bg-[var(--surface)] border-b border-[var(--border)] p-4 flex-col justify-center items-center">
               <img 
                 src={targetAsana.image} 
                 alt={targetAsana.name} 
-                className="w-full h-full object-cover rounded-2xl shadow-lg border border-[#EAEAEE]"
+                className="w-full h-full object-cover rounded-2xl shadow-lg border border-[var(--border)]"
               />
-              <div className="absolute bottom-6 bg-[#FFFFFF] backdrop-blur px-3 py-1.5 rounded-lg border border-[#EAEAEE] text-xs font-bold text-black flex items-center gap-2">
-                <Info className="w-3.5 h-3.5 text-[#1C1C1E]" />
+              <div className="absolute bottom-6 bg-[var(--surface)] backdrop-blur px-3 py-1.5 rounded-lg border border-[var(--border)] text-xs font-bold text-white flex items-center gap-2">
+                <Info className="w-3.5 h-3.5 text-gray-200" />
                 Target Reference
               </div>
             </div>
 
             {/* Coach's Lead Instructions */}
-            <div className="flex-1 p-6 flex flex-col">
-              <h4 className="text-sm font-bold tracking-tight text-black uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Activity className="w-4 h-4 text-[#1C1C1E]" />
+            <div className="flex-1 p-4 md:p-6 flex flex-col">
+              <h4 className="hidden md:flex text-sm font-bold tracking-tight text-white uppercase tracking-wider mb-4 items-center gap-2">
+                <Activity className="w-4 h-4 text-gray-200" />
                 Coach's Instructions
               </h4>
-                <div className="flex-1 mt-auto">
-                  <h4 className="text-sm font-bold text-black mb-2 flex items-center gap-2">
+                <div className="flex-1 mt-auto flex flex-col">
+                  <h4 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
                     <Activity className="w-4 h-4 text-rose-500" /> Benefits
                   </h4>
-                  <p className="text-sm text-[#8E8E93] leading-relaxed mb-6">
+                  <p className="text-xs md:text-sm text-[#8E8E93] leading-relaxed mb-4 md:mb-6">
                     {targetAsana.benefits}
                   </p>
 
-                  <div className="p-4 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] shadow-inner mb-6">
-                    <span className="font-bold text-black text-xs block mb-2">Live Alignment Guide:</span>
-                    <ul className="text-xs text-[#8E8E93] space-y-2 list-disc list-inside">
-                      <li>Align your body exactly like the reference image.</li>
-                      <li>Watch the neon skeleton on the right.</li>
+                  <div className="p-3 md:p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-inner mb-4 md:mb-6">
+                    <span className="font-bold text-white text-xs block mb-2">Live Alignment Guide:</span>
+                    <ul className="text-xs text-[#8E8E93] space-y-1 md:space-y-2 list-disc list-inside">
+                      <li>Align your body exactly like the reference.</li>
                       <li>Wait for the skeleton to turn green.</li>
                     </ul>
                   </div>
 
-                  <div className="mt-auto pt-4 border-t border-[#EAEAEE]">
+                  <div className="mt-auto pt-2 md:pt-4 border-t border-[var(--border)]">
                     <button 
                       onClick={() => {
                         confetti({
@@ -368,7 +369,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
                         soundFx.playSuccessChime();
                         onComplete(targetAsana);
                       }}
-                      className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-black font-bold tracking-tight tracking-wide shadow-none transition-all active:scale-95 flex items-center justify-center gap-2"
+                      className="w-full py-3 md:py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-bold tracking-tight tracking-wide transition-all active:scale-95 flex items-center justify-center gap-2"
                     >
                       <CheckCircle2 className="w-5 h-5" />
                       Asana Complete!
@@ -378,20 +379,20 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
               </div>
             </div>
 
-          {/* RIGHT PANEL: Live Camera Tracking */}
-          <div className="w-[60%] md:w-2/3 h-full relative flex items-center justify-center bg-black">
+          {/* RIGHT/TOP PANEL: Live Camera Tracking */}
+          <div className="order-1 md:order-2 flex-1 md:w-2/3 w-full relative flex items-center justify-center bg-black overflow-hidden">
             {/* Ambient background glow */}
             <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 via-transparent to-purple-500/10" />
 
             {isModelLoading && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-white border border-[#EAEAEE] shadow-sm  z-30">
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]  z-30">
                 <div className="relative w-20 h-20 mb-6 flex items-center justify-center">
-                  <div className="absolute inset-0 border-4 border-[#EAEAEE] rounded-full" />
+                  <div className="absolute inset-0 border-4 border-[var(--border)] rounded-full" />
                   <div className="absolute inset-0 border-4 border-t-indigo-500 rounded-full animate-spin" />
-                  <ScanEye className="w-8 h-8 text-[#1C1C1E] animate-pulse" />
+                  <ScanEye className="w-8 h-8 text-gray-200 animate-pulse" />
                 </div>
-                <h2 className="text-xl font-bold tracking-tight text-black tracking-wide">Calibrating AI Model</h2>
-                <p className="text-xs font-medium text-[#1C1C1E]/80 mt-2">Initializing THUNDER tracking with EMA Smoothing...</p>
+                <h2 className="text-xl font-bold tracking-tight text-white tracking-wide">Calibrating AI Model</h2>
+                <p className="text-xs font-medium text-gray-200/80 mt-2">Initializing THUNDER tracking with EMA Smoothing...</p>
               </div>
             )}
             
@@ -411,20 +412,20 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
               <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-sm">
                 <div className={`p-4 rounded-2xl border  shadow-none transition-all duration-500 flex items-center justify-between gap-4 ${
                   isCorrect 
-                    ? 'bg-[#F5F5F7] border-[#EAEAEE] shadow-none' 
-                    : 'bg-white border border-[#EAEAEE] shadow-sm border-[#EAEAEE]'
+                    ? 'bg-[var(--surface)] border-[var(--border)] shadow-none' 
+                    : 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border-[var(--border)]'
                 }`}>
                   <div className="flex-1">
-                    <h4 className={`text-base font-bold tracking-tight ${isCorrect ? 'text-[#1C1C1E]' : 'text-black'}`}>
+                    <h4 className={`text-base font-bold tracking-tight ${isCorrect ? 'text-gray-200' : 'text-white'}`}>
                       {isCorrect ? 'Perfect Form!' : 'Adjust Alignment'}
                     </h4>
-                    <p className={`text-xs mt-0.5 font-medium ${isCorrect ? 'text-[#1C1C1E]' : 'text-zinc-300'}`}>
+                    <p className={`text-xs mt-0.5 font-medium ${isCorrect ? 'text-gray-200' : 'text-zinc-300'}`}>
                       {feedbackMsg}
                     </p>
                   </div>
                   {isCorrect ? (
-                    <div className="w-10 h-10 shrink-0 rounded-full bg-[#F5F5F7] flex items-center justify-center border border-[#EAEAEE]">
-                      <CheckCircle2 className="w-5 h-5 text-[#1C1C1E]" />
+                    <div className="w-10 h-10 shrink-0 rounded-full bg-[var(--surface)] flex items-center justify-center border border-[var(--border)]">
+                      <CheckCircle2 className="w-5 h-5 text-gray-200" />
                     </div>
                   ) : (
                     <div className="w-10 h-10 shrink-0 rounded-full bg-sky-500/20 flex items-center justify-center border border-sky-500/50">

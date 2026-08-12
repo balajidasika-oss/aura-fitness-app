@@ -1,34 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html, body {
-    background-color: #FFFFFF;
-    color: #000000;
+  :root {
+    --background: #030305; /* Deep space black */
+    --foreground: #F8F9FA; /* Off-white for readability */
+    --accent: #E2B714;     /* Muted Gold */
+    --surface: rgba(255, 255, 255, 0.03); /* Frosted dark glass */
+    --border: rgba(255, 255, 255, 0.08); /* Barely visible border */
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] antialiased selection:bg-[var(--accent)] selection:text-black;
     font-family: 'Outfit', sans-serif;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    /* Ambient Aurora Backgrounds */
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.08), transparent 25%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    @apply tracking-tight;
   }
 }
 
-/* Custom Sleek Scrollbars */
+@layer utilities {
+  .glass-panel {
+    @apply bg-[var(--surface)] backdrop-blur-xl border border-[var(--border)] shadow-[0_4px_30px_rgba(0,0,0,0.1)];
+  }
+  
+  .glass-panel-elevated {
+    @apply bg-[var(--surface)] backdrop-blur-2xl border border-[var(--border)] shadow-[0_8px_32px_rgba(0,0,0,0.3)];
+  }
+
+  /* Ultra-smooth pills */
+  .rounded-organic {
+    border-radius: 9999px;
+  }
+}
+
+/* Custom Minimalist Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #F5F5F7;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D1D1D6;
-  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #AEAEB2;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Hide scrollbars for smooth horizontal story strips */
@@ -40,31 +69,7 @@
   scrollbar-width: none;
 }
 
-/* Glassmorphic Panel Styles */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-}
 
-.glass-panel-elevated {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255,255,255,1);
-}
-
-/* Ambient Radial Backgrounds */
-.bg-mesh-dark {
-  background-color: #FFFFFF;
-}
-
-.bg-mesh-coach {
-  background-color: #FFFFFF;
-}
 
 /* Safe area padding helper */
 .pb-safe {

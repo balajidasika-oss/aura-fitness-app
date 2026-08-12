@@ -20,16 +20,16 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#FFFFFF]  animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden rounded-2xl bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-950 border border-[#EAEAEE] shadow-none">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-transparent  animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden rounded-2xl bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-950 border border-[var(--border)] shadow-none">
         {/* Top Header */}
-        <div className="p-4 border-b border-[#EAEAEE] flex items-center justify-between bg-white border border-[#EAEAEE] shadow-sm  relative z-10">
+        <div className="p-4 border-b border-[var(--border)] flex items-center justify-between bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]  relative z-10">
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-2xl bg-[#F5F5F7] text-[#1C1C1E] flex items-center justify-center shadow-md">
+            <div className="w-8 h-8 rounded-2xl bg-[var(--surface)] text-gray-200 flex items-center justify-center shadow-md">
               <Scale className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold tracking-tight text-black">Aura Legal & Compliance Center</h3>
+              <h3 className="text-sm font-bold tracking-tight text-white">Aura Legal & Compliance Center</h3>
               <p className="text-[10px] text-[#8E8E93] font-medium">Terms, Health Waiver & Privacy Protection</p>
             </div>
           </div>
@@ -40,14 +40,14 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               soundFx.playTapSound();
               onClose();
             }}
-            className="p-1.5 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm text-[#8E8E93] hover:text-black transition"
+            className="p-1.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-[#8E8E93] hover:text-white transition"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Tab Switcher */}
-        <div className="grid grid-cols-3 p-2 gap-1.5 bg-white border border-[#EAEAEE] shadow-sm border-b border-[#EAEAEE] text-xs">
+        <div className="grid grid-cols-3 p-2 gap-1.5 bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border-b border-[var(--border)] text-xs">
           <button
             type="button"
             onClick={() => {
@@ -56,8 +56,8 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
             }}
             className={`py-2 px-1 rounded-2xl font-bold flex items-center justify-center space-x-1.5 transition ${
               activeTab === 'parq'
-                ? 'bg-red-500/20 text-red-300 border border-red-500/40 shadow-sm'
-                : 'text-[#8E8E93] hover:text-zinc-200 hover:bg-white border border-[#EAEAEE] shadow-sm'
+                ? 'bg-red-500/20 text-red-300 border border-red-500/40 shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
+                : 'text-[#8E8E93] hover:text-zinc-200 hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
             }`}
           >
             <HeartPulse className="w-3.5 h-3.5" />
@@ -72,8 +72,8 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
             }}
             className={`py-2 px-1 rounded-2xl font-bold flex items-center justify-center space-x-1.5 transition ${
               activeTab === 'privacy'
-                ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE] shadow-sm'
-                : 'text-[#8E8E93] hover:text-zinc-200 hover:bg-white border border-[#EAEAEE] shadow-sm'
+                ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
+                : 'text-[#8E8E93] hover:text-zinc-200 hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
             }`}
           >
             <Lock className="w-3.5 h-3.5" />
@@ -88,8 +88,8 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
             }}
             className={`py-2 px-1 rounded-2xl font-bold flex items-center justify-center space-x-1.5 transition ${
               activeTab === 'terms'
-                ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE] shadow-sm'
-                : 'text-[#8E8E93] hover:text-zinc-200 hover:bg-white border border-[#EAEAEE] shadow-sm'
+                ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
+                : 'text-[#8E8E93] hover:text-zinc-200 hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -105,7 +105,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               <div className="p-3 rounded-2xl bg-red-950/40 border border-red-500/40 text-red-200 flex items-start space-x-2.5">
                 <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold tracking-tight text-black">Physical Activity Readiness & Medical Disclaimer</h4>
+                  <h4 className="text-xs font-bold tracking-tight text-white">Physical Activity Readiness & Medical Disclaimer</h4>
                   <p className="text-[11px] text-red-300/90 mt-0.5">
                     Physical training involves inherent risk of physical injury. Please review carefully before participating.
                   </p>
@@ -113,14 +113,14 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">1. Not Medical Advice</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">1. Not Medical Advice</h5>
                 <p>
                   The workouts, cardiovascular routines, rep schemes, and coaching voice feedback provided via Aura Fitness Coach are for general physical conditioning and educational purposes only. They do not constitute medical diagnosis, treatment, or professional physical therapy.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">2. PAR-Q Health Screening Checklist</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">2. PAR-Q Health Screening Checklist</h5>
                 <p>
                   By utilizing this application, you attest that you do not have any of the following contraindications unless explicitly cleared in writing by a licensed physician:
                 </p>
@@ -133,7 +133,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">3. Assumption of Risk & Voluntary Release</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">3. Assumption of Risk & Voluntary Release</h5>
                 <p>
                   You voluntarily agree to assume all physical risks associated with resistance lifting, high incline treadmill protocols, StairMaster climbing, and athletic activities. You release Aura Fitness, coaches, and administrators from any liability for accidental injury or property damage resulting from workout execution.
                 </p>
@@ -144,18 +144,18 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
           {/* TAB 2: PRIVACY & GDPR DATA RIGHTS */}
           {activeTab === 'privacy' && (
             <div className="space-y-3.5 animate-in fade-in duration-150">
-              <div className="p-3 rounded-2xl bg-[#F5F5F7] border border-[#EAEAEE] text-[#1C1C1E] flex items-start space-x-2.5">
-                <Shield className="w-4 h-4 text-[#1C1C1E] flex-shrink-0 mt-0.5" />
+              <div className="p-3 rounded-2xl bg-[var(--surface)] border border-[var(--border)] text-gray-200 flex items-start space-x-2.5">
+                <Shield className="w-4 h-4 text-gray-200 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold tracking-tight text-black">Privacy Policy & Biometric Protection (GDPR / CCPA)</h4>
-                  <p className="text-[11px] text-[#1C1C1E]/90 mt-0.5">
+                  <h4 className="text-xs font-bold tracking-tight text-white">Privacy Policy & Biometric Protection (GDPR / CCPA)</h4>
+                  <p className="text-[11px] text-gray-200/90 mt-0.5">
                     Your personal biometric data, photos, and voice memos belong to you. We do not sell or broker user data.
                   </p>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">1. Data We Collect</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">1. Data We Collect</h5>
                 <ul className="list-disc pl-4 space-y-1 text-[#8E8E93]">
                   <li><strong className="text-zinc-200">Account Profile:</strong> Name, email address, fitness goals, and profile photo.</li>
                   <li><strong className="text-zinc-200">Workout Logs:</strong> Muscle groups, exercises, sets, reps, weight (kg), session duration, and cardio metrics (incline, floors, pace).</li>
@@ -164,14 +164,14 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">2. Device Sensor Permissions (Camera & Microphone)</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">2. Device Sensor Permissions (Camera & Microphone)</h5>
                 <p>
                   Microphone access is used exclusively during client-initiated voice recording to deliver daily updates to your coach. Camera access is used solely for capturing live meal and session photos. Sensors are never accessed passively in the background.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">3. GDPR Data Subject Rights</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">3. GDPR Data Subject Rights</h5>
                 <p>Under GDPR (EU) and CCPA (California), you hold the unconditional right to:</p>
                 <ul className="list-disc pl-4 space-y-1 text-[#8E8E93]">
                   <li><strong className="text-zinc-200">Right to Portability (Export):</strong> Download a complete machine-readable JSON copy of your logs anytime from Privacy Settings.</li>
@@ -181,9 +181,9 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">4. Security Disclaimer & "As Is" Provision</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">4. Security Disclaimer & "As Is" Provision</h5>
                 <p>
-                  While we implement strict cryptographic measures (e.g., PBKDF2 hashing) to protect your account, this platform is provided "AS IS" and without warranties. You agree that the creators and operators of Aura Fitness OS are <strong className="text-black font-bold">strictly not liable</strong> for any unauthorized access, data loss, server interruptions, or account breaches. Do not store sensitive health records beyond general fitness tracking on this platform.
+                  While we implement strict cryptographic measures (e.g., PBKDF2 hashing) to protect your account, this platform is provided "AS IS" and without warranties. You agree that the creators and operators of Aura Fitness OS are <strong className="text-white font-bold">strictly not liable</strong> for any unauthorized access, data loss, server interruptions, or account breaches. Do not store sensitive health records beyond general fitness tracking on this platform.
                 </p>
               </div>
             </div>
@@ -192,32 +192,32 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
           {/* TAB 3: TERMS OF SERVICE */}
           {activeTab === 'terms' && (
             <div className="space-y-3.5 animate-in fade-in duration-150">
-              <div className="p-3 rounded-2xl bg-[#F5F5F7] border border-[#EAEAEE] text-[#1C1C1E] flex items-start space-x-2.5">
-                <FileText className="w-4 h-4 text-[#1C1C1E] flex-shrink-0 mt-0.5" />
+              <div className="p-3 rounded-2xl bg-[var(--surface)] border border-[var(--border)] text-gray-200 flex items-start space-x-2.5">
+                <FileText className="w-4 h-4 text-gray-200 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold tracking-tight text-black">Terms of Platform Service</h4>
-                  <p className="text-[11px] text-[#1C1C1E]/90 mt-0.5">
+                  <h4 className="text-xs font-bold tracking-tight text-white">Terms of Platform Service</h4>
+                  <p className="text-[11px] text-gray-200/90 mt-0.5">
                     Standard rules governing user conduct, coach communication, and platform usage.
                   </p>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">1. Account Responsibility</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">1. Account Responsibility</h5>
                 <p>
                   You are responsible for maintaining the confidentiality of your login credentials and for all activities that occur under your account. You agree not to impersonate another athlete or coach.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">2. Acceptable Use & Media Uploads</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">2. Acceptable Use & Media Uploads</h5>
                 <p>
                   Uploaded photos and voice notes must strictly relate to athletic training, workout verification, nutrition meals, or coaching inquiries. Uploading obscene, harassing, or unlawful media is strictly prohibited and results in immediate account termination.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h5 className="text-xs font-bold text-black uppercase tracking-wider">3. Coach-Athlete Communication</h5>
+                <h5 className="text-xs font-bold text-white uppercase tracking-wider">3. Coach-Athlete Communication</h5>
                 <p>
                   Voice feedback and emoji cheers provided by coaches within the app are professional guidance. Coaches are independent fitness professionals who adhere to high athletic standards.
                 </p>
@@ -234,8 +234,8 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
         </div>
 
         {/* Footer Accept / Close Button */}
-        <div className="p-4 border-t border-[#EAEAEE] bg-white border border-[#EAEAEE] shadow-sm flex items-center justify-between">
-          <div className="flex items-center space-x-1.5 text-[11px] text-[#1C1C1E] font-bold">
+        <div className="p-4 border-t border-[var(--border)] bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] flex items-center justify-between">
+          <div className="flex items-center space-x-1.5 text-[11px] text-gray-200 font-bold">
             <CheckCircle className="w-3.5 h-3.5" />
             <span>Updated & Compliant 2026</span>
           </div>
@@ -246,7 +246,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               soundFx.playTapSound();
               onClose();
             }}
-            className="py-2 px-5 rounded-2xl bg-[#F5F5F7] hover:bg-[#F5F5F7] text-slate-950 text-xs font-bold tracking-tight transition shadow-lg shadow-[#FF3B30]/20 active:scale-95"
+            className="py-2 px-5 rounded-2xl bg-[var(--surface)] hover:bg-[var(--surface)] text-white text-xs font-bold tracking-tight transition shadow-lg shadow-[#FF3B30]/20 active:scale-95"
           >
             I Understand & Agree
           </button>

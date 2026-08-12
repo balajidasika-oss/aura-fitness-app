@@ -157,22 +157,22 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-[#FFFFFF]  flex justify-end animate-fadeIn">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-transparent  flex justify-end animate-fadeIn">
       <div 
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-lg bg-white border border-[#EAEAEE] shadow-sm border-l border-[#EAEAEE] h-full flex flex-col shadow-none overflow-hidden"
+        className="w-full max-w-lg bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border-l border-[var(--border)] h-full flex flex-col shadow-none overflow-hidden"
       >
         {/* Top Header */}
-        <div className="p-4 border-b border-[#EAEAEE] bg-white border border-[#EAEAEE] shadow-sm backdrop-blur flex items-center justify-between">
+        <div className="p-4 border-b border-[var(--border)] bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] backdrop-blur flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
               src={clientDetail?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120'}
               alt={clientDetail?.name}
-              className="w-10 h-10 rounded-2xl object-cover border-2 border-[#EAEAEE]"
+              className="w-10 h-10 rounded-2xl object-cover border-2 border-[var(--border)]"
             />
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-sm text-black">{clientDetail?.name || 'Athlete'}</h3>
+                <h3 className="font-extrabold text-sm text-white">{clientDetail?.name || 'Athlete'}</h3>
                 {clientDetail && <ComplianceBadge tier={clientDetail.compliance.tier} score={clientDetail.compliance.score} />}
               </div>
               <p className="text-[11px] text-[#8E8E93] font-medium">
@@ -183,14 +183,14 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-2xl text-[#8E8E93] hover:text-black bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] hover:bg-white border border-[#EAEAEE] shadow-sm transition"
+            className="p-1.5 rounded-2xl text-[#8E8E93] hover:text-white bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-[#EAEAEE] bg-white border border-[#EAEAEE] shadow-sm px-3 pt-2 gap-1 overflow-x-auto no-scrollbar">
+        <div className="flex border-b border-[var(--border)] bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] px-3 pt-2 gap-1 overflow-x-auto no-scrollbar">
           {[
             { id: 'workouts', label: '🏋️ Strength', count: clientDetail?.logs?.filter(l => l.workout?.title || (l.workout?.exercises && l.workout.exercises.length > 0) || (l.workout?.muscleGroups && l.workout.muscleGroups.length > 0)).length || 0 },
             { id: 'yoga', label: '🧘‍♀️ Yoga', count: clientDetail?.logs?.filter(l => l.yoga).length || 0 },
@@ -208,14 +208,14 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               }}
               className={`flex items-center gap-1 py-2 px-3 text-xs font-bold rounded-2xl whitespace-nowrap transition ${
                 activeTab === tab.id
-                  ? 'bg-[#F5F5F7] text-slate-950 font-bold tracking-tight shadow'
+                  ? 'bg-[var(--surface)] text-white font-bold tracking-tight shadow'
                   : 'text-[#8E8E93] hover:text-zinc-200'
               }`}
             >
               <span>{tab.label}</span>
               {tab.count !== null && (
                 <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  activeTab === tab.id ? 'bg-[#FFFFFF] text-slate-950 font-bold tracking-tight' : 'bg-white border border-[#EAEAEE] shadow-sm text-[#8E8E93]'
+                  activeTab === tab.id ? 'bg-transparent text-white font-bold tracking-tight' : 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-[#8E8E93]'
                 }`}>
                   {tab.count}
                 </span>
@@ -228,7 +228,7 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {isLoading ? (
             <div className="flex justify-center items-center py-20">
-              <div className="w-7 h-7 border-2 border-[#EAEAEE] border-t-transparent rounded-full animate-spin" />
+              <div className="w-7 h-7 border-2 border-[var(--border)] border-t-transparent rounded-full animate-spin" />
             </div>
           ) : activeTab === 'workouts' ? (
             <div className="space-y-3">
@@ -250,15 +250,15 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                     const grandTotalReps = w?.totalWorkoutReps || w?.muscleGroups?.reduce((a, b) => a + (b.totalMuscleReps || 0), 0) || 0;
 
                     return (
-                      <div key={log._id} className="p-3.5 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] space-y-3">
+                      <div key={log._id} className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] space-y-3">
                         {/* Workout Header */}
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
-                            <div className="w-8 h-8 rounded-2xl bg-[#F5F5F7] text-[#1C1C1E] flex items-center justify-center font-bold text-xs">
+                            <div className="w-8 h-8 rounded-2xl bg-[var(--surface)] text-gray-200 flex items-center justify-center font-bold text-xs">
                               <Dumbbell className="w-4 h-4" />
                             </div>
                             <div>
-                              <h5 className="font-bold text-black text-xs">{w?.title || 'Strength Workout'}</h5>
+                              <h5 className="font-bold text-white text-xs">{w?.title || 'Strength Workout'}</h5>
                               <span className="text-[10px] text-[#8E8E93] font-medium">
                                 {log.date} · {totalDuration} mins total · {w?.intensity || 'high'} intensity
                               </span>
@@ -266,11 +266,11 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                           </div>
 
                           {grandTotalReps > 0 ? (
-                            <span className="text-[10px] font-bold tracking-tight uppercase text-[#1C1C1E] bg-[#F5F5F7] px-2 py-0.5 rounded-full border border-[#EAEAEE]">
+                            <span className="text-[10px] font-bold tracking-tight uppercase text-gray-200 bg-[var(--surface)] px-2 py-0.5 rounded-full border border-[var(--border)]">
                               {grandTotalReps} Total Reps
                             </span>
                           ) : (
-                            <span className="text-[10px] font-bold uppercase text-[#1C1C1E] bg-[#F5F5F7] px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] font-bold uppercase text-gray-200 bg-[var(--surface)] px-2 py-0.5 rounded-full">
                               {w?.category || 'Strength'}
                             </span>
                           )}
@@ -280,10 +280,10 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                         {w?.muscleGroups && w.muscleGroups.length > 0 ? (
                           <div className="space-y-2 pt-1">
                             {w.muscleGroups.map((mg: IMuscleGroupLog, mgIdx: number) => (
-                              <div key={mgIdx} className="bg-white border border-[#EAEAEE] shadow-sm rounded-2xl p-2.5 border border-[#EAEAEE] space-y-1.5">
-                                <div className="flex items-center justify-between border-b border-[#EAEAEE] pb-1">
+                              <div key={mgIdx} className="bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] rounded-2xl p-2.5 border border-[var(--border)] space-y-1.5">
+                                <div className="flex items-center justify-between border-b border-[var(--border)] pb-1">
                                   <span className="text-xs font-bold text-zinc-200">{mg.label}</span>
-                                  <span className="text-[10px] font-bold tracking-tight text-[#1C1C1E] bg-[#F5F5F7] px-1.5 py-0.2 rounded">
+                                  <span className="text-[10px] font-bold tracking-tight text-gray-200 bg-[var(--surface)] px-1.5 py-0.2 rounded">
                                     {mg.totalMuscleReps} reps
                                   </span>
                                 </div>
@@ -291,10 +291,10 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                                   {mg.exercises.map((ex, exIdx) => (
                                     <div key={exIdx} className="text-xs flex justify-between items-center text-zinc-300">
                                       <div className="flex-1 pr-2">
-                                        <span className="font-medium text-black">{ex.name}</span>
+                                        <span className="font-medium text-white">{ex.name}</span>
                                         {ex.notes && <span className="text-[10px] text-[#8E8E93] block italic">({ex.notes})</span>}
                                       </div>
-                                      <span className="text-[#1C1C1E] font-mono text-[11px] font-bold whitespace-nowrap">
+                                      <span className="text-gray-200 font-mono text-[11px] font-bold whitespace-nowrap">
                                         {ex.sets}×{ex.reps} {ex.weightKg ? `@${ex.weightKg}kg` : ''} ({ex.totalReps || ex.sets * 10}r)
                                       </span>
                                     </div>
@@ -306,9 +306,9 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                         ) : w?.exerciseDetails && w.exerciseDetails.length > 0 ? (
                           <div className="space-y-1 pt-1">
                             {w.exerciseDetails.map((ex, i) => (
-                              <div key={i} className="p-2 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm text-xs flex justify-between items-center">
+                              <div key={i} className="p-2 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-xs flex justify-between items-center">
                                 <span className="font-semibold text-zinc-200">{ex.name}</span>
-                                <span className="text-[#1C1C1E] font-bold text-[11px]">
+                                <span className="text-gray-200 font-bold text-[11px]">
                                   {ex.sets} × {ex.reps} {ex.weightKg ? `@ ${ex.weightKg}kg` : ''}
                                 </span>
                               </div>
@@ -333,35 +333,35 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                   {allVoiceNotes.map((v, idx) => {
                     const isPlaying = playingAudioUrl === v.url;
                     return (
-                      <div key={idx} className="p-3.5 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] space-y-2">
+                      <div key={idx} className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] space-y-2">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
                             <button
                               onClick={() => togglePlayAudio(v.url)}
                               className={`w-9 h-9 rounded-2xl flex items-center justify-center transition active:scale-95 ${
                                 isPlaying
-                                  ? 'bg-rose-500 text-black shadow-lg shadow-rose-500/20'
-                                  : 'bg-[#F5F5F7] text-slate-950 shadow-lg shadow-[#FF3B30]/20'
+                                  ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/20'
+                                  : 'bg-[var(--surface)] text-white shadow-lg shadow-[#FF3B30]/20'
                               }`}
                             >
                               {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-slate-950 ml-0.5" />}
                             </button>
                             <div>
-                              <h5 className="text-xs font-bold text-black">Daily Athlete Debrief</h5>
+                              <h5 className="text-xs font-bold text-white">Daily Athlete Debrief</h5>
                               <span className="text-[10px] text-[#8E8E93]">{v.date}</span>
                             </div>
                           </div>
 
                           <div className="flex items-center space-x-1">
-                            <span className="w-1.5 h-4 bg-[#F5F5F7] rounded-full" />
-                            <span className={`w-1.5 h-6 rounded-full ${isPlaying ? 'bg-[#F5F5F7] animate-pulse' : 'bg-[#F5F5F7]'}`} />
-                            <span className={`w-1.5 h-3 rounded-full ${isPlaying ? 'bg-[#F5F5F7] animate-pulse' : 'bg-[#F5F5F7]'}`} />
-                            <span className={`w-1.5 h-5 rounded-full ${isPlaying ? 'bg-[#F5F5F7] animate-pulse' : 'bg-[#F5F5F7]'}`} />
+                            <span className="w-1.5 h-4 bg-[var(--surface)] rounded-full" />
+                            <span className={`w-1.5 h-6 rounded-full ${isPlaying ? 'bg-[var(--surface)] animate-pulse' : 'bg-[var(--surface)]'}`} />
+                            <span className={`w-1.5 h-3 rounded-full ${isPlaying ? 'bg-[var(--surface)] animate-pulse' : 'bg-[var(--surface)]'}`} />
+                            <span className={`w-1.5 h-5 rounded-full ${isPlaying ? 'bg-[var(--surface)] animate-pulse' : 'bg-[var(--surface)]'}`} />
                           </div>
                         </div>
 
                         {v.notes && (
-                          <p className="text-[11px] text-zinc-300 italic bg-white border border-[#EAEAEE] shadow-sm p-2 rounded-2xl border border-[#EAEAEE]">
+                          <p className="text-[11px] text-zinc-300 italic bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] p-2 rounded-2xl border border-[var(--border)]">
                             "{v.notes}"
                           </p>
                         )}
@@ -380,25 +380,25 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                 clientDetail?.logs?.filter(l => l.yoga).map((log) => {
                   const y = log.yoga;
                   return (
-                    <div key={log._id} className="p-3.5 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] space-y-2">
+                    <div key={log._id} className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] space-y-2">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          <div className="w-8 h-8 rounded-2xl bg-[#F5F5F7] text-[#1C1C1E] flex items-center justify-center font-bold text-xs">
+                          <div className="w-8 h-8 rounded-2xl bg-[var(--surface)] text-gray-200 flex items-center justify-center font-bold text-xs">
                             <Sparkles className="w-4 h-4" />
                           </div>
                           <div>
-                            <h5 className="font-bold text-black text-xs">{y?.title || 'Yoga Session'}</h5>
+                            <h5 className="font-bold text-white text-xs">{y?.title || 'Yoga Session'}</h5>
                             <span className="text-[10px] text-[#8E8E93] font-medium capitalize">
                               {log.date} · {y?.durationMinutes || 15} mins · {y?.type || 'mobility'}
                             </span>
                           </div>
                         </div>
-                        <span className="text-[10px] font-bold text-[#1C1C1E] bg-[#F5F5F7] px-2 py-0.5 rounded-full border border-[#EAEAEE]">
+                        <span className="text-[10px] font-bold text-gray-200 bg-[var(--surface)] px-2 py-0.5 rounded-full border border-[var(--border)]">
                           {log.completionScore}% Done
                         </span>
                       </div>
                       {y?.notes && (
-                        <p className="text-[11px] text-zinc-300 italic bg-white border border-[#EAEAEE] shadow-sm p-2 rounded-2xl border border-[#EAEAEE] mt-2">
+                        <p className="text-[11px] text-zinc-300 italic bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] p-2 rounded-2xl border border-[var(--border)] mt-2">
                           {y.notes}
                         </p>
                       )}
@@ -416,14 +416,14 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                 const isIncline = c?.activityType === 'incline_walk' || (c?.inclinePercentage && c.inclinePercentage > 0);
 
                 return (
-                  <div key={log._id} className="p-3.5 rounded-2xl bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] space-y-2">
+                  <div key={log._id} className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <div className="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-xs">
                           {isStair ? <Layers className="w-4 h-4" /> : isIncline ? <TrendingUp className="w-4 h-4" /> : <Activity className="w-4 h-4" />}
                         </div>
                         <div>
-                          <h5 className="font-bold text-black text-xs">
+                          <h5 className="font-bold text-white text-xs">
                             {isStair ? `StairMaster: ${c?.stairmasterFloors || 80} Floors (Lvl ${c?.stairmasterLevel || 8})` : isIncline ? `Incline Treadmill (${c?.inclinePercentage || 10}% Incline)` : `Run / Jog: ${c?.distanceKm || 5} km`}
                           </h5>
                           <span className="text-[10px] text-[#8E8E93] font-medium">
@@ -436,9 +436,9 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between text-[11px] text-[#8E8E93] pt-1 border-t border-[#EAEAEE]">
+                    <div className="flex items-center justify-between text-[11px] text-[#8E8E93] pt-1 border-t border-[var(--border)]">
                       <span>Heart Rate: <strong className="text-rose-400">{c?.heartRateAvg || 142} bpm</strong></span>
-                      <span>Est. Burn: <strong className="text-[#1C1C1E]">~{c?.caloriesBurned || 320} kcal</strong></span>
+                      <span>Est. Burn: <strong className="text-gray-200">~{c?.caloriesBurned || 320} kcal</strong></span>
                     </div>
                   </div>
                 );
@@ -452,7 +452,7 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               ) : (
                 <div className="grid grid-cols-2 gap-2.5">
                   {allSelfiesWithDates.map((s, idx) => (
-                    <div key={idx} className="bg-white border border-[#EAEAEE] shadow-sm rounded-2xl border border-[#EAEAEE] overflow-hidden">
+                    <div key={idx} className="bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] rounded-2xl border border-[var(--border)] overflow-hidden">
                       <img src={s.photo} alt="Workout selfie" className="w-full aspect-square object-cover" />
                       <div className="p-2">
                         <span className="text-[10px] font-bold text-[#8E8E93]">{s.date}</span>
@@ -471,10 +471,10 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               ) : (
                 <div className="grid grid-cols-2 gap-2.5">
                   {allMealsWithDates.map((m, idx) => (
-                    <div key={idx} className="bg-white border border-[#EAEAEE] shadow-sm rounded-2xl border border-[#EAEAEE] overflow-hidden">
+                    <div key={idx} className="bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] rounded-2xl border border-[var(--border)] overflow-hidden">
                       <img src={m.meal.imagePath} alt={m.meal.caption || m.meal.type} className="w-full aspect-square object-cover" />
                       <div className="p-2">
-                        <span className="text-[9px] font-bold tracking-tight text-[#1C1C1E] bg-[#F5F5F7] px-1.5 py-0.5 rounded capitalize">
+                        <span className="text-[9px] font-bold tracking-tight text-gray-200 bg-[var(--surface)] px-1.5 py-0.5 rounded capitalize">
                           {m.meal.type}
                         </span>
                         <span className="text-[10px] text-[#8E8E93] ml-2">{m.date}</span>
@@ -488,16 +488,16 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
           ) : (
             <div className="space-y-3">
               <h4 className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider">7-Day Habit Adherence</h4>
-              <div className="grid grid-cols-7 gap-1 bg-white border border-[#EAEAEE] shadow-sm p-3 rounded-2xl border border-[#EAEAEE]">
+              <div className="grid grid-cols-7 gap-1 bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] p-3 rounded-2xl border border-[var(--border)]">
                 {clientDetail?.compliance?.weeklyHistory?.map((day, idx) => (
                   <div key={idx} className="flex flex-col items-center gap-1">
                     <span className="text-[9px] text-[#8E8E93] font-bold">{day.dayName}</span>
                     <div className={`w-8 h-8 rounded-2xl flex items-center justify-center text-xs font-bold tracking-tight ${
                       day.status === 'complete'
-                        ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE]'
+                        ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)]'
                         : day.status === 'partial'
-                        ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE]'
-                        : 'bg-white border border-[#EAEAEE] shadow-sm text-zinc-600 border border-[#EAEAEE]'
+                        ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)]'
+                        : 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-zinc-600 border border-[var(--border)]'
                     }`}>
                       {day.score}%
                     </div>
@@ -509,7 +509,7 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
         </div>
 
         {/* Coach Quick Send Cheer Footer */}
-        <div className="p-3 border-t border-[#EAEAEE] bg-white border border-[#EAEAEE] shadow-sm space-y-2">
+        <div className="p-3 border-t border-[var(--border)] bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] space-y-2">
           
           <div className="mb-2">
             <VoiceNoteRecorder 
@@ -525,7 +525,7 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                 key={emoji}
                 onClick={() => setReactionEmoji(emoji)}
                 className={`text-base p-1 rounded-2xl transition ${
-                  reactionEmoji === emoji ? 'bg-white border border-[#EAEAEE] shadow-sm ring-2 ring-emerald-400' : 'opacity-70 hover:opacity-100'
+                  reactionEmoji === emoji ? 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] ring-2 ring-emerald-400' : 'opacity-70 hover:opacity-100'
                 }`}
               >
                 {emoji}
@@ -536,18 +536,18 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               placeholder={voiceBlob ? "Audio attached! Add optional text..." : "Quick cheer message to athlete..."}
               value={feedbackText}
               onChange={(e) => setFeedbackText(e.target.value)}
-              className="flex-1 bg-white border border-[#EAEAEE] shadow-sm border border-[#EAEAEE] rounded-2xl px-2.5 py-1.5 text-xs text-black placeholder-zinc-500 focus:outline-none focus:border-[#EAEAEE]"
+              className="flex-1 bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] rounded-2xl px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[var(--border)]"
             />
             <button
               onClick={handleSendFeedback}
               disabled={isSendingFeedback || (!feedbackText.trim() && !voiceBlob)}
-              className="bg-[#F5F5F7] hover:bg-[#F5F5F7] text-slate-950 font-bold p-2 rounded-2xl text-xs transition active:scale-95 disabled:opacity-50"
+              className="bg-[var(--surface)] hover:bg-[var(--surface)] text-white font-bold p-2 rounded-2xl text-xs transition active:scale-95 disabled:opacity-50"
             >
               <Send className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
           </div>
           {feedbackSentSuccess && (
-            <span className="text-[10px] text-[#1C1C1E] font-bold block text-center">
+            <span className="text-[10px] text-gray-200 font-bold block text-center">
               Cheer sent to athlete's feed!
             </span>
           )}

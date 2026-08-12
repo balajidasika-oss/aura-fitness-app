@@ -185,7 +185,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
               {clients.length} Athlete{clients.length === 1 ? '' : 's'} on Roster
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-black">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
             Welcome, {coachUser?.name || 'Coach'}
           </h1>
           <p className="text-xs text-[#8E8E93] mt-0.5">
@@ -194,14 +194,14 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
         </div>
 
         {coachUser?.coachCode && (
-          <div className="p-3 bg-slate-950/80 border border-[#EAEAEE] rounded-2xl flex items-center gap-3 w-full sm:w-auto justify-between">
+          <div className="p-3 bg-slate-950/80 border border-[var(--border)] rounded-2xl flex items-center gap-3 w-full sm:w-auto justify-between">
             <div>
               <div className="text-[10px] text-[#8E8E93] font-bold uppercase tracking-wider">Your Coach Code</div>
-              <div className="text-sm font-bold tracking-tight text-[#1C1C1E] font-mono tracking-wider">{coachUser.coachCode}</div>
+              <div className="text-sm font-bold tracking-tight text-gray-200 font-mono tracking-wider">{coachUser.coachCode}</div>
             </div>
             <button
               onClick={handleCopyCoachCode}
-              className="px-3 py-1.5 rounded-2xl bg-[#F5F5F7] hover:bg-[#F5F5F7] border border-[#EAEAEE] text-[#1C1C1E] text-xs font-bold flex items-center gap-1.5 transition active:scale-95"
+              className="px-3 py-1.5 rounded-2xl bg-[var(--surface)] hover:bg-[var(--surface)] border border-[var(--border)] text-gray-200 text-xs font-bold flex items-center gap-1.5 transition active:scale-95"
             >
               {copiedCode ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copiedCode ? 'Copied' : 'Copy'}</span>
@@ -216,16 +216,16 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
           <div className="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mx-auto">
             <Users className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-bold tracking-tight text-black">No Athletes Connected Yet</h3>
+          <h3 className="text-lg font-bold tracking-tight text-white">No Athletes Connected Yet</h3>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
             Share your unique Coach Code{' '}
-            <strong className="text-[#1C1C1E] font-mono">{coachUser?.coachCode || 'COACH-CODE'}</strong> with your clients.
+            <strong className="text-gray-200 font-mono">{coachUser?.coachCode || 'COACH-CODE'}</strong> with your clients.
             When they enter this code during registration, their workouts, nutrition photos, and voice notes will appear right here in your live stream.
           </p>
           <div className="flex justify-center gap-3 pt-2">
             <button
               onClick={handleCopyCoachCode}
-              className="px-5 py-2.5 rounded-2xl bg-[#F5F5F7] hover:bg-[#F5F5F7] text-slate-950 font-bold tracking-tight text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-[#FF3B30]/20 transition active:scale-95"
+              className="px-5 py-2.5 rounded-2xl bg-[var(--surface)] hover:bg-[var(--surface)] text-white font-bold tracking-tight text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-[#FF3B30]/20 transition active:scale-95"
             >
               <Copy className="w-4 h-4" />
               <span>Copy Invite Code</span>
@@ -252,8 +252,8 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
               }}
               className={`text-xs font-bold px-4 py-2 rounded-2xl transition ${
                 activeTab === 'feed'
-                  ? 'bg-[#F5F5F7] text-slate-950 font-bold tracking-tight shadow-md'
-                  : 'text-[#8E8E93] hover:text-black'
+                  ? 'bg-[var(--surface)] text-white font-bold tracking-tight shadow-md'
+                  : 'text-[#8E8E93] hover:text-white'
               }`}
             >
               Activity Stream
@@ -265,8 +265,8 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
               }}
               className={`text-xs font-bold px-4 py-2 rounded-2xl transition ${
                 activeTab === 'athletes'
-                  ? 'bg-[#F5F5F7] text-slate-950 font-bold tracking-tight shadow-md'
-                  : 'text-[#8E8E93] hover:text-black'
+                  ? 'bg-[var(--surface)] text-white font-bold tracking-tight shadow-md'
+                  : 'text-[#8E8E93] hover:text-white'
               }`}
             >
               Athlete Roster ({clients.length})
@@ -275,7 +275,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
 
           <button
             onClick={refreshAction}
-            className="p-2 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-[#8E8E93] hover:text-black transition active:scale-95"
+            className="p-2 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-[#8E8E93] hover:text-white transition active:scale-95"
             title="Refresh Feed"
           >
             <RefreshCw className="w-4 h-4" />
@@ -288,7 +288,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
         <div className="space-y-1.5">
           <div className="flex items-center justify-between px-1">
             <span className="text-[11px] font-bold text-[#8E8E93] flex items-center space-x-1">
-              <Sparkles className="w-3 h-3 text-[#1C1C1E]" />
+              <Sparkles className="w-3 h-3 text-gray-200" />
               <span>Today's Athlete Stories</span>
             </span>
             <span className="text-[10px] text-slate-500">Tap avatar to view summary</span>
@@ -325,7 +325,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                       {client.name.split(' ')[0]}
                     </span>
                     {client.streak && client.streak > 0 ? (
-                      <Flame className="w-3 h-3 text-[#1C1C1E] fill-amber-400 flex-shrink-0" />
+                      <Flame className="w-3 h-3 text-gray-200 fill-amber-400 flex-shrink-0" />
                     ) : null}
                   </div>
                 </button>
@@ -368,10 +368,10 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     <img
                       src={client.avatarUrl}
                       alt={client.name}
-                      className="w-10 h-10 rounded-2xl object-cover border border-[#EAEAEE]"
+                      className="w-10 h-10 rounded-2xl object-cover border border-[var(--border)]"
                     />
                     <div>
-                      <h4 className="text-xs font-bold text-black leading-tight flex items-center space-x-1">
+                      <h4 className="text-xs font-bold text-white leading-tight flex items-center space-x-1">
                         <span>{client.name}</span>
                         <ChevronRight className="w-3 h-3 text-slate-500" />
                       </h4>
@@ -385,16 +385,16 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     <button
                       onClick={() => handleSpeakReview(client, latestLog)}
                       title="Audio Voice Coach Synthesis"
-                      className="p-1.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-[#1C1C1E] transition-colors"
+                      className="p-1.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-gray-200 transition-colors"
                     >
                       <Volume2 className="w-4 h-4" />
                     </button>
                     <span
                       className={`text-[10px] font-bold tracking-tight px-2 py-0.5 rounded-full ${
                         client.compliance?.tier === 'green'
-                          ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE]'
+                          ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)]'
                           : client.compliance?.tier === 'yellow'
-                          ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE]'
+                          ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)]'
                           : 'bg-red-500/20 text-red-300 border border-red-500/30'
                       }`}
                     >
@@ -415,7 +415,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-                        <div className="absolute top-2.5 left-2.5 bg-[#F5F5F7] text-slate-950 text-[10px] font-bold tracking-tight px-2.5 py-0.5 rounded-full shadow">
+                        <div className="absolute top-2.5 left-2.5 bg-[var(--surface)] text-white text-[10px] font-bold tracking-tight px-2.5 py-0.5 rounded-full shadow">
                           📸 Session Selfie Logged
                         </div>
                       </div>
@@ -425,11 +425,11 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     {workout && (
                       <div className="p-3 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-2">
                         <div className="flex justify-between items-center text-xs">
-                          <span className="font-bold text-black flex items-center gap-1.5">
-                            <Dumbbell className="w-3.5 h-3.5 text-[#1C1C1E]" />
+                          <span className="font-bold text-white flex items-center gap-1.5">
+                            <Dumbbell className="w-3.5 h-3.5 text-gray-200" />
                             <span>{workout.title || 'Strength Session'}</span>
                           </span>
-                          <span className="text-[#1C1C1E] font-bold tracking-tight text-[11px]">
+                          <span className="text-gray-200 font-bold tracking-tight text-[11px]">
                             {grandTotalReps > 0 ? `${grandTotalReps} Total Reps` : `${totalDuration} mins`}
                           </span>
                         </div>
@@ -451,7 +451,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     {/* Cardio Breakdown */}
                     {cardio && (cardio.distanceKm > 0 || (cardio.stairmasterFloors && cardio.stairmasterFloors > 0)) && (
                       <div className="p-3 rounded-2xl bg-slate-950/70 border border-slate-800 flex justify-between items-center text-xs">
-                        <span className="font-bold text-black flex items-center gap-1.5">
+                        <span className="font-bold text-white flex items-center gap-1.5">
                           <Activity className="w-3.5 h-3.5 text-cyan-400" />
                           <span>Cardio: {cardio.activityType}</span>
                         </span>
@@ -465,12 +465,12 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     {hasVoiceNote && voiceUrl && (
                       <div className="p-3 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <Mic className="w-4 h-4 text-[#1C1C1E]" />
+                          <Mic className="w-4 h-4 text-gray-200" />
                           <span className="text-xs font-bold text-slate-200">Voice Debrief Memo</span>
                         </div>
                         <button
                           onClick={() => toggleFeedAudio(voiceUrl)}
-                          className="px-3 py-1.5 rounded-2xl bg-[#F5F5F7] hover:bg-[#F5F5F7] text-[#1C1C1E] text-xs font-bold flex items-center gap-1 transition"
+                          className="px-3 py-1.5 rounded-2xl bg-[var(--surface)] hover:bg-[var(--surface)] text-gray-200 text-xs font-bold flex items-center gap-1 transition"
                         >
                           {isAudioPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                           <span>{isAudioPlaying ? 'Pause' : 'Play Memo'}</span>
@@ -482,11 +482,11 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     <div className="pt-2 border-t border-slate-800/80">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[11px] font-bold text-[#8E8E93] flex items-center space-x-1">
-                          <Sparkles className="w-3 h-3 text-[#1C1C1E]" />
+                          <Sparkles className="w-3 h-3 text-gray-200" />
                           <span>1-Tap Coach Cheer</span>
                         </span>
                         {isCheered && (
-                          <span className="text-[10px] font-bold text-[#1C1C1E] flex items-center space-x-1">
+                          <span className="text-[10px] font-bold text-gray-200 flex items-center space-x-1">
                             <CheckCircle2 className="w-3 h-3" />
                             <span>Cheer Delivered</span>
                           </span>
@@ -498,7 +498,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                           onClick={() =>
                             handleQuickCheer(client._id, logId, '🔥', 'Crushed your strength & cardio goals today!')
                           }
-                          className="py-2 px-2 rounded-2xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-[#EAEAEE] text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
+                          className="py-2 px-2 rounded-2xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-[var(--border)] text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
                         >
                           <span>🔥</span>
                           <span className="text-[11px]">Crushed It</span>
@@ -508,7 +508,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                           onClick={() =>
                             handleQuickCheer(client._id, logId, '💪', 'Incredible lifting volume & cardio pacing!')
                           }
-                          className="py-2 px-2 rounded-2xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/40 text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
+                          className="py-2 px-2 rounded-2xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/40 text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
                         >
                           <span>💪</span>
                           <span className="text-[11px]">Heavy Lift</span>
@@ -518,7 +518,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                           onClick={() =>
                             handleQuickCheer(client._id, logId, '🥗', 'Spotless meal choices. Keep the fuel clean!')
                           }
-                          className="py-2 px-2 rounded-2xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-[#EAEAEE] text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
+                          className="py-2 px-2 rounded-2xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-[var(--border)] text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
                         >
                           <span>🥗</span>
                           <span className="text-[11px]">Clean Fuel</span>
@@ -548,8 +548,8 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                 onClick={() => setFilterTier(tier)}
                 className={`flex-1 py-1 text-[11px] font-bold rounded-2xl capitalize transition ${
                   filterTier === tier
-                    ? 'bg-[#F5F5F7] text-slate-950 font-bold tracking-tight shadow'
-                    : 'text-[#8E8E93] hover:text-black'
+                    ? 'bg-[var(--surface)] text-white font-bold tracking-tight shadow'
+                    : 'text-[#8E8E93] hover:text-white'
                 }`}
               >
                 {tier === 'all' ? 'All' : tier}
@@ -574,7 +574,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     className="w-11 h-11 rounded-2xl object-cover border border-slate-700"
                   />
                   <div>
-                    <h4 className="text-xs font-bold tracking-tight text-black">{client.name}</h4>
+                    <h4 className="text-xs font-bold tracking-tight text-white">{client.name}</h4>
                     <p className="text-[11px] text-[#8E8E93] font-medium">
                       {client.fitnessGoal} · {client.streak || 0}d streak
                     </p>
@@ -585,9 +585,9 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                   <span
                     className={`text-[10px] font-bold tracking-tight px-2 py-0.5 rounded-full ${
                       client.compliance?.tier === 'green'
-                        ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE]'
+                        ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)]'
                         : client.compliance?.tier === 'yellow'
-                        ? 'bg-[#F5F5F7] text-[#1C1C1E] border border-[#EAEAEE]'
+                        ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)]'
                         : 'bg-red-500/20 text-red-300 border border-red-500/30'
                     }`}
                   >
