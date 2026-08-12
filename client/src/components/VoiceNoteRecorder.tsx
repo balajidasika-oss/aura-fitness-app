@@ -161,31 +161,31 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   };
 
   return (
-    <div className="rounded-3xl bg-[#141414] border border-neutral-800 p-4 space-y-3 shadow-none ">
+    <div className="rounded-[32px] bg-white shadow-sm border border-[#E6E4DD] p-4 space-y-3 shadow-none ">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${
-            isRecording ? 'bg-red-500/20 text-red-400 animate-pulse' : 'bg-neutral-800 text-neutral-300'
+          <div className={`w-7 h-7 rounded-[32px] flex items-center justify-center ${
+            isRecording ? 'bg-red-500/20 text-red-400 animate-pulse' : 'bg-[#EAF0EA] text-[#4A5C4F]'
           }`}>
             <Mic className="w-4 h-4" />
           </div>
           <div>
-            <h4 className="text-xs font-black text-white">{title || `Daily Voice Memo to ${coachName}`}</h4>
-            <span className="text-[10px] text-neutral-400 font-medium">
+            <h4 className="text-xs font-bold tracking-tight text-[#2D332F]">{title || `Daily Voice Memo to ${coachName}`}</h4>
+            <span className="text-[10px] text-[#7A8277] font-medium">
               {subtitle || 'Explain how sets felt, energy levels, or soreness'}
             </span>
           </div>
         </div>
 
-        <div className="flex items-center space-x-1 text-[10px] text-neutral-200 font-bold bg-neutral-800 px-2 py-0.5 rounded-full border border-neutral-700">
+        <div className="flex items-center space-x-1 text-[10px] text-[#4A5C4F] font-bold bg-[#EAF0EA] px-2 py-0.5 rounded-full border border-[#E6E4DD]">
           <ShieldCheck className="w-3 h-3" />
           <span>Microphone Ready</span>
         </div>
       </div>
 
       {permissionError && (
-        <div className="p-2.5 rounded-2xl bg-red-950/40 border border-red-500/30 text-xs text-red-300 flex items-start space-x-2">
+        <div className="p-2.5 rounded-[32px] bg-red-950/40 border border-red-500/30 text-xs text-red-300 flex items-start space-x-2">
           <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
           <span>{permissionError}</span>
         </div>
@@ -193,37 +193,37 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
 
       {/* State 1: Idle / No Recording */}
       {!isRecording && !audioUrl && (
-        <div className="bg-[#141414] rounded-2xl border border-neutral-800 p-4 flex flex-col items-center justify-center text-center space-y-3">
+        <div className="bg-white shadow-sm rounded-[32px] border border-[#E6E4DD] p-4 flex flex-col items-center justify-center text-center space-y-3">
           <button
             type="button"
             onClick={startRecording}
-            className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-indigo-600 to-violet-500 text-white shadow-lg shadow-indigo-500/30 hover:scale-105 active:scale-95 transition"
+            className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-indigo-600 to-violet-500 text-[#2D332F] shadow-lg shadow-indigo-500/30 hover:scale-105 active:scale-95 transition"
           >
-            <div className="absolute inset-0 rounded-full bg-neutral-800 animate-ping pointer-events-none" />
+            <div className="absolute inset-0 rounded-full bg-[#EAF0EA] animate-ping pointer-events-none" />
             <Mic className="w-6 h-6 group-hover:scale-110 transition" />
           </button>
           <div className="space-y-0.5">
-            <span className="text-xs font-black text-zinc-200 block">Tap to Record Voice Note</span>
-            <span className="text-[10px] text-neutral-500 font-medium">Maximum 2:00 duration</span>
+            <span className="text-xs font-bold tracking-tight text-zinc-200 block">Tap to Record Voice Note</span>
+            <span className="text-[10px] text-[#7A8277] font-medium">Maximum 2:00 duration</span>
           </div>
         </div>
       )}
 
       {/* State 2: Live Recording in Progress */}
       {isRecording && (
-        <div className="bg-red-950/20 border border-red-500/40 rounded-2xl p-4 space-y-3">
+        <div className="bg-red-950/20 border border-red-500/40 rounded-[32px] p-4 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
-              <span className="text-xs font-black text-red-400 uppercase tracking-wider">Recording Live...</span>
+              <span className="text-xs font-bold tracking-tight text-red-400 uppercase tracking-wider">Recording Live...</span>
             </div>
-            <span className="text-sm font-black font-mono text-white bg-[#141414] px-2.5 py-0.5 rounded-xl border border-neutral-800">
+            <span className="text-sm font-bold tracking-tight font-mono text-[#2D332F] bg-white shadow-sm px-2.5 py-0.5 rounded-[32px] border border-[#E6E4DD]">
               {formatTime(recordingSeconds)}
             </span>
           </div>
 
           {/* Equalizer Visualizer Waves */}
-          <div className="h-10 flex items-center justify-center gap-1 bg-[#141414] rounded-xl px-3 border border-neutral-800">
+          <div className="h-10 flex items-center justify-center gap-1 bg-white shadow-sm rounded-[32px] px-3 border border-[#E6E4DD]">
             {waveLevels.map((lvl, idx) => (
               <div
                 key={idx}
@@ -236,7 +236,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
           <button
             type="button"
             onClick={stopRecording}
-            className="w-full py-2.5 rounded-xl bg-red-500 hover:bg-red-400 text-white text-xs font-black flex items-center justify-center space-x-2 shadow-lg shadow-red-500/30 transition active:scale-98"
+            className="w-full py-2.5 rounded-[32px] bg-red-500 hover:bg-red-400 text-[#2D332F] text-xs font-bold tracking-tight flex items-center justify-center space-x-2 shadow-lg shadow-red-500/30 transition active:scale-98"
           >
             <Square className="w-3.5 h-3.5 fill-white" />
             <span>Finish Recording ({formatTime(recordingSeconds)})</span>
@@ -246,7 +246,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
 
       {/* State 3: Recorded Audio Preview & Playback */}
       {audioUrl && !isRecording && (
-        <div className="bg-[#141414] rounded-2xl border border-neutral-700 p-3.5 space-y-3 shadow-inner">
+        <div className="bg-white shadow-sm rounded-[32px] border border-[#E6E4DD] p-3.5 space-y-3 shadow-inner">
           <audio
             ref={audioElementRef}
             src={audioUrl}
@@ -261,13 +261,13 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
               <button
                 type="button"
                 onClick={togglePlayback}
-                className="w-9 h-9 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-white flex items-center justify-center transition active:scale-95 shadow-md shadow-indigo-500/30"
+                className="w-9 h-9 rounded-[32px] bg-[#EAF0EA] hover:bg-[#EAF0EA] text-[#2D332F] flex items-center justify-center transition active:scale-95 shadow-md shadow-indigo-500/30"
               >
                 {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white ml-0.5" />}
               </button>
               <div>
-                <span className="text-xs font-black text-white block">Voice Note Ready</span>
-                <span className="text-[10px] text-neutral-400 font-mono font-bold">
+                <span className="text-xs font-bold tracking-tight text-[#2D332F] block">Voice Note Ready</span>
+                <span className="text-[10px] text-[#7A8277] font-mono font-bold">
                   {formatTime(playbackSeconds)} / {formatTime(duration || recordingSeconds)}
                 </span>
               </div>
@@ -278,7 +278,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
                 type="button"
                 onClick={startRecording}
                 title="Re-record"
-                className="p-2 rounded-xl bg-[#141414] hover:bg-[#141414] text-zinc-300 border border-neutral-800 transition"
+                className="p-2 rounded-[32px] bg-white shadow-sm hover:bg-white shadow-sm text-zinc-300 border border-[#E6E4DD] transition"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
               </button>
@@ -286,7 +286,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
                 type="button"
                 onClick={handleDiscard}
                 title="Discard"
-                className="p-2 rounded-xl bg-[#141414] hover:bg-red-950 text-red-400 border border-neutral-800 hover:border-red-500/40 transition"
+                className="p-2 rounded-[32px] bg-white shadow-sm hover:bg-red-950 text-red-400 border border-[#E6E4DD] hover:border-red-500/40 transition"
               >
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
@@ -294,7 +294,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
           </div>
 
           {/* Scrub Waveform simulation */}
-          <div className="h-4 bg-[#141414] rounded-lg overflow-hidden relative cursor-pointer" onClick={(e) => {
+          <div className="h-4 bg-white shadow-sm rounded-lg overflow-hidden relative cursor-pointer" onClick={(e) => {
             if (!audioElementRef.current || !duration) return;
             const rect = e.currentTarget.getBoundingClientRect();
             const clickPos = (e.clientX - rect.left) / rect.width;

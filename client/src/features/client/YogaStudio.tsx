@@ -81,7 +81,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
   };
 
   return (
-    <div className="glass-panel-elevated rounded-3xl overflow-hidden shadow-none relative group">
+    <div className="glass-panel-elevated rounded-[32px] overflow-hidden shadow-none relative group">
       {/* Background Mesh */}
       <div className="absolute inset-0 bg-mesh-dark opacity-30 pointer-events-none transition-opacity group-hover:opacity-50" />
       {aiCoachAsana && (
@@ -102,36 +102,36 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
       )}
       
       {/* Studio Header */}
-      <div className="relative z-10 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 p-5 border-b border-neutral-800 ">
-        <h2 className="text-xl font-black flex items-center gap-2 bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent">
-          <Sparkles className="w-5 h-5 text-neutral-300 drop-shadow-none" />
+      <div className="relative z-10 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 p-5 border-b border-[#E6E4DD] ">
+        <h2 className="text-xl font-bold tracking-tight flex items-center gap-2 bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent">
+          <Sparkles className="w-5 h-5 text-[#4A5C4F] drop-shadow-none" />
           Mind & Body Studio
         </h2>
-        <p className="text-xs text-neutral-300/80 mt-1 font-medium tracking-wide">Holistic wellness, yoga, meditation, and dance.</p>
+        <p className="text-xs text-[#4A5C4F]/80 mt-1 font-medium tracking-wide">Holistic wellness, yoga, meditation, and dance.</p>
       </div>
 
       {/* Tabs */}
-      <div className="relative z-10 flex border-b border-neutral-800 p-2 gap-2 bg-[#0F0F0F]  shadow-inner">
+      <div className="relative z-10 flex border-b border-[#E6E4DD] p-2 gap-2 bg-[#F4F2EC]  shadow-inner">
         <button
           onClick={() => { soundFx.playTapSound(); setActiveTab('yoga'); }}
-          className={`flex-1 py-2.5 rounded-xl text-[11px] font-black transition-all duration-300 flex items-center justify-center gap-1.5 ${
-            activeTab === 'yoga' ? 'bg-neutral-800 text-neutral-300 border border-neutral-700 shadow-none' : 'text-neutral-400 hover:bg-[#141414]'
+          className={`flex-1 py-2.5 rounded-[32px] text-[11px] font-bold tracking-tight transition-all duration-300 flex items-center justify-center gap-1.5 ${
+            activeTab === 'yoga' ? 'bg-[#EAF0EA] text-[#4A5C4F] border border-[#E6E4DD] shadow-none' : 'text-[#7A8277] hover:bg-white shadow-sm'
           }`}
         >
           <Activity className="w-3.5 h-3.5" /> Yoga Asanas
         </button>
         <button
           onClick={() => { soundFx.playTapSound(); setActiveTab('meditation'); }}
-          className={`flex-1 py-2.5 rounded-xl text-[11px] font-black transition-all duration-300 flex items-center justify-center gap-1.5 ${
-            activeTab === 'meditation' ? 'bg-neutral-800 text-neutral-300 border border-neutral-700 shadow-none' : 'text-neutral-400 hover:bg-[#141414]'
+          className={`flex-1 py-2.5 rounded-[32px] text-[11px] font-bold tracking-tight transition-all duration-300 flex items-center justify-center gap-1.5 ${
+            activeTab === 'meditation' ? 'bg-[#EAF0EA] text-[#4A5C4F] border border-[#E6E4DD] shadow-none' : 'text-[#7A8277] hover:bg-white shadow-sm'
           }`}
         >
           <Clock className="w-3.5 h-3.5" /> Meditation
         </button>
         <button
           onClick={() => { soundFx.playTapSound(); setActiveTab('zumba'); }}
-          className={`flex-1 py-2.5 rounded-xl text-[11px] font-black transition-all duration-300 flex items-center justify-center gap-1.5 ${
-            activeTab === 'zumba' ? 'bg-pink-500/30 text-pink-300 border border-pink-500/40 shadow-none' : 'text-neutral-400 hover:bg-[#141414]'
+          className={`flex-1 py-2.5 rounded-[32px] text-[11px] font-bold tracking-tight transition-all duration-300 flex items-center justify-center gap-1.5 ${
+            activeTab === 'zumba' ? 'bg-pink-500/30 text-pink-300 border border-pink-500/40 shadow-none' : 'text-[#7A8277] hover:bg-white shadow-sm'
           }`}
         >
           <Heart className="w-3.5 h-3.5" /> Zumba Class
@@ -143,30 +143,30 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         {/* YOGA TAB */}
         {activeTab === 'yoga' && (
           <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
-            <p className="text-xs text-neutral-400 leading-relaxed">
+            <p className="text-xs text-[#7A8277] leading-relaxed">
               Follow these foundational asanas to improve flexibility, balance, and core strength. Breathe deeply through each posture.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {YOGA_ASANAS.map((asana, idx) => (
-                <div key={idx} className="glass-panel rounded-2xl overflow-hidden group hover:border-neutral-700 hover:-translate-y-1 transition-all duration-300 hover:shadow-none">
-                  <div className="h-36 bg-[#141414] relative overflow-hidden">
+                <div key={idx} className="glass-panel rounded-[32px] overflow-hidden group hover:border-[#E6E4DD] hover:-translate-y-1 transition-all duration-300 hover:shadow-none">
+                  <div className="h-36 bg-white shadow-sm relative overflow-hidden">
                     <img src={asana.image} alt={asana.name} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                     <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                      <div className="text-[10px] font-black bg-neutral-800 text-white px-2 py-0.5 rounded shadow-none">
+                      <div className="text-[10px] font-bold tracking-tight bg-[#EAF0EA] text-[#2D332F] px-2 py-0.5 rounded shadow-none">
                         {asana.duration}
                       </div>
                     </div>
                   </div>
                   <div className="p-4 space-y-2">
-                    <h4 className="text-sm font-black text-white group-hover:text-neutral-300 transition-colors">{asana.name}</h4>
-                    <p className="text-[11px] text-neutral-400 leading-relaxed min-h-[40px]">{asana.benefits}</p>
+                    <h4 className="text-sm font-bold tracking-tight text-[#2D332F] group-hover:text-[#4A5C4F] transition-colors">{asana.name}</h4>
+                    <p className="text-[11px] text-[#7A8277] leading-relaxed min-h-[40px]">{asana.benefits}</p>
                     <button
                       onClick={() => {
                         soundFx.playTapSound();
                         setAiCoachAsana(asana);
                       }}
-                      className="w-full py-2 rounded-xl bg-neutral-800 hover:bg-neutral-800 border border-neutral-700 text-[11px] font-bold text-neutral-300 flex items-center justify-center gap-1.5 transition active:scale-95"
+                      className="w-full py-2 rounded-[32px] bg-[#EAF0EA] hover:bg-[#EAF0EA] border border-[#E6E4DD] text-[11px] font-bold text-[#4A5C4F] flex items-center justify-center gap-1.5 transition active:scale-95"
                     >
                       <ScanEye className="w-3.5 h-3.5" />
                       Start AI Coach
@@ -182,33 +182,33 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         {activeTab === 'meditation' && (
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300 text-center py-4">
             <div className="space-y-2">
-              <h3 className="text-lg font-black text-white">Guided Silent Meditation</h3>
-              <p className="text-xs text-neutral-400">Clear your mind. A bell will sound when your session ends.</p>
+              <h3 className="text-lg font-bold tracking-tight text-[#2D332F]">Guided Silent Meditation</h3>
+              <p className="text-xs text-[#7A8277]">Clear your mind. A bell will sound when your session ends.</p>
             </div>
             
             <div className="relative w-48 h-48 mx-auto flex items-center justify-center">
-              <div className={`absolute inset-0 rounded-full border-4 border-neutral-800 ${isMeditating ? 'animate-pulse border-neutral-700' : ''}`} />
-              <div className="text-5xl font-black text-white tabular-nums tracking-tighter">
+              <div className={`absolute inset-0 rounded-full border-4 border-[#E6E4DD] ${isMeditating ? 'animate-pulse border-[#E6E4DD]' : ''}`} />
+              <div className="text-5xl font-bold tracking-tight text-[#2D332F] tabular-nums tracking-tighter">
                 {formatTime(meditationTimeRemaining)}
               </div>
             </div>
 
             <div className="flex justify-center gap-3">
-              <button onClick={() => changeDuration(3)} className="px-3 py-1.5 rounded-lg bg-[#141414] hover:bg-[#141414] text-xs font-bold text-zinc-300">3 Min</button>
-              <button onClick={() => changeDuration(5)} className="px-3 py-1.5 rounded-lg bg-[#141414] hover:bg-[#141414] text-xs font-bold text-zinc-300">5 Min</button>
-              <button onClick={() => changeDuration(10)} className="px-3 py-1.5 rounded-lg bg-[#141414] hover:bg-[#141414] text-xs font-bold text-zinc-300">10 Min</button>
+              <button onClick={() => changeDuration(3)} className="px-3 py-1.5 rounded-lg bg-white shadow-sm hover:bg-white shadow-sm text-xs font-bold text-zinc-300">3 Min</button>
+              <button onClick={() => changeDuration(5)} className="px-3 py-1.5 rounded-lg bg-white shadow-sm hover:bg-white shadow-sm text-xs font-bold text-zinc-300">5 Min</button>
+              <button onClick={() => changeDuration(10)} className="px-3 py-1.5 rounded-lg bg-white shadow-sm hover:bg-white shadow-sm text-xs font-bold text-zinc-300">10 Min</button>
             </div>
 
             <div className="flex justify-center gap-4 pt-4">
               <button
                 onClick={toggleMeditation}
-                className="w-14 h-14 rounded-full bg-neutral-800 hover:bg-neutral-800 text-white flex items-center justify-center shadow-lg shadow-purple-500/20 transition active:scale-95"
+                className="w-14 h-14 rounded-full bg-[#EAF0EA] hover:bg-[#EAF0EA] text-[#2D332F] flex items-center justify-center shadow-lg shadow-purple-500/20 transition active:scale-95"
               >
                 {isMeditating ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
               </button>
               <button
                 onClick={resetMeditation}
-                className="w-14 h-14 rounded-full bg-[#141414] hover:bg-[#141414] text-zinc-300 flex items-center justify-center transition active:scale-95"
+                className="w-14 h-14 rounded-full bg-white shadow-sm hover:bg-white shadow-sm text-zinc-300 flex items-center justify-center transition active:scale-95"
               >
                 <RotateCcw className="w-5 h-5" />
               </button>
@@ -230,19 +230,19 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
                     soundFx.playTapSound();
                     setSelectedZumbaVideo({ title: video.title, videoId: video.videoId });
                   }}
-                  className="flex items-center p-2.5 rounded-2xl glass-panel hover:border-pink-500/40 hover:-translate-x-1 hover:shadow-none transition-all duration-300 group cursor-pointer"
+                  className="flex items-center p-2.5 rounded-[32px] glass-panel hover:border-pink-500/40 hover:-translate-x-1 hover:shadow-none transition-all duration-300 group cursor-pointer"
                 >
-                  <div className="w-28 h-20 rounded-xl overflow-hidden relative shrink-0">
+                  <div className="w-28 h-20 rounded-[32px] overflow-hidden relative shrink-0">
                     <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
-                    <div className="absolute inset-0 flex items-center justify-center bg-[#0F0F0F] group-hover:bg-[#0F0F0F] transition-colors">
+                    <div className="absolute inset-0 flex items-center justify-center bg-[#F4F2EC] group-hover:bg-[#F4F2EC] transition-colors">
                       <div className="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center shadow-none group-hover:scale-110 transition-transform">
-                        <Play className="w-4 h-4 text-white ml-0.5" />
+                        <Play className="w-4 h-4 text-[#2D332F] ml-0.5" />
                       </div>
                     </div>
                   </div>
                   <div className="ml-4 flex-1">
-                    <h4 className="text-sm font-black text-white group-hover:text-pink-300 transition-colors">{video.title}</h4>
-                    <span className="text-[10px] text-pink-400 font-black bg-pink-500/10 border border-pink-500/20 px-2 py-0.5 rounded mt-2 inline-block">
+                    <h4 className="text-sm font-bold tracking-tight text-[#2D332F] group-hover:text-pink-300 transition-colors">{video.title}</h4>
+                    <span className="text-[10px] text-pink-400 font-bold tracking-tight bg-pink-500/10 border border-pink-500/20 px-2 py-0.5 rounded mt-2 inline-block">
                       {video.duration}
                     </span>
                   </div>
@@ -253,10 +253,10 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         )}
         {/* PREMIUM VIDEO OVERLAY */}
         {selectedZumbaVideo && (
-          <div className="fixed inset-0 z-[200] bg-[#0F0F0F] backdrop-blur-3xl flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-500">
+          <div className="fixed inset-0 z-[200] bg-[#F4F2EC] backdrop-blur-3xl flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-500">
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-              <div className="bg-[#1A1A1A]  px-4 py-2 rounded-2xl border border-neutral-800">
-                <h3 className="text-white font-black tracking-wide text-sm flex items-center gap-2">
+              <div className="bg-white shadow-sm  px-4 py-2 rounded-[32px] border border-[#E6E4DD]">
+                <h3 className="text-[#2D332F] font-bold tracking-tight tracking-wide text-sm flex items-center gap-2">
                   <Play className="w-4 h-4 text-pink-500 fill-pink-500" />
                   {selectedZumbaVideo.title}
                 </h3>
@@ -275,14 +275,14 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
                     }
                     setSelectedZumbaVideo(null);
                   }}
-                  className="px-4 py-2 rounded-full bg-neutral-800 hover:bg-neutral-800 text-white font-bold text-sm shadow-none flex items-center gap-2 transition"
+                  className="px-4 py-2 rounded-full bg-[#EAF0EA] hover:bg-[#EAF0EA] text-[#2D332F] font-bold text-sm shadow-none flex items-center gap-2 transition"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   Complete Zumba
                 </button>
                 <button 
                   onClick={() => setSelectedZumbaVideo(null)}
-                  className="px-4 py-2 rounded-full bg-[#1A1A1A] hover:bg-rose-500/20 text-white hover:text-rose-400 border border-neutral-800 flex items-center justify-center gap-2 transition"
+                  className="px-4 py-2 rounded-full bg-white shadow-sm hover:bg-rose-500/20 text-[#2D332F] hover:text-rose-400 border border-[#E6E4DD] flex items-center justify-center gap-2 transition"
                 >
                   <ArrowLeft className="w-5 h-5" />
                   <span className="font-bold text-sm">Back</span>
@@ -290,7 +290,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
               </div>
             </div>
             
-            <div className="w-full max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-none border border-pink-500/30 mt-16 bg-black relative">
+            <div className="w-full max-w-5xl aspect-video rounded-[32px] overflow-hidden shadow-none border border-pink-500/30 mt-16 bg-black relative">
               <video
                 className="w-full h-full object-contain"
                 src={selectedZumbaVideo.videoUrl}

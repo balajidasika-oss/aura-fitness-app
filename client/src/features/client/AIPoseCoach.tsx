@@ -281,33 +281,33 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
   }, [isCorrect]);
 
   return (
-    <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#0F0F0F] backdrop-blur-2xl p-2 md:p-6 animate-in fade-in zoom-in-95 duration-500 ${isFullscreen ? 'p-0' : ''}`}>
-      <div className={`relative bg-[#141414] border border-neutral-800 flex flex-col overflow-hidden shadow-none ${isFullscreen ? 'w-full h-full rounded-none' : 'w-full h-full max-w-7xl max-h-[900px] rounded-[2rem]'}`}>
+    <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#F4F2EC] backdrop-blur-2xl p-2 md:p-6 animate-in fade-in zoom-in-95 duration-500 ${isFullscreen ? 'p-0' : ''}`}>
+      <div className={`relative bg-white shadow-sm border border-[#E6E4DD] flex flex-col overflow-hidden shadow-none ${isFullscreen ? 'w-full h-full rounded-none' : 'w-full h-full max-w-7xl max-h-[900px] rounded-[2rem]'}`}>
         
         {/* Header - Glassmorphism */}
-        <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between p-4 bg-[#141414]  border border-neutral-800 rounded-2xl shadow-lg">
+        <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between p-4 bg-white shadow-sm  border border-[#E6E4DD] rounded-[32px] shadow-lg">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-neutral-800 text-neutral-300 flex items-center justify-center border border-neutral-700 shadow-none">
+            <div className="w-10 h-10 rounded-[32px] bg-[#EAF0EA] text-[#4A5C4F] flex items-center justify-center border border-[#E6E4DD] shadow-none">
               <ScanEye className="w-5 h-5 animate-pulse" />
             </div>
             <div>
-              <h3 className="text-sm font-black text-white flex items-center gap-2">
-                AuraFit AI Vision <span className="flex w-2 h-2 rounded-full bg-neutral-800 shadow-none animate-pulse" />
+              <h3 className="text-sm font-bold tracking-tight text-[#2D332F] flex items-center gap-2">
+                AuraFit AI Vision <span className="flex w-2 h-2 rounded-full bg-[#EAF0EA] shadow-none animate-pulse" />
               </h3>
-              <p className="text-[11px] text-neutral-300 font-bold uppercase tracking-wider">{targetAsana.name}</p>
+              <p className="text-[11px] text-[#4A5C4F] font-bold uppercase tracking-wider">{targetAsana.name}</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-2">
             <button 
               onClick={() => { soundFx.playTapSound(); setIsFullscreen(!isFullscreen); }}
-              className="p-2.5 rounded-xl bg-[#141414] hover:bg-[#1A1A1A] text-white transition  border border-neutral-800"
+              className="p-2.5 rounded-[32px] bg-white shadow-sm hover:bg-white shadow-sm text-[#2D332F] transition  border border-[#E6E4DD]"
             >
               {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
             </button>
             <button 
               onClick={() => { soundFx.playTapSound(); onClose(); }}
-              className="px-4 py-2 flex items-center gap-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 transition  border border-rose-500/30 shadow-none"
+              className="px-4 py-2 flex items-center gap-2 rounded-[32px] bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 transition  border border-rose-500/30 shadow-none"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="font-bold text-sm">Back</span>
@@ -316,47 +316,47 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
         </div>
 
         {/* Content Body - Split Screen */}
-        <div className="flex-1 flex flex-row relative w-full h-full bg-[#141414] overflow-hidden pt-[88px]">
+        <div className="flex-1 flex flex-row relative w-full h-full bg-white shadow-sm overflow-hidden pt-[88px]">
           
           {/* LEFT PANEL: Reference Image & Instructions */}
-          <div className="w-[40%] md:w-1/3 h-full border-r border-neutral-800 bg-[#141414] flex flex-col overflow-y-auto">
+          <div className="w-[40%] md:w-1/3 h-full border-r border-[#E6E4DD] bg-white shadow-sm flex flex-col overflow-y-auto">
             {/* Reference Image */}
-            <div className="relative h-48 md:h-2/5 shrink-0 bg-[#141414] p-4 flex flex-col justify-center items-center">
+            <div className="relative h-48 md:h-2/5 shrink-0 bg-white shadow-sm p-4 flex flex-col justify-center items-center">
               <img 
                 src={targetAsana.image} 
                 alt={targetAsana.name} 
-                className="w-full h-full object-cover rounded-xl shadow-lg border border-neutral-800"
+                className="w-full h-full object-cover rounded-[32px] shadow-lg border border-[#E6E4DD]"
               />
-              <div className="absolute bottom-6 bg-[#0F0F0F] backdrop-blur px-3 py-1.5 rounded-lg border border-neutral-800 text-xs font-bold text-white flex items-center gap-2">
-                <Info className="w-3.5 h-3.5 text-neutral-300" />
+              <div className="absolute bottom-6 bg-[#F4F2EC] backdrop-blur px-3 py-1.5 rounded-lg border border-[#E6E4DD] text-xs font-bold text-[#2D332F] flex items-center gap-2">
+                <Info className="w-3.5 h-3.5 text-[#4A5C4F]" />
                 Target Reference
               </div>
             </div>
 
             {/* Coach's Lead Instructions */}
             <div className="flex-1 p-6 flex flex-col">
-              <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Activity className="w-4 h-4 text-neutral-300" />
+              <h4 className="text-sm font-bold tracking-tight text-[#2D332F] uppercase tracking-wider mb-4 flex items-center gap-2">
+                <Activity className="w-4 h-4 text-[#4A5C4F]" />
                 Coach's Instructions
               </h4>
                 <div className="flex-1 mt-auto">
-                  <h4 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                  <h4 className="text-sm font-bold text-[#2D332F] mb-2 flex items-center gap-2">
                     <Activity className="w-4 h-4 text-rose-500" /> Benefits
                   </h4>
-                  <p className="text-sm text-neutral-400 leading-relaxed mb-6">
+                  <p className="text-sm text-[#7A8277] leading-relaxed mb-6">
                     {targetAsana.benefits}
                   </p>
 
-                  <div className="p-4 rounded-xl bg-[#141414] border border-neutral-800 shadow-inner mb-6">
-                    <span className="font-bold text-white text-xs block mb-2">Live Alignment Guide:</span>
-                    <ul className="text-xs text-neutral-400 space-y-2 list-disc list-inside">
+                  <div className="p-4 rounded-[32px] bg-white shadow-sm border border-[#E6E4DD] shadow-inner mb-6">
+                    <span className="font-bold text-[#2D332F] text-xs block mb-2">Live Alignment Guide:</span>
+                    <ul className="text-xs text-[#7A8277] space-y-2 list-disc list-inside">
                       <li>Align your body exactly like the reference image.</li>
                       <li>Watch the neon skeleton on the right.</li>
                       <li>Wait for the skeleton to turn green.</li>
                     </ul>
                   </div>
 
-                  <div className="mt-auto pt-4 border-t border-neutral-800">
+                  <div className="mt-auto pt-4 border-t border-[#E6E4DD]">
                     <button 
                       onClick={() => {
                         confetti({
@@ -368,7 +368,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
                         soundFx.playSuccessChime();
                         onComplete(targetAsana);
                       }}
-                      className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-black tracking-wide shadow-none transition-all active:scale-95 flex items-center justify-center gap-2"
+                      className="w-full py-3.5 rounded-[32px] bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-[#2D332F] font-bold tracking-tight tracking-wide shadow-none transition-all active:scale-95 flex items-center justify-center gap-2"
                     >
                       <CheckCircle2 className="w-5 h-5" />
                       Asana Complete!
@@ -384,14 +384,14 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
             <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 via-transparent to-purple-500/10" />
 
             {isModelLoading && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#141414]  z-30">
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-white shadow-sm  z-30">
                 <div className="relative w-20 h-20 mb-6 flex items-center justify-center">
-                  <div className="absolute inset-0 border-4 border-neutral-700 rounded-full" />
+                  <div className="absolute inset-0 border-4 border-[#E6E4DD] rounded-full" />
                   <div className="absolute inset-0 border-4 border-t-indigo-500 rounded-full animate-spin" />
-                  <ScanEye className="w-8 h-8 text-neutral-300 animate-pulse" />
+                  <ScanEye className="w-8 h-8 text-[#4A5C4F] animate-pulse" />
                 </div>
-                <h2 className="text-xl font-black text-white tracking-wide">Calibrating AI Model</h2>
-                <p className="text-xs font-medium text-neutral-300/80 mt-2">Initializing THUNDER tracking with EMA Smoothing...</p>
+                <h2 className="text-xl font-bold tracking-tight text-[#2D332F] tracking-wide">Calibrating AI Model</h2>
+                <p className="text-xs font-medium text-[#4A5C4F]/80 mt-2">Initializing THUNDER tracking with EMA Smoothing...</p>
               </div>
             )}
             
@@ -409,22 +409,22 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
             {/* Live Feedback Bubble Overlay */}
             {!isModelLoading && (
               <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-sm">
-                <div className={`p-4 rounded-2xl border  shadow-none transition-all duration-500 flex items-center justify-between gap-4 ${
+                <div className={`p-4 rounded-[32px] border  shadow-none transition-all duration-500 flex items-center justify-between gap-4 ${
                   isCorrect 
-                    ? 'bg-neutral-800 border-neutral-700 shadow-none' 
-                    : 'bg-[#141414] border-neutral-800'
+                    ? 'bg-[#EAF0EA] border-[#E6E4DD] shadow-none' 
+                    : 'bg-white shadow-sm border-[#E6E4DD]'
                 }`}>
                   <div className="flex-1">
-                    <h4 className={`text-base font-black ${isCorrect ? 'text-neutral-200' : 'text-white'}`}>
+                    <h4 className={`text-base font-bold tracking-tight ${isCorrect ? 'text-[#4A5C4F]' : 'text-[#2D332F]'}`}>
                       {isCorrect ? 'Perfect Form!' : 'Adjust Alignment'}
                     </h4>
-                    <p className={`text-xs mt-0.5 font-medium ${isCorrect ? 'text-neutral-200' : 'text-zinc-300'}`}>
+                    <p className={`text-xs mt-0.5 font-medium ${isCorrect ? 'text-[#4A5C4F]' : 'text-zinc-300'}`}>
                       {feedbackMsg}
                     </p>
                   </div>
                   {isCorrect ? (
-                    <div className="w-10 h-10 shrink-0 rounded-full bg-neutral-800 flex items-center justify-center border border-neutral-700">
-                      <CheckCircle2 className="w-5 h-5 text-neutral-200" />
+                    <div className="w-10 h-10 shrink-0 rounded-full bg-[#EAF0EA] flex items-center justify-center border border-[#E6E4DD]">
+                      <CheckCircle2 className="w-5 h-5 text-[#4A5C4F]" />
                     </div>
                   ) : (
                     <div className="w-10 h-10 shrink-0 rounded-full bg-sky-500/20 flex items-center justify-center border border-sky-500/50">
