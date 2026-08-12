@@ -43,6 +43,7 @@ import {
   MuscleCategory,
 } from '../../types';
 import { submitDailyLog, fetchTodayLog, joinCoach, API_BASE } from '../../services/api';
+import { GamificationDashboard } from './GamificationDashboard';
 import { useAuth } from '../../context/AuthContext';
 import { ProgressRing } from '../../components/ProgressRing';
 import { LiveCameraModal } from '../../components/LiveCameraModal';

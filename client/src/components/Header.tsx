@@ -35,7 +35,16 @@ export const Header: React.FC<HeaderProps> = ({
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
       const isStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
-      setIsStandalone(isStandaloneMode);
+      const isInstalledAlready = localStorage.getItem('pwa_installed') === 'true';
+      setIsStandalone(isStandaloneMode || isInstalledAlready);
+
+      const handleAppInstalled = () => {
+        localStorage.setItem('pwa_installed', 'true');
+        setIsStandalone(true);
+      };
+      
+      window.addEventListener('appinstalled', handleAppInstalled);
+      return () => window.removeEventListener('appinstalled', handleAppInstalled);
     }
   }, []);
 
