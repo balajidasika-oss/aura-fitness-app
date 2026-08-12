@@ -18,6 +18,22 @@
   </head>
   <body class="bg-[#09090b] text-zinc-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-300 min-h-screen overflow-x-hidden">
     <div id="root"></div>
+    <script>
+      // Escape hatch for old Service Worker caches that cause blank screens
+      window.addEventListener('error', function(e) {
+        if (e.message && (e.message.toLowerCase().includes('syntaxerror') || e.message.toLowerCase().includes('dynamically imported module'))) {
+          if (!sessionStorage.getItem('pwa_cache_cleared')) {
+            sessionStorage.setItem('pwa_cache_cleared', 'true');
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.getRegistrations().then(function(regs) {
+                for(let reg of regs) { reg.unregister(); }
+                window.location.reload(true);
+              });
+            }
+          }
+        }
+      }, true);
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
