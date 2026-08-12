@@ -20,17 +20,17 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden rounded-3xl bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-950 border border-zinc-800 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F0F0F]  animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden rounded-3xl bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-950 border border-neutral-800 shadow-none">
         {/* Top Header */}
-        <div className="p-4 border-b border-zinc-800/80 flex items-center justify-between bg-zinc-950/60 backdrop-blur-md relative z-10">
+        <div className="p-4 border-b border-neutral-800 flex items-center justify-between bg-[#141414]  relative z-10">
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shadow-md">
+            <div className="w-8 h-8 rounded-xl bg-neutral-800 text-neutral-200 flex items-center justify-center shadow-md">
               <Scale className="w-4 h-4" />
             </div>
             <div>
               <h3 className="text-sm font-black text-white">Aura Legal & Compliance Center</h3>
-              <p className="text-[10px] text-zinc-400 font-medium">Terms, Health Waiver & Privacy Protection</p>
+              <p className="text-[10px] text-neutral-400 font-medium">Terms, Health Waiver & Privacy Protection</p>
             </div>
           </div>
 
@@ -40,14 +40,14 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               soundFx.playTapSound();
               onClose();
             }}
-            className="p-1.5 rounded-xl bg-zinc-800/80 text-zinc-400 hover:text-white transition"
+            className="p-1.5 rounded-xl bg-[#141414] text-neutral-400 hover:text-white transition"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Tab Switcher */}
-        <div className="grid grid-cols-3 p-2 gap-1.5 bg-zinc-950 border-b border-zinc-800/80 text-xs">
+        <div className="grid grid-cols-3 p-2 gap-1.5 bg-[#141414] border-b border-neutral-800 text-xs">
           <button
             type="button"
             onClick={() => {
@@ -57,7 +57,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
             className={`py-2 px-1 rounded-xl font-bold flex items-center justify-center space-x-1.5 transition ${
               activeTab === 'parq'
                 ? 'bg-red-500/20 text-red-300 border border-red-500/40 shadow-sm'
-                : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
+                : 'text-neutral-400 hover:text-zinc-200 hover:bg-[#141414]'
             }`}
           >
             <HeartPulse className="w-3.5 h-3.5" />
@@ -72,8 +72,8 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
             }}
             className={`py-2 px-1 rounded-xl font-bold flex items-center justify-center space-x-1.5 transition ${
               activeTab === 'privacy'
-                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
-                : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
+                ? 'bg-neutral-800 text-neutral-200 border border-neutral-700 shadow-sm'
+                : 'text-neutral-400 hover:text-zinc-200 hover:bg-[#141414]'
             }`}
           >
             <Lock className="w-3.5 h-3.5" />
@@ -88,8 +88,8 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
             }}
             className={`py-2 px-1 rounded-xl font-bold flex items-center justify-center space-x-1.5 transition ${
               activeTab === 'terms'
-                ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
-                : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
+                ? 'bg-neutral-800 text-neutral-300 border border-neutral-700 shadow-sm'
+                : 'text-neutral-400 hover:text-zinc-200 hover:bg-[#141414]'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -124,7 +124,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
                 <p>
                   By utilizing this application, you attest that you do not have any of the following contraindications unless explicitly cleared in writing by a licensed physician:
                 </p>
-                <ul className="list-disc pl-4 space-y-1 text-zinc-400">
+                <ul className="list-disc pl-4 space-y-1 text-neutral-400">
                   <li>Diagnosed cardiovascular heart conditions or chest pain during physical exertion.</li>
                   <li>Frequent dizziness, loss of consciousness, or severe balance disorders.</li>
                   <li>Acute orthopedic bone, joint, or spinal issues aggravated by heavy resistance training.</li>
@@ -144,11 +144,11 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
           {/* TAB 2: PRIVACY & GDPR DATA RIGHTS */}
           {activeTab === 'privacy' && (
             <div className="space-y-3.5 animate-in fade-in duration-150">
-              <div className="p-3 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-200 flex items-start space-x-2.5">
-                <Shield className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <div className="p-3 rounded-2xl bg-neutral-800 border border-neutral-700 text-neutral-200 flex items-start space-x-2.5">
+                <Shield className="w-4 h-4 text-neutral-200 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs font-black text-white">Privacy Policy & Biometric Protection (GDPR / CCPA)</h4>
-                  <p className="text-[11px] text-emerald-300/90 mt-0.5">
+                  <p className="text-[11px] text-neutral-200/90 mt-0.5">
                     Your personal biometric data, photos, and voice memos belong to you. We do not sell or broker user data.
                   </p>
                 </div>
@@ -156,7 +156,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
 
               <div className="space-y-2">
                 <h5 className="text-xs font-bold text-white uppercase tracking-wider">1. Data We Collect</h5>
-                <ul className="list-disc pl-4 space-y-1 text-zinc-400">
+                <ul className="list-disc pl-4 space-y-1 text-neutral-400">
                   <li><strong className="text-zinc-200">Account Profile:</strong> Name, email address, fitness goals, and profile photo.</li>
                   <li><strong className="text-zinc-200">Workout Logs:</strong> Muscle groups, exercises, sets, reps, weight (kg), session duration, and cardio metrics (incline, floors, pace).</li>
                   <li><strong className="text-zinc-200">Media & Sensor Audio:</strong> Daily meal photos, post-workout selfies, and voice memos recorded via your device microphone.</li>
@@ -173,7 +173,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               <div className="space-y-2">
                 <h5 className="text-xs font-bold text-white uppercase tracking-wider">3. GDPR Data Subject Rights</h5>
                 <p>Under GDPR (EU) and CCPA (California), you hold the unconditional right to:</p>
-                <ul className="list-disc pl-4 space-y-1 text-zinc-400">
+                <ul className="list-disc pl-4 space-y-1 text-neutral-400">
                   <li><strong className="text-zinc-200">Right to Portability (Export):</strong> Download a complete machine-readable JSON copy of your logs anytime from Privacy Settings.</li>
                   <li><strong className="text-zinc-200">Right to Erasure (Forget Me):</strong> Permanently delete your account and all associated media files with 1-tap in your settings.</li>
                   <li><strong className="text-zinc-200">Zero Ad-Network Tracking:</strong> We do not deploy third-party advertising cookies or track users across external websites.</li>
@@ -192,11 +192,11 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
           {/* TAB 3: TERMS OF SERVICE */}
           {activeTab === 'terms' && (
             <div className="space-y-3.5 animate-in fade-in duration-150">
-              <div className="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-500/40 text-indigo-200 flex items-start space-x-2.5">
-                <FileText className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
+              <div className="p-3 rounded-2xl bg-neutral-800 border border-neutral-700 text-neutral-300 flex items-start space-x-2.5">
+                <FileText className="w-4 h-4 text-neutral-300 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs font-black text-white">Terms of Platform Service</h4>
-                  <p className="text-[11px] text-indigo-300/90 mt-0.5">
+                  <p className="text-[11px] text-neutral-300/90 mt-0.5">
                     Standard rules governing user conduct, coach communication, and platform usage.
                   </p>
                 </div>
@@ -234,8 +234,8 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
         </div>
 
         {/* Footer Accept / Close Button */}
-        <div className="p-4 border-t border-zinc-800 bg-zinc-950/80 flex items-center justify-between">
-          <div className="flex items-center space-x-1.5 text-[11px] text-emerald-400 font-bold">
+        <div className="p-4 border-t border-neutral-800 bg-[#141414] flex items-center justify-between">
+          <div className="flex items-center space-x-1.5 text-[11px] text-neutral-200 font-bold">
             <CheckCircle className="w-3.5 h-3.5" />
             <span>Updated & Compliant 2026</span>
           </div>
@@ -246,7 +246,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               soundFx.playTapSound();
               onClose();
             }}
-            className="py-2 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black transition shadow-lg shadow-emerald-500/20 active:scale-95"
+            className="py-2 px-5 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-slate-950 text-xs font-black transition shadow-lg shadow-emerald-500/20 active:scale-95"
           >
             I Understand & Agree
           </button>

@@ -147,8 +147,8 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-sm bg-slate-900 border border-slate-700/80 rounded-3xl overflow-hidden shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0F0F0F]  p-4 animate-in fade-in duration-200">
+      <div className="relative w-full max-w-sm bg-slate-900 border border-slate-700/80 rounded-3xl overflow-hidden shadow-none flex flex-col">
         {/* Shutter White Flash overlay */}
         {isFlashing && (
           <div className="absolute inset-0 bg-white z-40 pointer-events-none animate-out fade-out duration-200" />
@@ -161,7 +161,7 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
               <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
               <h3 className="font-bold text-white text-sm">{title}</h3>
             </div>
-            <p className="text-[11px] text-slate-400 mt-0.5">{subtitle}</p>
+            <p className="text-[11px] text-neutral-400 mt-0.5">{subtitle}</p>
           </div>
           <button
             onClick={handleClose}
@@ -181,7 +181,7 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
                 alt="Captured Preview"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute top-3 left-3 bg-emerald-500/90 text-white text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm shadow flex items-center space-x-1">
+              <div className="absolute top-3 left-3 bg-neutral-800 text-white text-xs font-semibold px-2.5 py-1 rounded-full  shadow flex items-center space-x-1">
                 <Check className="w-3.5 h-3.5" />
                 <span>Captured Ready</span>
               </div>
@@ -189,7 +189,7 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
           ) : cameraError ? (
             /* Camera Permission or Hardware Error Fallback */
             <div className="p-6 text-center flex flex-col items-center justify-center space-y-3">
-              <div className="w-12 h-12 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-neutral-800 text-neutral-300 flex items-center justify-center">
                 <Camera className="w-6 h-6" />
               </div>
               <p className="text-xs text-slate-300 font-medium">{cameraError}</p>
@@ -231,10 +231,10 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
               <div className="absolute top-3 right-3 flex items-center space-x-2">
                 <button
                   onClick={() => setHasGrid(!hasGrid)}
-                  className={`px-2 py-1 rounded-lg text-[10px] font-semibold backdrop-blur-md border ${
+                  className={`px-2 py-1 rounded-lg text-[10px] font-semibold  border ${
                     hasGrid
-                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                      : 'bg-black/40 text-slate-400 border-white/10'
+                      ? 'bg-neutral-800 text-neutral-200 border-neutral-700'
+                      : 'bg-[#0F0F0F] text-neutral-400 border-neutral-800'
                   }`}
                 >
                   Grid {hasGrid ? 'ON' : 'OFF'}
@@ -281,9 +281,9 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
               {/* Primary Shutter Button */}
               <button
                 onClick={handleTakeShutter}
-                className="relative group p-1 rounded-full border-4 border-emerald-400/80 hover:border-emerald-400 transition-transform active:scale-95"
+                className="relative group p-1 rounded-full border-4 border-neutral-700 hover:border-neutral-700 transition-transform active:scale-95"
               >
-                <div className="w-14 h-14 rounded-full bg-white group-hover:bg-emerald-100 transition-colors shadow-lg flex items-center justify-center">
+                <div className="w-14 h-14 rounded-full bg-white group-hover:bg-neutral-800 transition-colors shadow-lg flex items-center justify-center">
                   <div className="w-12 h-12 rounded-full border-2 border-slate-900 bg-white" />
                 </div>
               </button>

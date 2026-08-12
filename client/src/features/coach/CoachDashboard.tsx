@@ -175,33 +175,33 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
   return (
     <div className="space-y-6 pb-20">
       {/* Top Banner / Coach Header */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-none  flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-black uppercase tracking-wider">
               Coach Command Center
             </span>
-            <span className="text-xs text-slate-400 font-medium">
+            <span className="text-xs text-neutral-400 font-medium">
               {clients.length} Athlete{clients.length === 1 ? '' : 's'} on Roster
             </span>
           </div>
           <h1 className="text-xl sm:text-2xl font-black text-white">
             Welcome, {coachUser?.name || 'Coach'}
           </h1>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-neutral-400 mt-0.5">
             Monitor real daily workouts, listen to live voice memos, and cheer your athletes.
           </p>
         </div>
 
         {coachUser?.coachCode && (
-          <div className="p-3 bg-slate-950/80 border border-emerald-500/30 rounded-2xl flex items-center gap-3 w-full sm:w-auto justify-between">
+          <div className="p-3 bg-slate-950/80 border border-neutral-700 rounded-2xl flex items-center gap-3 w-full sm:w-auto justify-between">
             <div>
-              <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Your Coach Code</div>
-              <div className="text-sm font-black text-emerald-400 font-mono tracking-wider">{coachUser.coachCode}</div>
+              <div className="text-[10px] text-neutral-400 font-bold uppercase tracking-wider">Your Coach Code</div>
+              <div className="text-sm font-black text-neutral-200 font-mono tracking-wider">{coachUser.coachCode}</div>
             </div>
             <button
               onClick={handleCopyCoachCode}
-              className="px-3 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-400 text-xs font-bold flex items-center gap-1.5 transition active:scale-95"
+              className="px-3 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-800 border border-neutral-700 text-neutral-200 text-xs font-bold flex items-center gap-1.5 transition active:scale-95"
             >
               {copiedCode ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copiedCode ? 'Copied' : 'Copy'}</span>
@@ -219,13 +219,13 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
           <h3 className="text-lg font-black text-white">No Athletes Connected Yet</h3>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
             Share your unique Coach Code{' '}
-            <strong className="text-emerald-400 font-mono">{coachUser?.coachCode || 'COACH-CODE'}</strong> with your clients.
+            <strong className="text-neutral-200 font-mono">{coachUser?.coachCode || 'COACH-CODE'}</strong> with your clients.
             When they enter this code during registration, their workouts, nutrition photos, and voice notes will appear right here in your live stream.
           </p>
           <div className="flex justify-center gap-3 pt-2">
             <button
               onClick={handleCopyCoachCode}
-              className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95"
+              className="px-5 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95"
             >
               <Copy className="w-4 h-4" />
               <span>Copy Invite Code</span>
@@ -252,8 +252,8 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
               }}
               className={`text-xs font-bold px-4 py-2 rounded-xl transition ${
                 activeTab === 'feed'
-                  ? 'bg-emerald-500 text-slate-950 font-black shadow-md'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-neutral-800 text-slate-950 font-black shadow-md'
+                  : 'text-neutral-400 hover:text-white'
               }`}
             >
               Activity Stream
@@ -265,8 +265,8 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
               }}
               className={`text-xs font-bold px-4 py-2 rounded-xl transition ${
                 activeTab === 'athletes'
-                  ? 'bg-emerald-500 text-slate-950 font-black shadow-md'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-neutral-800 text-slate-950 font-black shadow-md'
+                  : 'text-neutral-400 hover:text-white'
               }`}
             >
               Athlete Roster ({clients.length})
@@ -275,7 +275,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
 
           <button
             onClick={refreshAction}
-            className="p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition active:scale-95"
+            className="p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-neutral-400 hover:text-white transition active:scale-95"
             title="Refresh Feed"
           >
             <RefreshCw className="w-4 h-4" />
@@ -287,8 +287,8 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
       {clients.length > 0 && (
         <div className="space-y-1.5">
           <div className="flex items-center justify-between px-1">
-            <span className="text-[11px] font-bold text-slate-400 flex items-center space-x-1">
-              <Sparkles className="w-3 h-3 text-emerald-400" />
+            <span className="text-[11px] font-bold text-neutral-400 flex items-center space-x-1">
+              <Sparkles className="w-3 h-3 text-neutral-200" />
               <span>Today's Athlete Stories</span>
             </span>
             <span className="text-[10px] text-slate-500">Tap avatar to view summary</span>
@@ -325,7 +325,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                       {client.name.split(' ')[0]}
                     </span>
                     {client.streak && client.streak > 0 ? (
-                      <Flame className="w-3 h-3 text-amber-400 fill-amber-400 flex-shrink-0" />
+                      <Flame className="w-3 h-3 text-neutral-300 fill-amber-400 flex-shrink-0" />
                     ) : null}
                   </div>
                 </button>
@@ -357,7 +357,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
             return (
               <div
                 key={client._id}
-                className="bg-slate-900/90 rounded-3xl border border-slate-800/90 overflow-hidden shadow-2xl backdrop-blur-sm"
+                className="bg-slate-900/90 rounded-3xl border border-slate-800/90 overflow-hidden shadow-none "
               >
                 {/* Athlete Top Bar */}
                 <div className="p-3.5 flex items-center justify-between border-b border-slate-800/80 bg-slate-950/50">
@@ -368,14 +368,14 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     <img
                       src={client.avatarUrl}
                       alt={client.name}
-                      className="w-10 h-10 rounded-2xl object-cover border border-emerald-500/30"
+                      className="w-10 h-10 rounded-2xl object-cover border border-neutral-700"
                     />
                     <div>
                       <h4 className="text-xs font-bold text-white leading-tight flex items-center space-x-1">
                         <span>{client.name}</span>
                         <ChevronRight className="w-3 h-3 text-slate-500" />
                       </h4>
-                      <p className="text-[10px] text-slate-400 font-medium">
+                      <p className="text-[10px] text-neutral-400 font-medium">
                         {client.fitnessGoal} · {client.streak || 0}d streak
                       </p>
                     </div>
@@ -385,16 +385,16 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     <button
                       onClick={() => handleSpeakReview(client, latestLog)}
                       title="Audio Voice Coach Synthesis"
-                      className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 transition-colors"
+                      className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-neutral-200 transition-colors"
                     >
                       <Volume2 className="w-4 h-4" />
                     </button>
                     <span
                       className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
                         client.compliance?.tier === 'green'
-                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                          ? 'bg-neutral-800 text-neutral-200 border border-neutral-700'
                           : client.compliance?.tier === 'yellow'
-                          ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                          ? 'bg-neutral-800 text-neutral-300 border border-neutral-700'
                           : 'bg-red-500/20 text-red-300 border border-red-500/30'
                       }`}
                     >
@@ -415,7 +415,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-                        <div className="absolute top-2.5 left-2.5 bg-emerald-500 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow">
+                        <div className="absolute top-2.5 left-2.5 bg-neutral-800 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow">
                           📸 Session Selfie Logged
                         </div>
                       </div>
@@ -426,10 +426,10 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                       <div className="p-3 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-2">
                         <div className="flex justify-between items-center text-xs">
                           <span className="font-bold text-white flex items-center gap-1.5">
-                            <Dumbbell className="w-3.5 h-3.5 text-emerald-400" />
+                            <Dumbbell className="w-3.5 h-3.5 text-neutral-200" />
                             <span>{workout.title || 'Strength Session'}</span>
                           </span>
-                          <span className="text-emerald-400 font-black text-[11px]">
+                          <span className="text-neutral-200 font-black text-[11px]">
                             {grandTotalReps > 0 ? `${grandTotalReps} Total Reps` : `${totalDuration} mins`}
                           </span>
                         </div>
@@ -465,12 +465,12 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     {hasVoiceNote && voiceUrl && (
                       <div className="p-3 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <Mic className="w-4 h-4 text-emerald-400" />
+                          <Mic className="w-4 h-4 text-neutral-200" />
                           <span className="text-xs font-bold text-slate-200">Voice Debrief Memo</span>
                         </div>
                         <button
                           onClick={() => toggleFeedAudio(voiceUrl)}
-                          className="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 text-xs font-bold flex items-center gap-1 transition"
+                          className="px-3 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-neutral-200 text-xs font-bold flex items-center gap-1 transition"
                         >
                           {isAudioPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                           <span>{isAudioPlaying ? 'Pause' : 'Play Memo'}</span>
@@ -481,12 +481,12 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                     {/* Coach 1-Tap Cheer Reactions Bar */}
                     <div className="pt-2 border-t border-slate-800/80">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-[11px] font-bold text-slate-400 flex items-center space-x-1">
-                          <Sparkles className="w-3 h-3 text-emerald-400" />
+                        <span className="text-[11px] font-bold text-neutral-400 flex items-center space-x-1">
+                          <Sparkles className="w-3 h-3 text-neutral-200" />
                           <span>1-Tap Coach Cheer</span>
                         </span>
                         {isCheered && (
-                          <span className="text-[10px] font-bold text-emerald-400 flex items-center space-x-1">
+                          <span className="text-[10px] font-bold text-neutral-200 flex items-center space-x-1">
                             <CheckCircle2 className="w-3 h-3" />
                             <span>Cheer Delivered</span>
                           </span>
@@ -498,7 +498,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                           onClick={() =>
                             handleQuickCheer(client._id, logId, '🔥', 'Crushed your strength & cardio goals today!')
                           }
-                          className="py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/40 text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
+                          className="py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-neutral-700 text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
                         >
                           <span>🔥</span>
                           <span className="text-[11px]">Crushed It</span>
@@ -518,7 +518,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                           onClick={() =>
                             handleQuickCheer(client._id, logId, '🥗', 'Spotless meal choices. Keep the fuel clean!')
                           }
-                          className="py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-emerald-500/40 text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
+                          className="py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-neutral-700 text-xs font-bold text-slate-200 flex items-center justify-center space-x-1 transition active:scale-95 shadow-sm"
                         >
                           <span>🥗</span>
                           <span className="text-[11px]">Clean Fuel</span>
@@ -548,8 +548,8 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                 onClick={() => setFilterTier(tier)}
                 className={`flex-1 py-1 text-[11px] font-bold rounded-xl capitalize transition ${
                   filterTier === tier
-                    ? 'bg-emerald-500 text-slate-950 font-black shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-neutral-800 text-slate-950 font-black shadow'
+                    : 'text-neutral-400 hover:text-white'
                 }`}
               >
                 {tier === 'all' ? 'All' : tier}
@@ -575,7 +575,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                   />
                   <div>
                     <h4 className="text-xs font-black text-white">{client.name}</h4>
-                    <p className="text-[11px] text-slate-400 font-medium">
+                    <p className="text-[11px] text-neutral-400 font-medium">
                       {client.fitnessGoal} · {client.streak || 0}d streak
                     </p>
                   </div>
@@ -585,9 +585,9 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                   <span
                     className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
                       client.compliance?.tier === 'green'
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                        ? 'bg-neutral-800 text-neutral-200 border border-neutral-700'
                         : client.compliance?.tier === 'yellow'
-                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        ? 'bg-neutral-800 text-neutral-300 border border-neutral-700'
                         : 'bg-red-500/20 text-red-300 border border-red-500/30'
                     }`}
                   >

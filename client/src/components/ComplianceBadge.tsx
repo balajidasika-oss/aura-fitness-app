@@ -19,19 +19,19 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
 }) => {
   const tierConfig = {
     green: {
-      bg: 'bg-emerald-500/10',
-      border: 'border-emerald-500/30',
-      text: 'text-emerald-400',
+      bg: 'bg-neutral-800',
+      border: 'border-neutral-700',
+      text: 'text-neutral-200',
       glow: 'shadow-emerald-500/20',
-      dot: 'bg-emerald-500',
+      dot: 'bg-neutral-800',
       label: 'High Compliance',
     },
     yellow: {
-      bg: 'bg-amber-500/10',
-      border: 'border-amber-500/30',
-      text: 'text-amber-400',
+      bg: 'bg-neutral-800',
+      border: 'border-neutral-700',
+      text: 'text-neutral-300',
       glow: 'shadow-amber-500/20',
-      dot: 'bg-amber-500',
+      dot: 'bg-neutral-800',
       label: 'Moderate',
     },
     red: {
@@ -58,18 +58,18 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
       >
         <span className={`w-2 h-2 rounded-full ${tierConfig.dot} animate-pulse`} />
         <span>{score}%</span>
-        {showDetails && <span className="font-normal text-zinc-400 text-[11px]">· {tierConfig.label}</span>}
+        {showDetails && <span className="font-normal text-neutral-400 text-[11px]">· {tierConfig.label}</span>}
       </div>
 
       {/* 7-Day Mini Heatmap Dots */}
       {weeklyHistory && weeklyHistory.length > 0 && (
         <div className="flex items-center gap-1 mt-0.5" title="Last 7 Days Logging History">
           {weeklyHistory.map((day, idx) => {
-            let dotBg = 'bg-zinc-800 border-zinc-700 text-zinc-600';
+            let dotBg = 'bg-[#141414] border-neutral-800 text-zinc-600';
             if (day.status === 'complete') {
-              dotBg = 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400';
+              dotBg = 'bg-neutral-800 border-neutral-700 text-neutral-200';
             } else if (day.status === 'partial') {
-              dotBg = 'bg-amber-500/20 border-amber-500/50 text-amber-400';
+              dotBg = 'bg-neutral-800 border-neutral-700 text-neutral-300';
             }
 
             return (

@@ -63,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 shadow-md">
+    <header className="sticky top-0 z-40 bg-slate-950/90  border-b border-slate-800/80 shadow-md">
       <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 gap-2 sm:gap-4">
           {/* Logo & Brand */}
@@ -74,11 +74,11 @@ export const Header: React.FC<HeaderProps> = ({
             <div>
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <span className="font-extrabold text-sm sm:text-base tracking-wider text-white">AURAFIT</span>
-                <span className="text-[9px] sm:text-[10px] uppercase font-black tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span className="text-[9px] sm:text-[10px] uppercase font-black tracking-wider px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-200 border border-neutral-700">
                   {activeRole === 'coach' ? 'Coach Portal' : 'Athlete'}
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 hidden sm:block">Performance Habit Logger &amp; Coach OS</p>
+              <p className="text-[10px] text-neutral-400 hidden sm:block">Performance Habit Logger &amp; Coach OS</p>
             </div>
           </div>
 
@@ -89,11 +89,11 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={handleCopyCoachCode}
                 title="Copy Coach Invite Code to share with athletes"
-                className="hidden sm:flex items-center gap-1.5 bg-slate-900 border border-emerald-500/30 hover:border-emerald-500/60 rounded-xl px-2.5 py-1 text-xs text-emerald-400 font-bold transition active:scale-95"
+                className="hidden sm:flex items-center gap-1.5 bg-slate-900 border border-neutral-700 hover:border-neutral-700 rounded-xl px-2.5 py-1 text-xs text-neutral-200 font-bold transition active:scale-95"
               >
                 <Award className="w-3.5 h-3.5" />
                 <span>{currentUser.coachCode}</span>
-                {copiedCode ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3 text-slate-400" />}
+                {copiedCode ? <Check className="w-3 h-3 text-neutral-200" /> : <Copy className="w-3 h-3 text-neutral-400" />}
               </button>
             )}
 
@@ -104,10 +104,10 @@ export const Header: React.FC<HeaderProps> = ({
                   <img
                     src={currentUser.avatarUrl}
                     alt={currentUser.name}
-                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-emerald-400"
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-neutral-700"
                   />
                   {currentUser.streak && currentUser.streak > 0 ? (
-                    <span className="absolute -bottom-1 -right-1 bg-amber-500 text-slate-950 font-bold text-[7px] sm:text-[8px] px-1 rounded-full flex items-center">
+                    <span className="absolute -bottom-1 -right-1 bg-neutral-800 text-slate-950 font-bold text-[7px] sm:text-[8px] px-1 rounded-full flex items-center">
                       <Flame className="w-1.5 h-1.5 sm:w-2 sm:h-2 fill-slate-950" />
                     </span>
                   ) : null}
@@ -116,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <p className="text-xs font-bold text-white truncate max-w-[120px]">
                     {currentUser.name}
                   </p>
-                  <p className="text-[10px] text-slate-400 capitalize">
+                  <p className="text-[10px] text-neutral-400 capitalize">
                     {currentUser.role === 'coach' ? 'Coach' : `${currentUser.streak || 0}d streak`}
                   </p>
                 </div>
@@ -130,7 +130,7 @@ export const Header: React.FC<HeaderProps> = ({
               className={`p-1.5 sm:p-2 rounded-xl border text-xs transition active:scale-95 ${
                 isMuted
                   ? 'bg-slate-900 text-slate-500 border-slate-800'
-                  : 'bg-slate-900 text-emerald-400 border-emerald-500/30'
+                  : 'bg-slate-900 text-neutral-200 border-neutral-700'
               }`}
             >
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -144,7 +144,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenPWAInstall();
                 }}
                 title="Install PWA / Add to Home Screen"
-                className="flex p-1.5 sm:p-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-emerald-400 hover:border-emerald-500/30 transition active:scale-95"
+                className="flex p-1.5 sm:p-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-neutral-200 hover:border-neutral-700 transition active:scale-95"
               >
                 <Smartphone className="w-4 h-4" />
               </button>
@@ -158,7 +158,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenLegal();
                 }}
                 title="Legal & Safety Policy"
-                className="hidden md:flex p-1.5 sm:p-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-emerald-400 hover:border-emerald-500/30 transition active:scale-95"
+                className="hidden md:flex p-1.5 sm:p-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-neutral-200 hover:border-neutral-700 transition active:scale-95"
               >
                 <Shield className="w-4 h-4" />
               </button>

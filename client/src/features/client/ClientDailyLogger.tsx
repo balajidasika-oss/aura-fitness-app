@@ -501,22 +501,22 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       
       {/* Top Banner: Date Selector & Real-Time Habit Completion Ring */}
       <div className="glass-panel-elevated rounded-3xl p-5 relative overflow-hidden group">
-        <div className="absolute top-[-50px] right-[-50px] w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none group-hover:bg-emerald-500/20 transition-colors duration-700" />
+        <div className="absolute top-[-50px] right-[-50px] w-64 h-64 bg-neutral-800 rounded-full blur-[80px] pointer-events-none group-hover:bg-neutral-800 transition-colors duration-700" />
 
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-200">
                 Daily Athlete Log
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-neutral-800 shadow-none animate-pulse" />
             </div>
             <h2 className="text-xl font-black mt-1 bg-gradient-to-br from-white via-emerald-100 to-emerald-400 bg-clip-text text-transparent">Track Your Session</h2>
             <input
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="mt-1 bg-white/5 border border-white/10 rounded-xl px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-emerald-500 font-medium"
+              className="mt-1 bg-[#141414] border border-neutral-800 rounded-xl px-2.5 py-1 text-xs text-zinc-300 focus:outline-none focus:border-neutral-700 font-medium"
             />
           </div>
 
@@ -527,43 +527,43 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               strokeWidth={6}
               indicatorColor={completionScore >= 75 ? '#10b981' : completionScore >= 50 ? '#f59e0b' : '#6366f1'}
             />
-            <span className="text-[10px] font-bold text-zinc-400 mt-1">4 Habits</span>
+            <span className="text-[10px] font-bold text-neutral-400 mt-1">4 Habits</span>
           </div>
         </div>
 
         {/* Change Coach Button */}
-        <div className="mt-3 flex items-center justify-between bg-white/5 backdrop-blur-md rounded-xl p-2 border border-white/10">
+        <div className="mt-3 flex items-center justify-between bg-[#141414]  rounded-xl p-2 border border-neutral-800">
           <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center">
-              <Award className="w-3 h-3 text-indigo-400" />
+            <div className="w-6 h-6 rounded-full bg-neutral-800 flex items-center justify-center">
+              <Award className="w-3 h-3 text-neutral-300" />
             </div>
             <div>
-              <p className="text-[10px] text-zinc-400 uppercase tracking-wider font-bold">Assigned Coach</p>
+              <p className="text-[10px] text-neutral-400 uppercase tracking-wider font-bold">Assigned Coach</p>
               <p className="text-xs font-black text-white">{client.coachName || 'None'}</p>
             </div>
           </div>
           <button 
             onClick={() => setShowCoachModal(true)}
-            className="text-xs font-bold text-emerald-400 px-3 py-1.5 rounded-lg border border-emerald-500/30 hover:bg-emerald-500/10 transition cursor-pointer"
+            className="text-xs font-bold text-neutral-200 px-3 py-1.5 rounded-lg border border-neutral-700 hover:bg-neutral-800 transition cursor-pointer"
           >
             {client.coachId ? 'Change Coach' : 'Connect to Coach'}
           </button>
         </div>
 
         {/* Rest Day Toggle */}
-        <div className="mt-2 flex items-center justify-between bg-white/5 backdrop-blur-md rounded-xl p-2 border border-white/10">
+        <div className="mt-2 flex items-center justify-between bg-[#141414]  rounded-xl p-2 border border-neutral-800">
           <div className="flex items-center space-x-2">
-            <div className={`w-6 h-6 rounded-full flex items-center justify-center transition ${isRestDay ? 'bg-indigo-500 text-slate-950' : 'bg-zinc-800 text-zinc-400'}`}>
+            <div className={`w-6 h-6 rounded-full flex items-center justify-center transition ${isRestDay ? 'bg-neutral-800 text-slate-950' : 'bg-[#141414] text-neutral-400'}`}>
               <Layers className="w-3 h-3" />
             </div>
             <div>
-              <p className="text-[10px] text-zinc-400 uppercase tracking-wider font-bold">Active Recovery</p>
+              <p className="text-[10px] text-neutral-400 uppercase tracking-wider font-bold">Active Recovery</p>
               <p className="text-xs font-black text-white">Mark as Rest Day</p>
             </div>
           </div>
           <button 
             onClick={() => setIsRestDay(!isRestDay)}
-            className={`w-10 h-6 rounded-full relative transition-colors ${isRestDay ? 'bg-emerald-500' : 'bg-zinc-700'}`}
+            className={`w-10 h-6 rounded-full relative transition-colors ${isRestDay ? 'bg-neutral-800' : 'bg-[#141414]'}`}
           >
             <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${isRestDay ? 'right-1' : 'left-1'}`} />
           </button>
@@ -572,16 +572,16 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
       {/* Change Coach Modal */}
       {showCoachModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-black/40 border border-white/10 rounded-3xl p-5 w-full max-w-sm relative">
+        <div className="fixed inset-0 z-50 bg-[#0F0F0F]  flex items-center justify-center p-4">
+          <div className="bg-[#0F0F0F] border border-neutral-800 rounded-3xl p-5 w-full max-w-sm relative">
             <button 
               onClick={() => setShowCoachModal(false)}
-              className="absolute top-4 right-4 text-zinc-400 hover:text-white"
+              className="absolute top-4 right-4 text-neutral-400 hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
             <h3 className="text-lg font-black text-white mb-2">Connect to a Coach</h3>
-            <p className="text-xs text-zinc-400 mb-4">
+            <p className="text-xs text-neutral-400 mb-4">
               Enter the unique invite code provided by your coach to sync your logs and receive daily feedback.
             </p>
             <input 
@@ -589,12 +589,12 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               placeholder="e.g. COACH-A1B2C3"
               value={coachCodeInput}
               onChange={(e) => setCoachCodeInput(e.target.value.toUpperCase())}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white font-mono font-bold tracking-wider mb-4 placeholder-zinc-600 focus:outline-none focus:border-emerald-500 uppercase"
+              className="w-full bg-[#141414] border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white font-mono font-bold tracking-wider mb-4 placeholder-zinc-600 focus:outline-none focus:border-neutral-700 uppercase"
             />
             <button
               onClick={handleJoinCoach}
               disabled={isJoiningCoach || !coachCodeInput.trim()}
-              className="w-full py-3 rounded-xl bg-emerald-500 text-slate-950 font-black flex items-center justify-center space-x-2 disabled:opacity-50 transition cursor-pointer"
+              className="w-full py-3 rounded-xl bg-neutral-800 text-slate-950 font-black flex items-center justify-center space-x-2 disabled:opacity-50 transition cursor-pointer"
             >
               {isJoiningCoach ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               <span>{isJoiningCoach ? 'Connecting...' : 'Connect Now'}</span>
@@ -607,11 +607,11 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         {coachCheer && (
           <div className="mt-4 animate-in slide-in-from-bottom-2 fade-in duration-300">
             <div className="flex items-end space-x-2">
-              <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-sm shadow-md border border-indigo-400">
+              <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-sm shadow-md border border-neutral-700">
                 {coachCheer.reactionEmoji || '🏆'}
               </div>
-              <div className="relative bg-indigo-950/80 border border-indigo-500/40 rounded-2xl rounded-bl-sm p-3.5 max-w-[85%] shadow-lg">
-                <span className="text-[10px] font-black text-indigo-300 uppercase tracking-wider block mb-1">
+              <div className="relative bg-neutral-800 border border-neutral-700 rounded-2xl rounded-bl-sm p-3.5 max-w-[85%] shadow-lg">
+                <span className="text-[10px] font-black text-neutral-300 uppercase tracking-wider block mb-1">
                   Coach {client.coachName || 'Kai'} says:
                 </span>
                 {coachCheer.message && (
@@ -620,7 +620,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   </p>
                 )}
                 {coachCheer.audioUrl && (
-                  <div className="mt-2.5 bg-indigo-900/50 rounded-xl p-2 border border-indigo-500/30">
+                  <div className="mt-2.5 bg-neutral-800 rounded-xl p-2 border border-neutral-700">
                     <audio 
                       controls 
                       src={`${API_BASE.replace('/api', '')}${coachCheer.audioUrl}`} 
@@ -634,7 +634,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         )}
 
       {/* WORKOUT MODE SWITCHER */}
-      <div className="flex p-1.5 glass-panel rounded-2xl relative shadow-xl shadow-black/40 mb-2">
+      <div className="flex p-1.5 glass-panel rounded-2xl relative shadow-none shadow-black/40 mb-2">
         <button
           onClick={() => {
             soundFx.playTapSound();
@@ -642,8 +642,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
           }}
           className={`flex-1 py-3 rounded-xl text-xs font-black transition-all duration-300 relative z-10 flex items-center justify-center space-x-2 ${
             workoutMode === 'strength' 
-            ? 'bg-emerald-500 text-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-[1.02]' 
-            : 'text-zinc-400 hover:text-white hover:bg-white/5'
+            ? 'bg-neutral-800 text-slate-950 shadow-none scale-[1.02]' 
+            : 'text-neutral-400 hover:text-white hover:bg-[#141414]'
           }`}
         >
           <span className="text-sm">💪</span>
@@ -657,8 +657,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
           }}
           className={`flex-1 py-3 rounded-xl text-xs font-black transition-all duration-300 relative z-10 flex items-center justify-center space-x-2 ${
             workoutMode === 'yoga' 
-            ? 'bg-indigo-500 text-white shadow-[0_0_20px_rgba(99,102,241,0.4)] scale-[1.02]' 
-            : 'text-zinc-400 hover:text-white hover:bg-white/5'
+            ? 'bg-neutral-800 text-white shadow-none scale-[1.02]' 
+            : 'text-neutral-400 hover:text-white hover:bg-[#141414]'
           }`}
         >
           <span className="text-sm">🧘‍♀️</span>
@@ -669,21 +669,21 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       {/* SECTION 1: STRENGTH TRAINING - MUSCLE GROUPS & REPS */}
       {workoutMode === 'strength' && (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className={`glass-panel rounded-3xl p-5 space-y-5 transition-all duration-300 ${isRestDay ? 'opacity-40 grayscale pointer-events-none' : 'hover:border-emerald-500/30'}`}>
+          <div className={`glass-panel rounded-3xl p-5 space-y-5 transition-all duration-300 ${isRestDay ? 'opacity-40 grayscale pointer-events-none' : 'hover:border-neutral-700'}`}>
             {/* Header & Single Total Duration */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-neutral-700 flex items-center justify-center text-neutral-200 shadow-none">
               <Dumbbell className="w-5 h-5" />
             </div>
             <div>
               <h3 className="text-sm font-black text-white flex items-center space-x-1.5">
                 <span>Muscle Group Workout</span>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
+                <span className="px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-200 text-[10px] font-bold">
                   {grandTotalReps} Total Reps
                 </span>
               </h3>
-              <span className="text-[11px] text-zinc-400 font-medium">
+              <span className="text-[11px] text-neutral-400 font-medium">
                 Log reps per muscle group with single total duration
               </span>
             </div>
@@ -691,9 +691,9 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Workout Meta: Title & Single Session Duration */}
-        <div className="grid grid-cols-2 gap-2.5 bg-black/30 backdrop-blur-lg p-3 rounded-2xl border border-white/5">
+        <div className="grid grid-cols-2 gap-2.5 bg-[#0F0F0F]  p-3 rounded-2xl border border-neutral-800">
           <div>
-            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
+            <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider block mb-1">
               Workout Focus
             </label>
             <input
@@ -701,16 +701,16 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               value={workoutTitle}
               onChange={(e) => setWorkoutTitle(e.target.value)}
               placeholder="e.g. Chest & Shoulders"
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 font-bold"
+              className="w-full bg-[#141414] border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-neutral-700 font-bold"
             />
           </div>
 
           <div>
-            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
+            <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider block mb-1">
               Total Duration (Mins)
             </label>
-            <div className="flex items-center space-x-1.5 bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5">
-              <Timer className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="flex items-center space-x-1.5 bg-[#141414] border border-neutral-800 rounded-xl px-2.5 py-1.5">
+              <Timer className="w-3.5 h-3.5 text-neutral-200" />
               <input
                 type="number"
                 min="5"
@@ -719,7 +719,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                 onChange={(e) => setTotalSessionDurationMinutes(parseInt(e.target.value, 10) || 0)}
                 className="w-full bg-transparent text-xs text-white font-black focus:outline-none"
               />
-              <span className="text-[10px] text-zinc-500 font-bold">min</span>
+              <span className="text-[10px] text-neutral-500 font-bold">min</span>
             </div>
           </div>
         </div>
@@ -728,7 +728,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         <div className="space-y-1.5">
           <div className="flex items-center justify-between px-1">
             <span className="text-[11px] font-bold text-zinc-300">Choose Muscle to Log:</span>
-            <span className="text-[10px] text-zinc-500 font-medium">Tap to switch muscle section</span>
+            <span className="text-[10px] text-neutral-500 font-medium">Tap to switch muscle section</span>
           </div>
 
           <div className="grid grid-cols-3 gap-1.5">
@@ -747,19 +747,19 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   }}
                   className={`p-2 rounded-2xl border text-left transition flex flex-col justify-between relative overflow-hidden ${
                     isActive
-                      ? 'bg-gradient-to-tr from-emerald-950/60 to-zinc-900 border-emerald-500/60 shadow-lg shadow-emerald-500/10 ring-1 ring-emerald-400/30'
-                      : 'bg-black/20 border-white/5 hover:border-white/10'
+                      ? 'bg-gradient-to-tr from-emerald-950/60 to-zinc-900 border-neutral-700 shadow-lg shadow-emerald-500/10 ring-1 ring-neutral-700'
+                      : 'bg-[#0F0F0F] border-neutral-800 hover:border-neutral-800'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-base">{def.icon}</span>
                     {totalReps > 0 && (
-                      <span className="px-1.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 font-black text-[9px]">
+                      <span className="px-1.5 py-0.5 rounded-full bg-neutral-800 text-slate-950 font-black text-[9px]">
                         {totalReps}r
                       </span>
                     )}
                   </div>
-                  <span className={`text-[11px] font-bold mt-1 line-clamp-1 ${isActive ? 'text-emerald-300' : 'text-zinc-300'}`}>
+                  <span className={`text-[11px] font-bold mt-1 line-clamp-1 ${isActive ? 'text-neutral-200' : 'text-zinc-300'}`}>
                     {def.label.split(' ')[0]}
                   </span>
                 </button>
@@ -769,8 +769,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Active Muscle Group Exercise Roster & Reps Counter */}
-        <div className="bg-black/40 rounded-2xl border border-white/10 p-3.5 space-y-3">
-          <div className="flex items-center justify-between border-b border-white/10 pb-2">
+        <div className="bg-[#0F0F0F] rounded-2xl border border-neutral-800 p-3.5 space-y-3">
+          <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
             <div className="flex items-center space-x-2">
               <span className="text-lg">
                 {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.icon}
@@ -779,7 +779,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                 <h4 className="text-xs font-black text-white">
                   {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.label}
                 </h4>
-                <span className="text-[10px] text-zinc-400 font-bold">
+                <span className="text-[10px] text-neutral-400 font-bold">
                   {currentMuscleGroup?.totalMuscleReps || 0} Total Reps Logged
                 </span>
               </div>
@@ -791,7 +791,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                 soundFx.playTapSound();
                 setShowAddModal(true);
               }}
-              className="px-2.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black flex items-center space-x-1 shadow-md shadow-emerald-500/20 transition active:scale-95"
+              className="px-2.5 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-slate-950 text-xs font-black flex items-center space-x-1 shadow-md shadow-emerald-500/20 transition active:scale-95"
             >
               <Plus className="w-3.5 h-3.5 stroke-[3]" />
               <span>Add Exercise</span>
@@ -804,26 +804,26 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               {currentMuscleGroup.exercises.map((ex, idx) => (
                 <div
                   key={idx}
-                  className="p-2.5 rounded-xl bg-white/10 border border-white/10 flex items-center justify-between group"
+                  className="p-2.5 rounded-xl bg-[#1A1A1A] border border-neutral-800 flex items-center justify-between group"
                 >
                   <div className="flex-1 pr-2">
                     <div className="flex items-center space-x-2">
                       <span className="text-xs font-bold text-white">{ex.name}</span>
-                      <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                      <span className="text-[10px] font-black text-neutral-200 bg-neutral-800 px-1.5 py-0.5 rounded border border-neutral-700">
                         {ex.totalReps || ex.sets * 10} reps
                       </span>
                     </div>
-                    <div className="flex items-center space-x-3 text-[10px] text-zinc-400 mt-0.5 font-medium">
+                    <div className="flex items-center space-x-3 text-[10px] text-neutral-400 mt-0.5 font-medium">
                       <span>{ex.sets} sets × {ex.reps} reps</span>
                       {ex.weightKg !== undefined && ex.weightKg > 0 && <span>• {ex.weightKg} kg</span>}
-                      {ex.notes && <span className="text-zinc-500 line-clamp-1">({ex.notes})</span>}
+                      {ex.notes && <span className="text-neutral-500 line-clamp-1">({ex.notes})</span>}
                     </div>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => handleRemoveExercise(activeMuscleTab, idx)}
-                    className="p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition"
+                    className="p-1.5 rounded-lg text-neutral-500 hover:text-red-400 hover:bg-red-500/10 transition"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -832,13 +832,13 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             </div>
           ) : (
             <div className="text-center py-5 space-y-1.5">
-              <p className="text-xs text-zinc-500 font-medium">
+              <p className="text-xs text-neutral-500 font-medium">
                 No exercises logged for {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.label.split(' ')[0]} yet.
               </p>
               <button
                 type="button"
                 onClick={() => setShowAddModal(true)}
-                className="text-xs font-bold text-emerald-400 hover:underline"
+                className="text-xs font-bold text-neutral-200 hover:underline"
               >
                 + Add {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.label.split(' ')[0]} Exercise
               </button>
@@ -849,19 +849,19 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
       {/* Add Exercise Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-4 w-full max-w-sm space-y-3 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0F0F0F]  p-4 animate-in fade-in">
+          <div className="bg-[#141414] border border-neutral-800 rounded-3xl p-4 w-full max-w-sm space-y-3 shadow-none">
+            <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
               <h4 className="text-xs font-black text-white flex items-center space-x-1.5">
                 <span>Add Exercise to</span>
-                <span className="text-emerald-400">
+                <span className="text-neutral-200">
                   {MUSCLE_DEFINITIONS.find((m) => m.id === activeMuscleTab)?.label.split(' ')[0]}
                 </span>
               </h4>
               <button
                 type="button"
                 onClick={() => setShowAddModal(false)}
-                className="p-1 rounded-full text-zinc-400 hover:text-white"
+                className="p-1 rounded-full text-neutral-400 hover:text-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -869,14 +869,14 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
             <form onSubmit={handleAddExercise} className="space-y-3">
               <div>
-                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Exercise Name</label>
+                <label className="text-[10px] font-bold text-neutral-400 block mb-1">Exercise Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Incline DB Bench Press"
                   value={newExName}
                   onChange={(e) => setNewExName(e.target.value)}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 font-bold"
+                  className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-neutral-700 font-bold"
                 />
 
                 {/* Quick suggestions */}
@@ -886,7 +886,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                       key={sug}
                       type="button"
                       onClick={() => setNewExName(sug)}
-                      className="text-[9px] bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-2 py-0.5 rounded-full transition"
+                      className="text-[9px] bg-[#141414] hover:bg-[#141414] text-zinc-300 px-2 py-0.5 rounded-full transition"
                     >
                       {sug}
                     </button>
@@ -896,53 +896,53 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Sets</label>
+                  <label className="text-[10px] font-bold text-neutral-400 block mb-1">Sets</label>
                   <input
                     type="number"
                     min="1"
                     max="20"
                     value={newExSets}
                     onChange={(e) => setNewExSets(parseInt(e.target.value, 10) || 1)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-neutral-700"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Reps/Set</label>
+                  <label className="text-[10px] font-bold text-neutral-400 block mb-1">Reps/Set</label>
                   <input
                     type="text"
                     value={newExReps}
                     onChange={(e) => setNewExReps(e.target.value)}
                     placeholder="8-10"
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-neutral-700"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Weight (kg)</label>
+                  <label className="text-[10px] font-bold text-neutral-400 block mb-1">Weight (kg)</label>
                   <input
                     type="number"
                     min="0"
                     max="500"
                     value={newExWeight}
                     onChange={(e) => setNewExWeight(parseFloat(e.target.value) || 0)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-2.5 py-2 text-xs text-white font-bold focus:outline-none focus:border-neutral-700"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Coach Notes (optional)</label>
+                <label className="text-[10px] font-bold text-neutral-400 block mb-1">Coach Notes (optional)</label>
                 <input
                   type="text"
                   placeholder="e.g. Clean lockout, 3s eccentric tempo"
                   value={newExNotes}
                   onChange={(e) => setNewExNotes(e.target.value)}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-neutral-700"
                 />
               </div>
 
-              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-2 text-[10px] text-emerald-300 font-bold flex items-center justify-between">
+              <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-2 text-[10px] text-neutral-200 font-bold flex items-center justify-between">
                 <span>Calculated Reps:</span>
                 <span className="text-xs font-black">
                   {newExSets * (parseInt(newExReps.split('-')[0].replace(/\D/g, ''), 10) || 10)} reps
@@ -977,18 +977,18 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       )}
 
       {/* SECTION 2: CLIENT DAILY VOICE NOTE (Microphone Access) */}
-      <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/5 shadow-2xl relative overflow-hidden mt-8"><VoiceNoteRecorder onAudioReady={handleVoiceAudioReady} coachName="Coach Kai" /></div>
+      <div className="bg-[#0F0F0F]  rounded-3xl p-6 md:p-8 border border-neutral-800 shadow-none relative overflow-hidden mt-8"><VoiceNoteRecorder onAudioReady={handleVoiceAudioReady} coachName="Coach Kai" /></div>
 
       {/* SECTION 3: CARDIO LOGGING (Incline Walk, StairMaster, Running) */}
-      <div className="rounded-3xl bg-black/40 border border-white/5 p-4 space-y-3.5 shadow-2xl backdrop-blur-xl">
+      <div className="rounded-3xl bg-[#0F0F0F] border border-neutral-800 p-4 space-y-3.5 shadow-none ">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
+            <div className="w-9 h-9 rounded-2xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-neutral-300 shadow-md">
               <Gauge className="w-5 h-5" />
             </div>
             <div>
               <h3 className="text-sm font-black text-white">Cardio Conditioning</h3>
-              <span className="text-[11px] text-zinc-400 font-medium">
+              <span className="text-[11px] text-neutral-400 font-medium">
                 Treadmill Incline • StairMaster • Running
               </span>
             </div>
@@ -996,7 +996,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Cardio Type Switcher */}
-        <div className="grid grid-cols-3 gap-1.5 bg-black/40 p-1 rounded-2xl border border-white/5">
+        <div className="grid grid-cols-3 gap-1.5 bg-[#0F0F0F] p-1 rounded-2xl border border-neutral-800">
           <button
             type="button"
             onClick={() => {
@@ -1005,8 +1005,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             }}
             className={`py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 ${
               cardioType === 'incline_walk'
-                ? 'bg-amber-500 text-slate-950 font-black shadow-md'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-neutral-800 text-slate-950 font-black shadow-md'
+                : 'text-neutral-400 hover:text-zinc-200'
             }`}
           >
             <span>⛰️ Incline</span>
@@ -1020,8 +1020,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             }}
             className={`py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 ${
               cardioType === 'stairmaster'
-                ? 'bg-amber-500 text-slate-950 font-black shadow-md'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-neutral-800 text-slate-950 font-black shadow-md'
+                : 'text-neutral-400 hover:text-zinc-200'
             }`}
           >
             <span>🪜 Stairs</span>
@@ -1035,8 +1035,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             }}
             className={`py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1 ${
               cardioType === 'running'
-                ? 'bg-amber-500 text-slate-950 font-black shadow-md'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-neutral-800 text-slate-950 font-black shadow-md'
+                : 'text-neutral-400 hover:text-zinc-200'
             }`}
           >
             <span>🏃 Run</span>
@@ -1044,12 +1044,12 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {/* Dynamic Metric Sliders / Inputs */}
-        <div className="bg-black/40 p-3.5 rounded-2xl border border-white/5 space-y-3">
+        <div className="bg-[#0F0F0F] p-3.5 rounded-2xl border border-neutral-800 space-y-3">
           {cardioType === 'incline_walk' && (
             <>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-zinc-300">Treadmill Incline</span>
-                <span className="text-xs font-black text-amber-400 font-mono">{inclinePercentage}% Incline</span>
+                <span className="text-xs font-black text-neutral-300 font-mono">{inclinePercentage}% Incline</span>
               </div>
               <input
                 type="range"
@@ -1063,22 +1063,22 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
               <div className="grid grid-cols-2 gap-2.5 pt-1">
                 <div>
-                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Distance (km)</label>
+                  <label className="text-[10px] font-bold text-neutral-400 block mb-1">Distance (km)</label>
                   <input
                     type="number"
                     step="0.1"
                     value={cardioDistanceKm}
                     onChange={(e) => setCardioDistanceKm(parseFloat(e.target.value) || 0)}
-                    className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                    className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Duration (min)</label>
+                  <label className="text-[10px] font-bold text-neutral-400 block mb-1">Duration (min)</label>
                   <input
                     type="number"
                     value={cardioDurationMins}
                     onChange={(e) => setCardioDurationMins(parseInt(e.target.value, 10) || 0)}
-                    className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                    className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                   />
                 </div>
               </div>
@@ -1088,23 +1088,23 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
           {cardioType === 'stairmaster' && (
             <div className="grid grid-cols-2 gap-2.5">
               <div>
-                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Floors Climbed</label>
+                <label className="text-[10px] font-bold text-neutral-400 block mb-1">Floors Climbed</label>
                 <input
                   type="number"
                   value={stairmasterFloors}
                   onChange={(e) => setStairmasterFloors(parseInt(e.target.value, 10) || 0)}
-                  className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                 />
               </div>
               <div>
-                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Speed Level (1-20)</label>
+                <label className="text-[10px] font-bold text-neutral-400 block mb-1">Speed Level (1-20)</label>
                 <input
                   type="number"
                   min="1"
                   max="20"
                   value={stairmasterLevel}
                   onChange={(e) => setStairmasterLevel(parseInt(e.target.value, 10) || 1)}
-                  className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                 />
               </div>
             </div>
@@ -1113,22 +1113,22 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
           {cardioType === 'running' && (
             <div className="grid grid-cols-2 gap-2.5">
               <div>
-                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Distance (km)</label>
+                <label className="text-[10px] font-bold text-neutral-400 block mb-1">Distance (km)</label>
                 <input
                   type="number"
                   step="0.1"
                   value={cardioDistanceKm}
                   onChange={(e) => setCardioDistanceKm(parseFloat(e.target.value) || 0)}
-                  className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                 />
               </div>
               <div>
-                <label className="text-[10px] font-bold text-zinc-400 block mb-1">Duration (min)</label>
+                <label className="text-[10px] font-bold text-neutral-400 block mb-1">Duration (min)</label>
                 <input
                   type="number"
                   value={cardioDurationMins}
                   onChange={(e) => setCardioDurationMins(parseInt(e.target.value, 10) || 0)}
-                  className="w-full bg-black/40 border border-white/5 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
+                  className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none"
                 />
               </div>
             </div>
@@ -1137,15 +1137,15 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       </div>
 
       {/* SECTION 4: NUTRITION PHOTO LOGS */}
-        <div className="rounded-3xl bg-black/40 border border-white/5 p-5 space-y-4 shadow-2xl backdrop-blur-xl mt-8">
-          <div className="flex items-center justify-between border-b border-white/5 pb-4">
+        <div className="rounded-3xl bg-[#0F0F0F] border border-neutral-800 p-5 space-y-4 shadow-none  mt-8">
+          <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.15)]">
+              <div className="w-10 h-10 rounded-2xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-neutral-300 shadow-none">
                 <Utensils className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-black text-white tracking-wide">Nutrition & Meals</h3>
-                <span className="text-xs text-slate-400 font-medium">
+                <span className="text-xs text-neutral-400 font-medium">
                   Snap food photos for coach macro review
                 </span>
               </div>
@@ -1158,7 +1158,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                   soundFx.playTapSound();
                   alert("Scanning meal with Aura AI... \n\nEstimated Macros:\n- Calories: 450 kcal\n- Protein: 35g\n- Carbs: 45g\n- Fats: 12g\n\n(Coach will verify this result)");
                 }}
-                className="px-3 py-1.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/20 text-xs font-black flex items-center space-x-1.5 transition active:scale-95 shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+                className="px-3 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-neutral-300 border border-neutral-700 text-xs font-black flex items-center space-x-1.5 transition active:scale-95 shadow-none"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>AI Scan Meal</span>
@@ -1166,7 +1166,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               <button
                 type="button"
                 onClick={() => setCameraModalMode('meal')}
-                className="px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-black flex items-center space-x-1.5 shadow-md shadow-teal-500/20 transition active:scale-95"
+                className="px-4 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-slate-950 text-xs font-black flex items-center space-x-1.5 shadow-md shadow-teal-500/20 transition active:scale-95"
               >
                 <Camera className="w-3.5 h-3.5" />
                 <span>Snap Photo</span>
@@ -1178,10 +1178,10 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         {meals.length > 0 ? (
           <div className="grid grid-cols-2 gap-2">
             {meals.map((m, idx) => (
-              <div key={idx} className="relative rounded-2xl overflow-hidden border border-white/5 aspect-video bg-black/40 group">
+              <div key={idx} className="relative rounded-2xl overflow-hidden border border-neutral-800 aspect-video bg-[#0F0F0F] group">
                 <img src={m.imagePath} alt={m.caption} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
-                  <span className="text-[10px] font-black uppercase text-teal-300">{m.type}</span>
+                  <span className="text-[10px] font-black uppercase text-neutral-300">{m.type}</span>
                   <span className="text-[11px] text-white font-medium line-clamp-1">{m.caption || 'Meal logged'}</span>
                 </div>
                 <button
@@ -1202,7 +1202,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                       }
                     }
                   }}
-                  className="absolute top-2 right-2 w-7 h-7 bg-red-500/80 hover:bg-red-500 text-white rounded-full flex items-center justify-center backdrop-blur-md opacity-0 group-hover:opacity-100 transition"
+                  className="absolute top-2 right-2 w-7 h-7 bg-red-500/80 hover:bg-red-500 text-white rounded-full flex items-center justify-center  opacity-0 group-hover:opacity-100 transition"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -1210,41 +1210,41 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             ))}
           </div>
         ) : (
-          <div className="bg-white/5 rounded-2xl border border-white/5 p-4 text-center">
-            <p className="text-xs text-zinc-500 font-medium">No meals snapped yet today.</p>
+          <div className="bg-[#141414] rounded-2xl border border-neutral-800 p-4 text-center">
+            <p className="text-xs text-neutral-500 font-medium">No meals snapped yet today.</p>
           </div>
         )}
 
         {/* Add Meal Detail Modal */}
         {isAddingMeal && mealPreviewUrl && (
-          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="bg-black/80 border border-white/10 rounded-3xl p-5 w-full max-w-sm relative backdrop-blur-xl">
+          <div className="fixed inset-0 z-50 bg-[#0F0F0F]  flex items-center justify-center p-4">
+            <div className="bg-[#0F0F0F] border border-neutral-800 rounded-3xl p-5 w-full max-w-sm relative ">
               <button 
                 onClick={() => {
                   setIsAddingMeal(false);
                   setMealPreviewUrl(null);
                   setMealFile(null);
                 }}
-                className="absolute top-4 right-4 text-zinc-400 hover:text-white"
+                className="absolute top-4 right-4 text-neutral-400 hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
               <h3 className="text-lg font-black text-white mb-3 flex items-center space-x-2">
-                <Utensils className="w-5 h-5 text-teal-400" />
+                <Utensils className="w-5 h-5 text-neutral-300" />
                 <span>Log Meal</span>
               </h3>
               
-              <div className="aspect-video w-full rounded-2xl overflow-hidden mb-4 border border-white/5">
+              <div className="aspect-video w-full rounded-2xl overflow-hidden mb-4 border border-neutral-800">
                 <img src={mealPreviewUrl} alt="Meal Preview" className="w-full h-full object-cover" />
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Meal Type</label>
+                  <label className="text-[10px] font-bold text-neutral-400 block mb-1">Meal Type</label>
                   <select
                     value={currentMealType}
                     onChange={(e) => setCurrentMealType(e.target.value as MealType)}
-                    className="w-full bg-black/40 border border-white/5 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500 font-bold"
+                    className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-neutral-700 font-bold"
                   >
                     <option value="breakfast">Breakfast</option>
                     <option value="lunch">Lunch</option>
@@ -1254,19 +1254,19 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-bold text-zinc-400 block mb-1">Caption / Macros (optional)</label>
+                  <label className="text-[10px] font-bold text-neutral-400 block mb-1">Caption / Macros (optional)</label>
                   <input
                     type="text"
                     value={mealCaption}
                     onChange={(e) => setMealCaption(e.target.value)}
                     placeholder="e.g. 2 eggs, avocado toast (400 cal)"
-                    className="w-full bg-black/40 border border-white/5 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500"
+                    className="w-full bg-[#0F0F0F] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-neutral-700"
                   />
                 </div>
 
                 <button
                   onClick={handleAddMealItem}
-                  className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-black flex items-center justify-center space-x-2 shadow-lg shadow-teal-500/25 transition active:scale-95"
+                  className="w-full py-3 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-slate-950 font-black flex items-center justify-center space-x-2 shadow-lg shadow-teal-500/25 transition active:scale-95"
                 >
                   <CheckCircle2 className="w-5 h-5" />
                   <span>Save to Daily Log</span>
@@ -1278,15 +1278,15 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       </div>
 
       {/* SECTION 5: POST-WORKOUT SELFIE */}
-      <div className="rounded-3xl bg-black/40 border border-white/5 p-4 space-y-3.5 shadow-2xl backdrop-blur-xl">
+      <div className="rounded-3xl bg-[#0F0F0F] border border-neutral-800 p-4 space-y-3.5 shadow-none ">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-md">
+            <div className="w-9 h-9 rounded-2xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-neutral-300 shadow-md">
               <Camera className="w-5 h-5" />
             </div>
             <div>
               <h3 className="text-sm font-black text-white">Post-Session Selfie</h3>
-              <span className="text-[11px] text-zinc-400 font-medium">
+              <span className="text-[11px] text-neutral-400 font-medium">
                 Hold yourself accountable with your coach
               </span>
             </div>
@@ -1295,7 +1295,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
           <button
             type="button"
             onClick={() => setCameraModalMode('selfie')}
-            className="px-2.5 py-1.5 rounded-xl bg-purple-500 hover:bg-purple-400 text-white text-xs font-black flex items-center space-x-1 shadow-md shadow-purple-500/20 transition active:scale-95"
+            className="px-2.5 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-white text-xs font-black flex items-center space-x-1 shadow-md shadow-purple-500/20 transition active:scale-95"
           >
             <Camera className="w-3.5 h-3.5" />
             <span>Take Selfie</span>
@@ -1303,16 +1303,16 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {sessionPhotoUrl ? (
-          <div className="relative rounded-2xl overflow-hidden border border-white/5 aspect-video bg-black/40">
+          <div className="relative rounded-2xl overflow-hidden border border-neutral-800 aspect-video bg-[#0F0F0F]">
             <img src={sessionPhotoUrl} alt="Post session selfie" className="w-full h-full object-cover" />
-            <div className="absolute top-2 right-2 bg-emerald-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full flex items-center space-x-1">
+            <div className="absolute top-2 right-2 bg-neutral-800 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full flex items-center space-x-1">
               <Check className="w-3 h-3 stroke-[3]" />
               <span>Selfie Verified</span>
             </div>
           </div>
         ) : (
-          <div className="bg-black/20 rounded-2xl border border-white/5 p-4 text-center">
-            <p className="text-xs text-zinc-500 font-medium">Snap your post-workout pump photo.</p>
+          <div className="bg-[#0F0F0F] rounded-2xl border border-neutral-800 p-4 text-center">
+            <p className="text-xs text-neutral-500 font-medium">Snap your post-workout pump photo.</p>
           </div>
         )}
       </div>
@@ -1341,9 +1341,9 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
           type="button"
           onClick={handleSaveDailyLog}
           disabled={isSubmitting}
-          className={`w-full py-4 px-5 rounded-2xl text-sm font-black text-slate-950 shadow-2xl flex items-center justify-center space-x-2 transition-all ${
+          className={`w-full py-4 px-5 rounded-2xl text-sm font-black text-slate-950 shadow-none flex items-center justify-center space-x-2 transition-all ${
             saveSuccess
-              ? 'bg-emerald-400 ring-4 ring-emerald-400/30'
+              ? 'bg-neutral-800 ring-4 ring-emerald-400/30'
               : 'bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 hover:brightness-110 shadow-emerald-500/25 active:scale-[0.98]'
           } disabled:opacity-50`}
         >
@@ -1364,7 +1364,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             </>
           )}
         </button>
-        <p className="text-center text-[11px] text-zinc-500 mt-2 font-medium">
+        <p className="text-center text-[11px] text-neutral-500 mt-2 font-medium">
           Instant sync with Coach Kai's dashboard • Safe &amp; Encrypted
         </p>
       </div>

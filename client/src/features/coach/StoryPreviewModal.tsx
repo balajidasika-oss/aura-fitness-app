@@ -78,8 +78,8 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
     'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&auto=format&fit=crop&q=80';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-lg p-3 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-sm aspect-[9/16] bg-slate-900 rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-slate-700">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0F0F0F]  p-3 animate-in fade-in duration-200">
+      <div className="relative w-full max-w-sm aspect-[9/16] bg-slate-900 rounded-3xl overflow-hidden shadow-none flex flex-col border border-slate-700">
         {/* Background Image Story */}
         <img
           src={storyImage}
@@ -115,24 +115,24 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
             <img
               src={currentClient.avatarUrl}
               alt={currentClient.name}
-              className="w-10 h-10 rounded-full object-cover border-2 border-emerald-400 shadow-md"
+              className="w-10 h-10 rounded-full object-cover border-2 border-neutral-700 shadow-md"
             />
             <div>
               <div className="flex items-center space-x-1.5">
                 <span className="font-bold text-white text-sm drop-shadow">{currentClient.name}</span>
-                <span className="bg-emerald-500/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-full backdrop-blur-sm shadow">
+                <span className="bg-neutral-800 text-white text-[10px] font-bold px-2 py-0.5 rounded-full  shadow">
                   {currentClient.compliance?.overallScore || 100}% Logged
                 </span>
               </div>
               <p className="text-[11px] text-slate-200 drop-shadow flex items-center space-x-1">
-                <Flame className="w-3 h-3 text-amber-400 fill-amber-400 inline" />
+                <Flame className="w-3 h-3 text-neutral-300 fill-amber-400 inline" />
                 <span>{currentClient.streak || 1} day streak · {currentClient.fitnessGoal}</span>
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition-colors"
+            className="w-8 h-8 rounded-full bg-[#0F0F0F] text-white flex items-center justify-center hover:bg-[#0F0F0F] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -157,8 +157,8 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
         {/* Bottom Story Content & Quick Cheer Bar */}
         <div className="relative z-10 mt-auto p-4 space-y-3">
           {/* Workout Stats Badge */}
-          <div className="p-3 rounded-2xl bg-black/60 backdrop-blur-md border border-white/10 space-y-1.5">
-            <div className="flex items-center justify-between text-xs font-semibold text-emerald-300">
+          <div className="p-3 rounded-2xl bg-[#0F0F0F]  border border-neutral-800 space-y-1.5">
+            <div className="flex items-center justify-between text-xs font-semibold text-neutral-200">
               <span className="flex items-center space-x-1">
                 <Zap className="w-3.5 h-3.5 fill-emerald-400" />
                 <span>Today's Check-in Complete</span>
@@ -175,14 +175,14 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
           {/* 1-Tap Cheer Reactions */}
           <div className="flex items-center space-x-2 pt-1">
             <span className="text-xs font-semibold text-slate-300 flex items-center space-x-1">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-neutral-300" />
               <span>Send Cheer:</span>
             </span>
             {['🔥', '💪', '🥗', '👏'].map((emoji) => (
               <button
                 key={emoji}
                 onClick={() => handleQuickCheer(emoji)}
-                className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-lg border border-white/20"
+                className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30  text-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-lg border border-neutral-800"
               >
                 {emoji}
               </button>

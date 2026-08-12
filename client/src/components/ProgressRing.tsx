@@ -31,7 +31,7 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
     <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
       {/* Background ambient glow when reaching 100% */}
       {isComplete && (
-        <div className="absolute inset-0 rounded-full bg-emerald-500/20 blur-xl animate-pulse" />
+        <div className="absolute inset-0 rounded-full bg-neutral-800 blur-xl animate-pulse" />
       )}
 
       <svg width={size} height={size} className="-rotate-90 transform overflow-visible">
@@ -72,8 +72,8 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center select-none">
         {isComplete ? (
           <div className="flex flex-col items-center">
-            <span className="text-xl font-black text-emerald-400">100%</span>
-            <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">
+            <span className="text-xl font-black text-neutral-200">100%</span>
+            <span className="text-[10px] font-black uppercase tracking-wider text-neutral-200">
               3/3 DONE
             </span>
           </div>
@@ -82,7 +82,7 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
             <span className="text-2xl font-black text-white tracking-tight">
               {Math.round(val)}%
             </span>
-            <span className="text-[10px] font-bold text-zinc-400 tracking-wider">
+            <span className="text-[10px] font-bold text-neutral-400 tracking-wider">
               {completedTasks !== undefined ? `${completedTasks}/${totalTasks}` : '3 Habits'}
             </span>
           </div>
