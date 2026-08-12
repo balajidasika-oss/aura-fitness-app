@@ -76,7 +76,7 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
       }
       setDeferredPrompt(null);
     } else {
-      alert("1-Tap Install is blocked by your browser (usually because you are in Incognito Mode or Private Browsing). Please open the app in a normal browser tab or use the 'Add to Home Screen' option in your browser's menu.");
+      alert("1-Tap Install is currently unavailable in this browser. To install the app, please tap your browser menu (⋮) and select 'Add to Home Screen' or 'Install App'.");
     }
   };
 
