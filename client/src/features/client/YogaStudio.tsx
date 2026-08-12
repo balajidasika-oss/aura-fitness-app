@@ -21,12 +21,12 @@ const YOGA_ASANAS = [
 ];
 
 const ZUMBA_VIDEOS = [
-  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400', videoId: 'kR6Dk10915U' },
-  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400', videoId: 'F3S01J-F-80' },
-  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400', videoId: 'vV_X1-Y3-9w' },
-  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400', videoId: 'Vl8W489x20c' },
-  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400', videoId: '9_H8p-H-HjA' },
-  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400', videoId: 'QRZcZwgvbXw' },
+  { id: '1', title: 'High-Energy Zumba Cardio', duration: '15 Min', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
+  { id: '2', title: 'Latin Dance Fitness', duration: '20 Min', thumbnail: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
+  { id: '3', title: 'Zumba Core & Rhythm', duration: '12 Min', thumbnail: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4' },
+  { id: '4', title: 'Reggaeton Fitness Dance', duration: '25 Min', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
+  { id: '5', title: 'Salsa Sweat Session', duration: '30 Min', thumbnail: 'https://images.unsplash.com/photo-1504609774528-ce5092a407f8?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4' },
+  { id: '6', title: 'Hip Hop Cardio Blast', duration: '18 Min', thumbnail: 'https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&q=80&w=400', videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4' },
 ];
 
 export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => {
@@ -270,7 +270,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
                         type: 'flow',
                         title: `Zumba: ${selectedZumbaVideo.title}`,
                         duration: parseInt(selectedZumbaVideo.duration) || 15,
-                        videoUrl: `https://www.youtube.com/watch?v=${selectedZumbaVideo.videoId}`
+                        videoUrl: selectedZumbaVideo.videoUrl
                       });
                     }
                     setSelectedZumbaVideo(null);
@@ -290,13 +290,13 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
               </div>
             </div>
             
-            <div className="w-full max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(236,72,153,0.3)] border border-pink-500/30 mt-16">
-              <iframe
-                className="w-full h-full"
-                src={`https://www.youtube.com/embed/${selectedZumbaVideo.videoId}?autoplay=1&rel=0&modestbranding=1`}
-                title={selectedZumbaVideo.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
+            <div className="w-full max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(236,72,153,0.3)] border border-pink-500/30 mt-16 bg-black relative">
+              <video
+                className="w-full h-full object-contain"
+                src={selectedZumbaVideo.videoUrl}
+                controls
+                autoPlay
+                controlsList="nodownload"
               />
             </div>
           </div>
