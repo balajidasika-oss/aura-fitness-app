@@ -121,23 +121,23 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
           </div>
 
           {/* Right Column - Bento Box Cards */}
-          <div className="lg:col-span-5 relative h-[400px] sm:h-[500px] w-full mt-8 lg:mt-0 flex justify-center items-center perspective-1000">
+          <div className="lg:col-span-5 relative h-[380px] sm:h-[500px] w-full mt-12 lg:mt-0 flex justify-center items-center perspective-1000 max-w-sm mx-auto lg:max-w-none">
             {/* Ambient Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/20 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-48 sm:h-64 bg-emerald-500/20 blur-[80px] sm:blur-[100px] rounded-full pointer-events-none" />
 
             {/* Card 1: Voice Memo */}
-            <div className="absolute z-30 left-0 top-10 sm:left-4 sm:top-12 w-48 sm:w-56 p-4 rounded-2xl bg-slate-950/60 backdrop-blur-2xl border-t border-white/20 border-x border-b border-white/5 shadow-2xl transform hover:-translate-y-2 transition-transform duration-500">
+            <div className="absolute z-30 left-2 sm:left-4 top-4 sm:top-12 w-44 sm:w-56 p-4 rounded-2xl bg-slate-950/60 backdrop-blur-2xl border-t border-white/20 border-x border-b border-white/5 shadow-2xl transform hover:-translate-y-2 transition-transform duration-500">
               <div className="flex items-center gap-2 mb-6">
                 <Mic className="w-4 h-4 text-emerald-400" />
                 <span className="text-sm font-bold text-white">Voice Memo</span>
               </div>
               {/* Fake Waveform */}
-              <div className="h-16 flex items-center gap-1 justify-center">
+              <div className="h-12 sm:h-16 flex items-center gap-1 justify-center">
                 {[4, 8, 12, 16, 24, 16, 12, 20, 32, 16, 8, 4].map((h, i) => (
-                  <div key={i} className="w-1.5 bg-emerald-400/80 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.8)]" style={{ height: `${h}px` }} />
+                  <div key={i} className="w-1 sm:w-1.5 bg-emerald-400/80 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.8)]" style={{ height: `${h * 0.8}px` }} />
                 ))}
               </div>
-              <div className="mt-6 flex justify-center gap-4">
+              <div className="mt-4 sm:mt-6 flex justify-center gap-4">
                 <button className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/50"><ChevronRight className="w-3 h-3 rotate-180" /></button>
                 <button className="p-2 rounded-full bg-white/10 text-white"><div className="w-3 h-3 flex gap-0.5 justify-center items-center"><div className="w-1 h-2.5 bg-white rounded-sm"/><div className="w-1 h-2.5 bg-white rounded-sm"/></div></button>
                 <button className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/50"><ChevronRight className="w-3 h-3" /></button>
@@ -145,9 +145,9 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
             </div>
 
             {/* Card 2: Muscle Volume */}
-            <div className="absolute z-20 right-4 sm:right-8 top-32 sm:top-24 w-52 sm:w-60 p-5 rounded-2xl bg-slate-950/60 backdrop-blur-xl border-t border-white/20 border-x border-b border-white/5 shadow-2xl transform hover:-translate-y-2 transition-transform duration-500 delay-75">
-              <span className="text-sm font-bold text-white mb-6 block">Muscle Volume</span>
-              <div className="flex items-end justify-between h-24 gap-1.5 border-b border-white/10 pb-2">
+            <div className="absolute z-20 right-2 sm:right-8 top-24 sm:top-24 w-48 sm:w-60 p-4 sm:p-5 rounded-2xl bg-slate-950/60 backdrop-blur-xl border-t border-white/20 border-x border-b border-white/5 shadow-2xl transform hover:-translate-y-2 transition-transform duration-500 delay-75">
+              <span className="text-xs sm:text-sm font-bold text-white mb-4 sm:mb-6 block">Muscle Volume</span>
+              <div className="flex items-end justify-between h-20 sm:h-24 gap-1.5 border-b border-white/10 pb-2">
                 {[40, 30, 80, 50, 95, 60].map((val, i) => (
                   <div key={i} className={`w-full rounded-sm ${i === 4 ? 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]' : 'bg-slate-700/50'}`} style={{ height: `${val}%` }} />
                 ))}
@@ -155,22 +155,22 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
               <div className="flex justify-between mt-2 text-[8px] text-slate-500 font-medium">
                 <span>12</span><span>06</span><span>18</span><span>22</span><span>20</span>
               </div>
-              <p className="mt-4 text-[10px] text-slate-400 text-center">Muscle volume progress</p>
+              <p className="mt-3 sm:mt-4 text-[10px] text-slate-400 text-center">Muscle volume progress</p>
             </div>
 
             {/* Card 3: Sync Status */}
-            <div className="absolute z-10 -right-4 sm:-right-8 bottom-10 sm:bottom-20 w-40 sm:w-48 p-6 rounded-2xl bg-slate-950/60 backdrop-blur-lg border-t border-white/20 border-x border-b border-white/5 shadow-2xl flex flex-col items-center gap-4 transform hover:-translate-y-2 transition-transform duration-500 delay-150">
+            <div className="absolute z-10 right-12 sm:-right-8 bottom-6 sm:bottom-20 w-36 sm:w-48 p-4 sm:p-6 rounded-2xl bg-slate-950/60 backdrop-blur-lg border-t border-white/20 border-x border-b border-white/5 shadow-2xl flex flex-col items-center gap-3 sm:gap-4 transform hover:-translate-y-2 transition-transform duration-500 delay-150">
               <div className="relative">
                 <div className="absolute inset-0 bg-emerald-500/20 blur-md rounded-full" />
-                <div className="w-12 h-12 rounded-full border-2 border-white/10 flex items-center justify-center">
-                  <div className="w-8 h-8 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-emerald-400 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full border-2 border-white/10 flex items-center justify-center">
+                  <div className="w-6 sm:w-8 h-6 sm:h-8 flex items-center justify-center">
+                    <svg className="w-4 sm:w-5 h-4 sm:h-5 text-emerald-400 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                   </div>
                 </div>
               </div>
-              <span className="text-xs font-bold text-slate-300">Sync Status</span>
+              <span className="text-[10px] sm:text-xs font-bold text-slate-300">Sync Status</span>
             </div>
           </div>
         </section>
