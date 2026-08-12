@@ -149,7 +149,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
   // Notes & Coach Cheer
   const [clientNotes, setClientNotes] = useState<string>('Hydration reached 3.5L. Felt energetic through all sets.');
-  const [coachCheer, setCoachCheer] = useState<{ reactionEmoji?: string; message: string } | null>(null);
+  const [coachCheer, setCoachCheer] = useState<{ reactionEmoji?: string; message: string; audioUrl?: string } | null>(null);
 
   // Live Camera Modal State
   const [cameraModalMode, setCameraModalMode] = useState<'meal' | 'selfie' | null>(null);

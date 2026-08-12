@@ -46,7 +46,7 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
   const triggerRefresh = onRefreshRoster || onCheerSent || (() => {});
   const [clientDetail, setClientDetail] = useState<(IClientUser & { logs: IDailyLog[] }) | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<'workouts' | 'cardio' | 'voice' | 'meals' | 'selfies' | 'compliance'>('workouts');
+  const [activeTab, setActiveTab] = useState<'workouts' | 'yoga' | 'cardio' | 'voice' | 'meals' | 'selfies' | 'compliance'>('workouts');
   const [feedbackText, setFeedbackText] = useState<string>('');
   const [reactionEmoji, setReactionEmoji] = useState<string>('🔥');
   const [isSendingFeedback, setIsSendingFeedback] = useState<boolean>(false);

@@ -10,6 +10,7 @@ import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 import { LegalCenterModal } from './components/LegalCenterModal';
 import { PrivacyDataSettingsModal } from './components/PrivacyDataSettingsModal';
 import { soundFx } from './utils/audio';
+import { Heart } from 'lucide-react';
 
 const MainAppContent: React.FC = () => {
   const { currentUser, isAuthenticated, activeRole } = useAuth();
@@ -126,10 +127,14 @@ const MainAppContent: React.FC = () => {
       {/* Footer Watermark */}
       <footer className="w-full py-6 mt-auto border-t border-slate-800/50 bg-[#07090e]">
         <div className="max-w-6xl mx-auto px-4 flex flex-col items-center justify-center space-y-2">
-          <p className="text-slate-400 text-sm font-medium flex items-center gap-1.5">
-            Engineered with <Heart className="w-4 h-4 text-rose-500 fill-rose-500" /> by
+          <p className="text-slate-400 text-sm font-medium flex items-center gap-1.5 flex-wrap justify-center">
+            Engineered with <Heart className="w-4 h-4 text-rose-500 fill-rose-500 inline" /> by
             <a href="https://www.linkedin.com/in/balajidasika/" target="_blank" rel="noopener noreferrer" className="text-indigo-400 font-bold hover:text-indigo-300 hover:underline transition-colors ml-1">
               Balaji Dasika
+            </a>
+            <span className="text-slate-600 mx-2">|</span>
+            <a href="https://github.com/balajidasika" target="_blank" rel="noopener noreferrer" className="text-slate-400 font-bold hover:text-white transition-colors flex items-center gap-1">
+              GitHub
             </a>
           </p>
         </div>

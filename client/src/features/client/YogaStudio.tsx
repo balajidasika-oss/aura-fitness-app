@@ -39,7 +39,7 @@ export const YogaStudio: React.FC = () => {
   const [selectedZumbaVideo, setSelectedZumbaVideo] = useState<{ title: string; videoId: string } | null>(null);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setInterval>;
     if (isMeditating && meditationTimeRemaining > 0) {
       interval = setInterval(() => {
         setMeditationTimeRemaining((prev) => prev - 1);
@@ -238,7 +238,7 @@ export const YogaStudio: React.FC = () => {
         )}
         {/* PREMIUM VIDEO OVERLAY */}
         {selectedZumbaVideo && (
-          <div className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-500">
+          <div className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-500">
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
               <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20">
                 <h3 className="text-white font-black tracking-wide text-sm flex items-center gap-2">
@@ -255,7 +255,7 @@ export const YogaStudio: React.FC = () => {
               </button>
             </div>
             
-            <div className="w-full max-w-5xl mx-4 aspect-video rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(236,72,153,0.3)] border border-pink-500/30">
+            <div className="w-full max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(236,72,153,0.3)] border border-pink-500/30 mt-16">
               <iframe
                 className="w-full h-full"
                 src={`https://www.youtube.com/embed/${selectedZumbaVideo.videoId}?autoplay=1&rel=0&modestbranding=1`}
