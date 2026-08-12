@@ -449,20 +449,32 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
             PAR-Q Waiver
           </button>
         </div>
-        <div className="w-full text-center text-[10px] sm:text-xs">
-          <p className="mb-2">
-            &copy; {new Date().getFullYear()} Aura Fitness OS. Designed and Engineered by{' '}
-            <a
-              href="https://github.com/balajidasika-oss"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-emerald-500 font-bold hover:text-emerald-400 transition-colors"
-            >
-              Balaji
-            </a>
-            .
+        <div className="w-full text-center space-y-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <span className="text-slate-400 text-sm">Engineered & Designed by</span>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://www.linkedin.com/in/balajidasika/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-1.5 rounded-full bg-slate-900 border border-slate-700 hover:border-emerald-500/50 hover:bg-slate-800 text-emerald-400 font-bold text-sm transition-all flex items-center gap-2 shadow-lg"
+              >
+                Balaji Dasika
+              </a>
+              <a
+                href="https://github.com/balajidasika"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-1.5 rounded-full bg-slate-900 border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-slate-300 font-bold text-sm transition-all flex items-center gap-2 shadow-lg"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+          <p className="text-[10px] sm:text-xs text-slate-600">
+            &copy; {new Date().getFullYear()} Aura Fitness OS. Built for modern performance coaching.
           </p>
-          <p className="text-[10px] text-slate-600">All rights reserved.</p>
+          <p className="text-[10px] text-slate-700">All rights reserved.</p>
         </div>
       </footer>
 
