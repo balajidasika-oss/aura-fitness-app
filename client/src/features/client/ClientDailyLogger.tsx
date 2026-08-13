@@ -387,7 +387,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       </div>
 
       {showCoachModal && createPortal(
-        <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-xl flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[9999] bg-white/60 backdrop-blur-xl flex items-center justify-center p-4">
           <div className="surface-card border border-[var(--border-subtle)] rounded-2xl p-6 w-full max-w-sm relative shadow-2xl animate-scale-in">
             <button 
               onClick={() => setShowCoachModal(false)}
@@ -619,7 +619,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
 
         {showAddModal && createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-xl p-4 animate-scale-in">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/60 backdrop-blur-xl p-4 animate-scale-in">
             <div className="surface-card border border-[var(--border-subtle)] rounded-2xl p-6 w-full max-w-sm space-y-5 shadow-2xl">
               <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
                 <h4 className="text-sm font-bold tracking-tight text-[var(--text-primary)] flex items-center space-x-2">
@@ -756,7 +756,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         {sessionPhotoUrl ? (
           <div className="relative rounded-xl overflow-hidden border border-[var(--border-subtle)] aspect-video bg-[var(--bg-surface-1)]">
             <img src={sessionPhotoUrl} alt="Post session selfie" className="w-full h-full object-cover" />
-            <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-[var(--text-primary)] text-[10px] font-bold tracking-tight px-3 py-1.5 rounded-full flex items-center space-x-1.5 border border-[var(--border-subtle)]">
+            <div className="absolute top-3 right-3 bg-white/60 backdrop-blur-md text-[var(--text-primary)] text-[10px] font-bold tracking-tight px-3 py-1.5 rounded-full flex items-center space-x-1.5 border border-[var(--border-subtle)]">
               <Check className="w-3.5 h-3.5 text-violet-400" />
               <span>Selfie Verified</span>
             </div>
