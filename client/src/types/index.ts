@@ -31,6 +31,10 @@ export interface IMealEntry {
   caption?: string;
   name?: string;
   loggedAt?: string | Date;
+  calories?: number;
+  protein?: number;
+  carbs?: number;
+  fats?: number;
 }
 
 export interface ICardioLog {

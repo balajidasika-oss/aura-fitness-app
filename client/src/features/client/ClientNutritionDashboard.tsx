@@ -24,6 +24,12 @@ export const ClientNutritionDashboard: React.FC<ClientNutritionDashboardProps> =
   const [mealPreviewUrl, setMealPreviewUrl] = useState<string | null>(null);
   const [currentMealType, setCurrentMealType] = useState<MealType>('snack');
   const [mealCaption, setMealCaption] = useState<string>('');
+  
+  const [mealCalories, setMealCalories] = useState<number>(0);
+  const [mealProtein, setMealProtein] = useState<number>(0);
+  const [mealCarbs, setMealCarbs] = useState<number>(0);
+  const [mealFats, setMealFats] = useState<number>(0);
+  
   const [cameraModalMode, setCameraModalMode] = useState<'meal' | null>(null);
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -77,10 +83,18 @@ export const ClientNutritionDashboard: React.FC<ClientNutritionDashboardProps> =
       imagePath: mealPreviewUrl,
       caption: mealCaption.trim(),
       loggedAt: new Date(),
+      calories: mealCalories,
+      protein: mealProtein,
+      carbs: mealCarbs,
+      fats: mealFats
     };
     setMeals((prev) => [...prev, newMeal]);
     setPendingMealFiles((prev) => [...prev, mealFile]);
     setMealCaption('');
+    setMealCalories(0);
+    setMealProtein(0);
+    setMealCarbs(0);
+    setMealFats(0);
     setMealPreviewUrl(null);
     setMealFile(null);
     setIsAddingMeal(false);
@@ -101,8 +115,16 @@ export const ClientNutritionDashboard: React.FC<ClientNutritionDashboardProps> =
       formData.append('existingMeals', JSON.stringify(existingMeals));
       if (pendingMealFiles.length > 0) {
         pendingMealFiles.forEach((file) => formData.append('mealPhotos', file));
-        formData.append('mealTypes', JSON.stringify(newMeals.map((m) => m.type)));
-        formData.append('mealCaptions', JSON.stringify(newMeals.map((m) => m.caption)));
+        
+        // Pass the new meals data as a single JSON array to keep things simple
+        formData.append('newMealsData', JSON.stringify(newMeals.map(m => ({
+          type: m.type,
+          caption: m.caption,
+          calories: m.calories,
+          protein: m.protein,
+          carbs: m.carbs,
+          fats: m.fats
+        }))));
       }
 
       await submitDailyLog(formData);
@@ -147,6 +169,25 @@ export const ClientNutritionDashboard: React.FC<ClientNutritionDashboardProps> =
               onChange={(e) => setSelectedDate(e.target.value)}
               className="mt-2 glass-card rounded-2xl px-3 py-1.5 text-xs text-[var(--text-secondary)] focus:outline-none focus:border-[var(--border-subtle)] font-medium"
             />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-4 gap-2 mt-5">
+          <div className="bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl p-2 sm:p-3 text-center">
+            <p className="text-[10px] sm:text-xs text-[var(--text-secondary)] font-bold uppercase tracking-wider mb-1">Cals</p>
+            <p className="text-sm sm:text-lg font-extrabold text-[var(--text-primary)]">{meals.reduce((sum, m) => sum + (m.calories || 0), 0)}</p>
+          </div>
+          <div className="bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl p-2 sm:p-3 text-center">
+            <p className="text-[10px] sm:text-xs text-[var(--text-secondary)] font-bold uppercase tracking-wider mb-1">Pro</p>
+            <p className="text-sm sm:text-lg font-extrabold text-[var(--text-primary)]">{meals.reduce((sum, m) => sum + (m.protein || 0), 0)}g</p>
+          </div>
+          <div className="bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl p-2 sm:p-3 text-center">
+            <p className="text-[10px] sm:text-xs text-[var(--text-secondary)] font-bold uppercase tracking-wider mb-1">Carbs</p>
+            <p className="text-sm sm:text-lg font-extrabold text-[var(--text-primary)]">{meals.reduce((sum, m) => sum + (m.carbs || 0), 0)}g</p>
+          </div>
+          <div className="bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl p-2 sm:p-3 text-center">
+            <p className="text-[10px] sm:text-xs text-[var(--text-secondary)] font-bold uppercase tracking-wider mb-1">Fat</p>
+            <p className="text-sm sm:text-lg font-extrabold text-[var(--text-primary)]">{meals.reduce((sum, m) => sum + (m.fats || 0), 0)}g</p>
           </div>
         </div>
       </div>
@@ -256,7 +297,7 @@ export const ClientNutritionDashboard: React.FC<ClientNutritionDashboardProps> =
       </div>
 
       {isAddingMeal && mealPreviewUrl && createPortal(
-        <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-xl flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[9999] bg-white/60 dark:bg-black/80 backdrop-blur-xl flex items-center justify-center p-4">
           <div className="surface-card border border-[var(--border-subtle)] rounded-2xl p-6 w-full max-w-sm relative shadow-2xl animate-scale-in">
             <button 
               onClick={() => {
@@ -298,32 +339,78 @@ export const ClientNutritionDashboard: React.FC<ClientNutritionDashboardProps> =
                   type="text"
                   value={mealCaption}
                   onChange={(e) => setMealCaption(e.target.value)}
-                  placeholder="e.g. 2 eggs, avocado toast (400 cal)"
+                  placeholder="e.g. Grilled Chicken Salad"
                   className="w-full bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl px-4 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-rose-400 transition-colors"
                 />
               </div>
 
-              <button
-                onClick={handleAddMealItem}
-                className="w-full py-3.5 mt-2 rounded-xl btn-primary text-sm font-bold tracking-tight flex items-center justify-center space-x-2 shadow-lg shadow-rose-500/25 transition-all duration-300"
-              >
-                <CheckCircle2 className="w-5 h-5" />
-                <span>Save to Daily Log</span>
-              </button>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] font-bold text-[var(--text-secondary)] block mb-1.5 uppercase tracking-wider">Calories</label>
+                  <input
+                    type="number"
+                    value={mealCalories || ''}
+                    onChange={(e) => setMealCalories(Number(e.target.value))}
+                    className="w-full bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl px-4 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-rose-400 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-[var(--text-secondary)] block mb-1.5 uppercase tracking-wider">Protein (g)</label>
+                  <input
+                    type="number"
+                    value={mealProtein || ''}
+                    onChange={(e) => setMealProtein(Number(e.target.value))}
+                    className="w-full bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl px-4 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-rose-400 transition-colors"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] font-bold text-[var(--text-secondary)] block mb-1.5 uppercase tracking-wider">Carbs (g)</label>
+                  <input
+                    type="number"
+                    value={mealCarbs || ''}
+                    onChange={(e) => setMealCarbs(Number(e.target.value))}
+                    className="w-full bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl px-4 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-rose-400 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-[var(--text-secondary)] block mb-1.5 uppercase tracking-wider">Fats (g)</label>
+                  <input
+                    type="number"
+                    value={mealFats || ''}
+                    onChange={(e) => setMealFats(Number(e.target.value))}
+                    className="w-full bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl px-4 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-rose-400 transition-colors"
+                  />
+                </div>
+              </div>
             </div>
+
+            <button
+              onClick={handleAddMealItem}
+              className="w-full py-3.5 mt-6 rounded-xl btn-primary text-sm font-bold tracking-tight flex items-center justify-center space-x-2 shadow-lg shadow-rose-500/25 transition-all duration-300"
+            >
+              <CheckCircle2 className="w-5 h-5" />
+              <span>Save to Daily Log</span>
+            </button>
           </div>
         </div>,
         document.body
       )}
 
-      <LiveCameraModal
-        isOpen={cameraModalMode !== null}
-        onClose={() => setCameraModalMode(null)}
-        onCapture={handleLiveCameraCapture}
-        title="Snap Nutrition Photo"
-        subtitle="Align within frame and tap shutter"
-        defaultFacingMode="environment"
-      />
+      {cameraModalMode && (
+        <div className="fixed inset-0 z-[9999] bg-white/60 dark:bg-black/80 backdrop-blur-xl">
+          <LiveCameraModal
+            isOpen={true}
+            onClose={() => setCameraModalMode(null)}
+            onCapture={handleLiveCameraCapture}
+            title="Snap Nutrition Photo"
+            subtitle="Align within frame and tap shutter"
+            defaultFacingMode="environment"
+          />
+        </div>
+      )}
     </div>
   );
 };

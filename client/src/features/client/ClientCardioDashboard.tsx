@@ -22,6 +22,12 @@ export const ClientCardioDashboard: React.FC<ClientCardioDashboardProps> = ({ cl
   const [stairmasterLevel, setStairmasterLevel] = useState<number>(8);
   const [heartRateAvg, setHeartRateAvg] = useState<number>(140);
   
+  const calculatedCalories = Math.round(
+    cardioType === 'stairmaster'
+      ? stairmasterFloors * 3.5 + cardioDurationMins * 8
+      : cardioDistanceKm * 65 * (1 + inclinePercentage * 0.08)
+  );
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
 
@@ -77,11 +83,7 @@ export const ClientCardioDashboard: React.FC<ClientCardioDashboardProps> = ({ cl
         stairmasterFloors,
         stairmasterLevel,
         heartRateAvg,
-        caloriesBurned: Math.round(
-          cardioType === 'stairmaster'
-            ? stairmasterFloors * 3.5 + cardioDurationMins * 8
-            : cardioDistanceKm * 65 * (1 + inclinePercentage * 0.08)
-        ),
+        caloriesBurned: calculatedCalories,
       };
       formData.append('cardio', JSON.stringify(cardioPayload));
 
@@ -139,6 +141,16 @@ export const ClientCardioDashboard: React.FC<ClientCardioDashboardProps> = ({ cl
           <div>
             <h3 className="text-sm font-bold tracking-tight text-[var(--text-primary)]">Cardio Conditioning</h3>
             <span className="text-[11px] text-[var(--text-secondary)] font-medium">Treadmill Incline • StairMaster • Running</span>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-2xl p-4 shadow-sm">
+          <div>
+            <p className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-wider mb-1">Est. Calories Burned</p>
+            <p className="text-2xl font-extrabold text-[var(--text-primary)]">{calculatedCalories} <span className="text-xs text-[var(--text-secondary)] font-bold">kcal</span></p>
+          </div>
+          <div className="w-12 h-12 rounded-full bg-cyan-400/10 flex items-center justify-center text-cyan-400 border border-cyan-400/20">
+            <Gauge className="w-6 h-6" />
           </div>
         </div>
 

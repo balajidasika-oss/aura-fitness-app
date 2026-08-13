@@ -53,8 +53,32 @@
     --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   }
 
+  :root.dark {
+    /* ── Core Surfaces (Dark) ── */
+    --bg-void:      #050505;
+    --bg-surface-1: #0f172a;
+    --bg-surface-2: #1e293b;
+    --bg-glass:     rgba(15, 23, 42, 0.6);
+    --bg-glass-elevated: rgba(30, 41, 59, 0.8);
+
+    /* ── Borders (Dark) ── */
+    --border-subtle:  rgba(255, 255, 255, 0.1);
+    --border-medium:  rgba(255, 255, 255, 0.2);
+
+    /* ── Text (Dark) ── */
+    --text-primary:   #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted:     #64748b;
+    --text-faint:     #334155;
+    --text-inverted:  #0f172a;
+  }
+
   * {
     scrollbar-color: rgba(0,0,0,0.1) transparent;
+  }
+
+  :root.dark * {
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
   }
 
   html,
@@ -79,6 +103,13 @@
       radial-gradient(circle at 50% 50%, rgba(79, 172, 254, 0.08), transparent 60%);
     background-attachment: fixed;
     min-height: 100vh;
+  }
+
+  :root.dark body {
+    background-image:
+      radial-gradient(circle at 15% 30%, rgba(0, 242, 254, 0.05), transparent 40%),
+      radial-gradient(circle at 85% 70%, rgba(255, 154, 158, 0.05), transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(79, 172, 254, 0.03), transparent 60%);
   }
 
   ::selection {

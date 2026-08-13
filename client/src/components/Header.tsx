@@ -13,8 +13,11 @@ import {
   Copy,
   Check,
   Github,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import { soundFx } from '../utils/audio';
 
 interface HeaderProps {
@@ -29,6 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenPrivacy,
 }) => {
   const { currentUser, logout, activeRole } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [isMuted, setIsMuted] = useState(soundFx.getMuted());
   const [copiedCode, setCopiedCode] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
@@ -135,6 +139,18 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            </button>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={() => {
+                soundFx.playTapSound();
+                toggleTheme();
+              }}
+              title="Toggle Light/Dark Theme"
+              className="w-10 h-10 p-2 flex items-center justify-center rounded-2xl text-xs transition-all duration-300 active:scale-95 btn-ghost border border-[var(--border-subtle)]"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
             </button>
 
 
