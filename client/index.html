@@ -20,6 +20,19 @@
   <body class="bg-[#09090b] text-zinc-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-300 min-h-screen overflow-x-hidden">
     <div id="root"></div>
     <script>
+      // Force cache bust for v1.0.2
+      if (!localStorage.getItem('aura_cache_bust_102')) {
+        localStorage.setItem('aura_cache_bust_102', 'true');
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            for(let reg of regs) { reg.unregister(); }
+            window.location.reload(true);
+          });
+        } else {
+          window.location.reload(true);
+        }
+      }
+
       // Escape hatch for old Service Worker caches that cause blank screens
       window.addEventListener('error', function(e) {
         if (e.message && (e.message.toLowerCase().includes('syntaxerror') || e.message.toLowerCase().includes('dynamically imported module'))) {
