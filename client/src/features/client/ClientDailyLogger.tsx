@@ -43,15 +43,12 @@ import {
   MuscleCategory,
 } from '../../types';
 import { submitDailyLog, fetchTodayLog, joinCoach, API_BASE } from '../../services/api';
-import { GamificationDashboard } from './GamificationDashboard';
 import { useAuth } from '../../context/AuthContext';
 import { ProgressRing } from '../../components/ProgressRing';
 import { LiveCameraModal } from '../../components/LiveCameraModal';
 import { VoiceFeedbackPlayer } from '../../components/VoiceFeedbackPlayer';
 import { VoiceNoteRecorder } from '../../components/VoiceNoteRecorder';
 import { soundFx } from '../../utils/audio';
-import { YogaStudio } from './YogaStudio';
-
 interface ClientDailyLoggerProps {
   client: IClientUser;
   onLogSaved?: () => void;
@@ -113,13 +110,6 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   const [newExWeight, setNewExWeight] = useState<number>(0);
   const [newExNotes, setNewExNotes] = useState<string>('');
 
-  // Yoga State
-  const [workoutMode, setWorkoutMode] = useState<'strength' | 'yoga'>('strength');
-  const [isYogaActive, setIsYogaActive] = useState<boolean>(false);
-  const [yogaType, setYogaType] = useState<'flexibility' | 'mobility' | 'recovery' | 'flow'>('mobility');
-  const [yogaTitle, setYogaTitle] = useState<string>('Daily Yoga Flow');
-  const [yogaDuration, setYogaDuration] = useState<number>(15);
-  const [yogaVideoUrl, setYogaVideoUrl] = useState<string>('https://www.youtube.com/embed/v7AYKMP6rOE'); // default morning mobility
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
 
   // 2. CARDIO SESSION STATE
@@ -201,14 +191,6 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
             setHeartRateAvg(cardio.heartRateAvg || 0);
           }
 
-          if (log.yoga) {
-            setIsYogaActive(true);
-            setWorkoutMode('yoga');
-            setYogaTitle(log.yoga.title || 'Daily Yoga Flow');
-            setYogaType(log.yoga.type || 'mobility');
-            setYogaDuration(log.yoga.durationMinutes || 15);
-            if (log.yoga.videoUrl) setYogaVideoUrl(log.yoga.videoUrl);
-          }
 
           setMeals(log.meals || []);
           setSessionPhotoUrl(log.postWorkoutPhoto || null);
@@ -245,8 +227,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   if (isRestDay) {
     completionScore += 50; // Waive workout and cardio
   } else {
-    if (workoutMode === 'strength' && hasWorkout) completionScore += 25;
-    if (workoutMode === 'yoga' && isYogaActive) completionScore += 25;
+    if (hasWorkout) completionScore += 25;
     if (hasCardio) completionScore += 25;
   }
   if (hasMeals) completionScore += 25;
@@ -433,14 +414,6 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       };
       formData.append('cardio', JSON.stringify(cardioPayload));
 
-      if (isYogaActive) {
-        formData.append('yoga', JSON.stringify({
-          title: yogaTitle,
-          durationMinutes: yogaDuration,
-          type: yogaType,
-          videoUrl: yogaVideoUrl,
-        }));
-      }
 
       // Existing Meals + New Meal Photo
       const existingMeals = meals.filter((m) => !m.imagePath?.startsWith('blob:'));
@@ -570,12 +543,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
       </div>
 
-      <GamificationDashboard 
-        yogaCompleted={isYogaActive && yogaType !== 'flow'}
-        streak={client.compliance?.streak || client.streak || 0}
-        totalLogsSubmitted={client.totalLogsSubmitted || 0}
-        zumbaCompleted={isYogaActive && yogaType === 'flow'}
-      />
+
 
       {/* Change Coach Modal */}
       {showCoachModal && (
@@ -640,41 +608,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
           </div>
         )}
 
-      {/* WORKOUT MODE SWITCHER */}
-      <div className="flex flex-wrap p-1.5 glass-panel rounded-2xl relative shadow-black/40 mb-2">
-        <button
-          onClick={() => {
-            soundFx.playTapSound();
-            setWorkoutMode('strength');
-          }}
-          className={`flex-1 py-3 rounded-2xl text-xs font-bold tracking-tight transition-all duration-300 relative z-10 flex items-center justify-center space-x-2 ${
-            workoutMode === 'strength' 
-            ? 'bg-[var(--bg-surface-1)] text-[var(--text-primary)]  scale-[1.02]' 
-            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:surface-card'
-          }`}
-        >
-          <span className="text-sm">💪</span>
-          <span>Strength Training</span>
-        </button>
-        <button
-          onClick={() => {
-            soundFx.playTapSound();
-            setWorkoutMode('yoga');
-            setIsYogaActive(true);
-          }}
-          className={`flex-1 py-3 rounded-2xl text-xs font-bold tracking-tight transition-all duration-300 relative z-10 flex items-center justify-center space-x-2 ${
-            workoutMode === 'yoga' 
-            ? 'bg-[var(--bg-surface-1)] text-[var(--text-primary)]  scale-[1.02]' 
-            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:surface-card'
-          }`}
-        >
-          <span className="text-sm">🧘‍♀️</span>
-          <span>Yoga & Mobility</span>
-        </button>
-      </div>
-
       {/* SECTION 1: STRENGTH TRAINING - MUSCLE GROUPS & REPS */}
-      {workoutMode === 'strength' && (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className={`glass-panel rounded-2xl p-5 space-y-5 transition-all duration-300 ${isRestDay ? 'opacity-40 grayscale pointer-events-none' : 'hover:border-[var(--border-subtle)]'}`}>
             {/* Header & Single Total Duration */}
@@ -972,21 +906,6 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         </div>
       )}
           </div>
-      )}
-
-      {/* SECTION 1B: YOGA & MOBILITY */}
-      {workoutMode === 'yoga' && (
-        <YogaStudio 
-          onCompleteSession={(details) => {
-            setYogaType(details.type);
-            setYogaTitle(details.title);
-            setYogaDuration(details.duration);
-            if (details.videoUrl) setYogaVideoUrl(details.videoUrl);
-            setIsYogaActive(true);
-            alert(`Achievement Unlocked! Added ${details.title} to your daily log.`);
-          }}
-        />
-      )}
 
       {/* SECTION 2: CLIENT DAILY VOICE NOTE (Microphone Access) */}
       <div className="bg-transparent rounded-2xl p-6 md:p-8 border-[var(--border-subtle)] relative overflow-hidden mt-8"><VoiceNoteRecorder onAudioReady={handleVoiceAudioReady} coachName="Coach Kai" /></div>

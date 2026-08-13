@@ -86,7 +86,8 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
   };
 
   return (
-    <div className="glass-panel-elevated rounded-2xl overflow-hidden relative group">
+    <div className="w-full max-w-4xl mx-auto pb-24 md:pb-8 animate-fade-in-up">
+      <div className="glass-panel-elevated rounded-2xl overflow-hidden relative shadow-2xl border-[var(--border-subtle)] min-h-[calc(100vh-140px)]">
       {/* Background Mesh */}
       <div className="absolute inset-0 bg-mesh-dark opacity-30 pointer-events-none transition-opacity group-hover:opacity-50" />
       {aiCoachAsana && (
@@ -151,7 +152,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
             <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
               Follow these foundational asanas to improve flexibility, balance, and core strength. Breathe deeply through each posture.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {YOGA_ASANAS.map((asana, idx) => (
                 <div key={idx} className="glass-panel rounded-2xl overflow-hidden group hover:border-[var(--border-subtle)] hover:-translate-y-1 transition-all duration-300">
                   <div className="h-36 surface-card relative overflow-hidden">
@@ -227,7 +228,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
             <p className="text-xs text-pink-200/80 leading-relaxed font-medium">
               Get your heart rate up with these fun, high-energy dance cardio sessions.
             </p>
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {ZUMBA_VIDEOS.map((video) => (
                 <div 
                   key={video.id} 
@@ -260,7 +261,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         {selectedZumbaVideo && (
           <div className="fixed inset-0 z-[200] bg-transparent backdrop-blur-3xl flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-500">
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-              <div className="surface-card px-4 py-2 rounded-2xl border-[var(--border-subtle)]">
+              <div className="surface-card px-4 py-2 rounded-2xl border-[var(--border-subtle)] hidden sm:block">
                 <h3 className="text-[var(--text-primary)] font-bold tracking-tight tracking-wide text-sm flex items-center gap-2">
                   <Play className="w-4 h-4 text-pink-500 fill-pink-500" />
                   {selectedZumbaVideo.title}
@@ -308,6 +309,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         )}
 
       </div>
+    </div>
     </div>
   );
 };
