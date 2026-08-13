@@ -119,7 +119,7 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
             </div>
             <div>
               <h3 className="text-base font-bold tracking-tight text-[var(--text-primary)]">GDPR Privacy Controls</h3>
-              <p className="text-[11px] text-[var(--text-muted)] font-medium mt-0.5">Manage your personal athlete data</p>
+              <p className="text-xs text-[var(--text-muted)] font-medium mt-0.5">Manage your personal athlete data</p>
             </div>
           </div>
 
@@ -129,7 +129,7 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
               soundFx.playTapSound();
               onClose();
             }}
-            className="p-2 rounded-2xl btn-icon transition-all duration-300"
+            className="w-10 h-10 p-2.5 rounded-2xl btn-icon transition-all duration-300 flex items-center justify-center"
           >
             <X className="w-4 h-4" />
           </button>
@@ -144,9 +144,9 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
           />
           <div className="flex-1">
             <span className="text-sm font-bold tracking-tight text-[var(--text-primary)] block">{currentUser.name}</span>
-            <span className="text-[11px] text-[var(--text-secondary)] font-medium">{currentUser.email}</span>
+            <span className="text-xs text-[var(--text-secondary)] font-medium">{currentUser.email}</span>
           </div>
-          <span className="pill text-[9px] font-bold tracking-wider uppercase">
+          <span className="pill text-[11px] font-bold tracking-wider uppercase">
             {currentUser.role}
           </span>
         </div>
@@ -157,7 +157,7 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
             <Download className="w-4 h-4 text-[var(--text-primary)]" />
             <h4 className="text-sm font-bold tracking-tight text-[var(--text-primary)]">Export My Data Archive</h4>
           </div>
-          <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+          <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
             Download a full, machine-readable JSON copy of your profile, daily muscle workouts, cardio sessions, and meal history (GDPR Art. 20).
           </p>
           <button
@@ -188,7 +188,7 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
             <Trash2 className="w-4 h-4" />
             <h4 className="text-sm font-bold tracking-tight">Right to Erasure (Delete Account)</h4>
           </div>
-          <p className="text-[11px] text-rose-300/80 leading-relaxed">
+          <p className="text-xs text-rose-300/80 leading-relaxed">
             Permanently purge your account, all daily workout entries, cardio logs, uploaded meal photos, and voice memos. This action cannot be undone.
           </p>
 
@@ -205,7 +205,7 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
             </button>
           ) : (
             <div className="space-y-3 pt-2">
-              <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-500/50 text-[11px] text-rose-200">
+              <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-500/50 text-xs text-rose-200">
                 Type <strong className="text-white font-mono font-bold tracking-tight">DELETE</strong> below to confirm erasure:
               </div>
               <input
@@ -213,7 +213,7 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
                 value={deleteConfirmationText}
                 onChange={(e) => setDeleteConfirmationText(e.target.value)}
                 placeholder="Type DELETE"
-                className="w-full bg-[var(--bg-surface-2)] border border-rose-500/50 rounded-xl px-4 py-2.5 text-xs text-[var(--text-primary)] uppercase focus:outline-none focus:border-rose-400 font-mono font-bold shadow-inner"
+                className="w-full bg-[var(--bg-surface-2)] border border-rose-500/50 rounded-xl px-4 py-3 text-xs text-[var(--text-primary)] uppercase focus:outline-none focus:border-rose-400 font-mono font-bold shadow-inner"
               />
               <div className="flex items-center gap-3">
                 <button

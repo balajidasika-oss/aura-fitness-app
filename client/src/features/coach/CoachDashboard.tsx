@@ -98,8 +98,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
   const handleQuickCheer = async (clientId: string, logId: string, emoji: string, defaultMsg: string) => {
     try {
       soundFx.playCheerSound();
-      const customMsg = customNotes[logId] || defaultMsg;
-      await sendCoachCheer(clientId, logId, emoji, customMsg);
+      await sendCoachCheer(clientId, logId, emoji, defaultMsg);
       setCheerSuccessLogId(logId);
       refreshAction();
       setTimeout(() => setCheerSuccessLogId(null), 2500);
@@ -110,7 +109,20 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
 
   const handleCopyCoachCode = () => {
     if (coachUser?.coachCode) {
-      navigator.clipboard.writeText(coachUser.coachCode);
+      try {
+        navigator.clipboard.writeText(coachUser.coachCode);
+      } catch (err) {
+        const textArea = document.createElement("textarea");
+        textArea.value = coachUser.coachCode;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+        } catch (err2) {
+          console.error("Fallback copy failed", err2);
+        }
+        document.body.removeChild(textArea);
+      }
       setCopiedCode(true);
       soundFx.playSuccessChime();
       setTimeout(() => setCopiedCode(false), 2000);
@@ -493,7 +505,7 @@ export const CoachDashboard: React.FC<CoachDashboardProps> = ({
                         )}
                       </div>
 
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         <button
                           onClick={() =>
                             handleQuickCheer(client._id, logId, '🔥', 'Crushed your strength & cardio goals today!')

@@ -98,7 +98,7 @@ export const FoodGallery: React.FC<FoodGalleryProps> = ({ mealsWithDates }) => {
             >
               <X className="w-5 h-5" />
             </button>
-            <img src={zoomedImage.url} alt="Enlarged meal" className="w-full max-h-[65vh] object-cover" />
+            <img src={zoomedImage.url} alt="Enlarged meal" className="w-full max-h-[80vh] object-contain" />
             <div className="p-4 bg-[var(--bg-surface-1)] border-t border-[var(--border-subtle)] flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-2">

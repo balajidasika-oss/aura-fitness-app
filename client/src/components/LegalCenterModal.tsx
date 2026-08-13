@@ -30,7 +30,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold tracking-tight text-[var(--text-primary)]">Legal & Compliance Center</h3>
-              <p className="text-[11px] text-[var(--text-muted)] font-medium mt-0.5">Terms, Health Waiver & Privacy</p>
+              <p className="text-xs text-[var(--text-muted)] font-medium mt-0.5">Terms, Health Waiver & Privacy</p>
             </div>
           </div>
 
@@ -40,7 +40,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               soundFx.playTapSound();
               onClose();
             }}
-            className="p-2 rounded-2xl btn-icon transition-all duration-300"
+            className="w-10 h-10 p-2.5 rounded-2xl btn-icon transition-all duration-300 flex items-center justify-center"
           >
             <X className="w-4 h-4" />
           </button>
@@ -54,7 +54,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               soundFx.playTapSound();
               setActiveTab('parq');
             }}
-            className={`py-2.5 px-2 rounded-xl font-bold flex items-center justify-center gap-1.5 transition-all duration-300 ${
+            className={`py-3 px-3 rounded-xl font-bold flex items-center justify-center gap-1.5 transition-all duration-300 ${
               activeTab === 'parq'
                 ? 'pill-rose shadow-lg'
                 : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-2)] hover:text-[var(--text-primary)]'
@@ -71,7 +71,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               soundFx.playTapSound();
               setActiveTab('privacy');
             }}
-            className={`py-2.5 px-2 rounded-xl font-bold flex items-center justify-center gap-1.5 transition-all duration-300 ${
+            className={`py-3 px-3 rounded-xl font-bold flex items-center justify-center gap-1.5 transition-all duration-300 ${
               activeTab === 'privacy'
                 ? 'bg-[var(--bg-surface-2)] text-[var(--text-primary)] shadow-md border border-[var(--border-subtle)]'
                 : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-2)] hover:text-[var(--text-primary)]'
@@ -88,7 +88,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
               soundFx.playTapSound();
               setActiveTab('terms');
             }}
-            className={`py-2.5 px-2 rounded-xl font-bold flex items-center justify-center gap-1.5 transition-all duration-300 ${
+            className={`py-3 px-3 rounded-xl font-bold flex items-center justify-center gap-1.5 transition-all duration-300 ${
               activeTab === 'terms'
                 ? 'bg-[var(--bg-surface-2)] text-[var(--text-primary)] shadow-md border border-[var(--border-subtle)]'
                 : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-2)] hover:text-[var(--text-primary)]'
@@ -230,7 +230,7 @@ export const LegalCenterModal: React.FC<LegalCenterModalProps> = ({
         </div>
 
         {/* Footer Accept / Close Button */}
-        <div className="p-5 border-t border-[var(--border-subtle)] bg-[var(--bg-glass)] flex items-center justify-between backdrop-blur-xl">
+        <div className="p-5 border-t border-[var(--border-subtle)] bg-[var(--bg-glass)] flex items-center justify-between backdrop-blur-xl pb-safe">
           <div className="flex items-center gap-2 text-xs text-[var(--text-primary)] font-bold">
             <CheckCircle className="w-4 h-4 text-emerald-400" />
             <span>Updated & Compliant 2026</span>

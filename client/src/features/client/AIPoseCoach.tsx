@@ -35,6 +35,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
   const [feedbackMsg, setFeedbackMsg] = useState('Initializing AI Coach...');
   const [isCorrect, setIsCorrect] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
 
   const detectorRef = useRef<poseDetection.PoseDetector | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -60,7 +61,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
 
         // Setup Camera
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+          video: { facingMode, width: { ideal: 640 }, height: { ideal: 480 } },
           audio: false,
         });
         
@@ -92,7 +93,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
       if (reqFrameRef.current) cancelAnimationFrame(reqFrameRef.current);
       if (streamRef.current) streamRef.current.getTracks().forEach(track => track.stop());
     };
-  }, []);
+  }, [facingMode]);
 
   const detectPose = async () => {
     if (!videoRef.current || !canvasRef.current || !detectorRef.current) return;
@@ -302,6 +303,13 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
           
           <div className="flex items-center space-x-2">
             <button 
+              onClick={() => { soundFx.playTapSound(); setFacingMode(prev => prev === 'user' ? 'environment' : 'user'); }}
+              className="p-2.5 rounded-2xl surface-card hover:surface-card text-[var(--text-primary)] transition border-[var(--border-subtle)]"
+              title="Toggle Camera"
+            >
+              <Camera className="w-4 h-4" />
+            </button>
+            <button 
               onClick={() => { soundFx.playTapSound(); setIsFullscreen(!isFullscreen); }}
               className="p-2.5 rounded-2xl surface-card hover:surface-card text-[var(--text-primary)] transition border-[var(--border-subtle)]"
             >
@@ -321,7 +329,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
         <div className="flex-1 flex flex-col md:flex-row relative w-full h-full surface-card overflow-hidden pt-[88px]">
           
           {/* LEFT/BOTTOM PANEL: Reference Image & Instructions */}
-          <div className="order-2 md:order-1 w-full md:w-1/3 h-[45%] md:h-full border-t md:border-t-0 md:border-r border-[var(--border-subtle)] bg-[var(--bg-surface-1)] flex flex-col overflow-y-auto z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.2)] md:">
+          <div className="order-2 md:order-1 w-full md:w-1/3 h-[35%] md:h-full border-t md:border-t-0 md:border-r border-[var(--border-subtle)] bg-[var(--bg-surface-1)] flex flex-col overflow-y-auto z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.2)] md:">
             {/* Reference Image (Hidden on very small screens, visible on md+) */}
             <div className="hidden sm:flex relative h-32 md:h-2/5 shrink-0 bg-[var(--bg-surface-1)] border-b border-[var(--border-subtle)] p-4 flex-col justify-center items-center">
               <img 

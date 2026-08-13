@@ -75,11 +75,11 @@ export const Header: React.FC<HeaderProps> = ({
             <div>
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <span className="font-extrabold text-sm sm:text-base tracking-wider text-[var(--text-primary)] bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--text-secondary)]">AURAFIT</span>
-                <span className="pill text-[9px] sm:text-[10px] uppercase font-bold">
+                <span className="pill text-[11px] uppercase font-bold">
                   {activeRole === 'coach' ? 'Coach Portal' : 'Athlete'}
                 </span>
               </div>
-              <p className="text-[10px] text-[var(--text-muted)] hidden sm:block">Performance Habit Logger & Coach OS</p>
+              <p className="text-xs text-[var(--text-muted)] hidden sm:block">Performance Habit Logger & Coach OS</p>
             </div>
           </div>
 
@@ -90,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={handleCopyCoachCode}
                 title="Copy Coach Invite Code to share with athletes"
-                className="hidden sm:flex items-center gap-1.5 btn-ghost rounded-2xl px-2.5 py-1 text-xs transition active:scale-95 animate-scale-in"
+                className="hidden sm:flex items-center gap-1.5 btn-ghost rounded-2xl px-3 py-2 text-xs transition active:scale-95 animate-scale-in"
               >
                 <Award className="w-3.5 h-3.5" />
                 <span>{currentUser.coachCode}</span>
@@ -108,7 +108,7 @@ export const Header: React.FC<HeaderProps> = ({
                     className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-[var(--border-subtle)]"
                   />
                   {currentUser.streak && currentUser.streak > 0 ? (
-                    <span className="absolute -bottom-1 -right-1 bg-[var(--bg-surface-2)] text-[var(--text-primary)] font-bold text-[7px] sm:text-[8px] px-1 rounded-full flex items-center border border-[var(--border-subtle)]">
+                    <span className="absolute -bottom-1 -right-1 bg-[var(--bg-surface-2)] text-[var(--text-primary)] font-bold text-[11px] px-1 rounded-full flex items-center border border-[var(--border-subtle)]">
                       <Flame className="w-1.5 h-1.5 sm:w-2 sm:h-2 fill-amber-500 text-amber-500" />
                     </span>
                   ) : null}
@@ -117,7 +117,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <p className="text-xs font-bold text-[var(--text-primary)] truncate max-w-[120px]">
                     {currentUser.name}
                   </p>
-                  <p className="text-[10px] text-[var(--text-muted)] capitalize">
+                  <p className="text-xs text-[var(--text-muted)] capitalize">
                     {currentUser.role === 'coach' ? 'Coach' : `${currentUser.streak || 0}d streak`}
                   </p>
                 </div>
@@ -128,7 +128,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={handleToggleMute}
               title={isMuted ? 'Unmute Sound FX' : 'Mute Sound FX'}
-              className={`p-1.5 sm:p-2 rounded-2xl text-xs transition-all duration-300 active:scale-95 ${
+              className={`w-10 h-10 p-2 flex items-center justify-center rounded-2xl text-xs transition-all duration-300 active:scale-95 ${
                 isMuted
                   ? 'bg-[var(--bg-surface-1)] text-[var(--text-muted)] border border-[var(--border-subtle)]'
                   : 'btn-ghost border border-[var(--border-subtle)]'
@@ -143,7 +143,7 @@ export const Header: React.FC<HeaderProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               title="Developer GitHub Profile"
-              className="flex p-1.5 sm:p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
+              className="flex items-center justify-center w-10 h-10 p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
             >
               <Github className="w-4 h-4" />
             </a>
@@ -156,7 +156,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenPWAInstall();
                 }}
                 title="Install PWA / Add to Home Screen"
-                className="flex p-1.5 sm:p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
+                className="flex items-center justify-center w-10 h-10 p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
               >
                 <Smartphone className="w-4 h-4" />
               </button>
@@ -170,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenLegal();
                 }}
                 title="Legal & Safety Policy"
-                className="hidden md:flex p-1.5 sm:p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
+                className="hidden md:flex items-center justify-center w-10 h-10 p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
               >
                 <Shield className="w-4 h-4" />
               </button>
@@ -182,7 +182,7 @@ export const Header: React.FC<HeaderProps> = ({
                 logout();
               }}
               title="Sign Out"
-              className="p-1.5 sm:p-2 rounded-2xl btn-danger active:scale-95 transition-all duration-300"
+              className="flex items-center justify-center w-10 h-10 p-2 rounded-2xl btn-danger active:scale-95 transition-all duration-300"
             >
               <LogOut className="w-4 h-4" />
             </button>

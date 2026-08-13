@@ -132,6 +132,7 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
   };
 
   const handleSendFeedback = async () => {
+    if (!latestLog?._id) return;
     try {
       soundFx.playCheerSound();
       setIsSendingFeedback(true);
@@ -511,32 +512,36 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
             />
           </div>
 
-          <div className="flex items-center gap-1.5">
-            {(['🔥', '💪', '🥗', '⚡', '👏'] as const).map((emoji) => (
+          <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex items-center justify-between sm:justify-start gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+              {(['🔥', '💪', '🥗', '⚡', '👏'] as const).map((emoji) => (
+                <button
+                  key={emoji}
+                  onClick={() => setReactionEmoji(emoji)}
+                  className={`text-base p-1 rounded-xl transition-all duration-300 flex-shrink-0 ${
+                    reactionEmoji === emoji ? 'bg-[var(--bg-surface-2)] ring-1 ring-[var(--text-primary)]' : 'opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  {emoji}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-1.5 flex-1 w-full min-w-0">
+              <input
+                type="text"
+                placeholder={voiceBlob ? "Audio attached! Add optional text..." : "Quick cheer message to athlete..."}
+                value={feedbackText}
+                onChange={(e) => setFeedbackText(e.target.value)}
+                className="flex-1 min-w-0 bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl px-2.5 py-1.5 text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--border-medium)] transition-all duration-300"
+              />
               <button
-                key={emoji}
-                onClick={() => setReactionEmoji(emoji)}
-                className={`text-base p-1 rounded-xl transition-all duration-300 ${
-                  reactionEmoji === emoji ? 'bg-[var(--bg-surface-2)] ring-1 ring-[var(--text-primary)]' : 'opacity-70 hover:opacity-100'
-                }`}
+                onClick={handleSendFeedback}
+                disabled={isSendingFeedback || (!feedbackText.trim() && !voiceBlob)}
+                className="btn-primary p-2 text-xs transition-all duration-300 disabled:opacity-50 flex-shrink-0"
               >
-                {emoji}
+                <Send className="w-3.5 h-3.5 stroke-[2.5]" />
               </button>
-            ))}
-            <input
-              type="text"
-              placeholder={voiceBlob ? "Audio attached! Add optional text..." : "Quick cheer message to athlete..."}
-              value={feedbackText}
-              onChange={(e) => setFeedbackText(e.target.value)}
-              className="flex-1 bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl px-2.5 py-1.5 text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--border-medium)] transition-all duration-300"
-            />
-            <button
-              onClick={handleSendFeedback}
-              disabled={isSendingFeedback || (!feedbackText.trim() && !voiceBlob)}
-              className="btn-primary p-2 text-xs transition-all duration-300 disabled:opacity-50"
-            >
-              <Send className="w-3.5 h-3.5 stroke-[2.5]" />
-            </button>
+            </div>
           </div>
           {feedbackSentSuccess && (
             <span className="text-[10px] text-emerald-400 font-bold block text-center mt-1">

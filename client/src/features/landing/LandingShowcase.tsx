@@ -30,7 +30,6 @@ import { PWAInstallPrompt } from '../../components/PWAInstallPrompt';
 import { LegalCenterModal, LegalTab } from '../../components/LegalCenterModal';
 
 interface LandingShowcaseProps {
-  onOpenPWAInstall?: () => void;
   onOpenLegal?: () => void;
   onOpenPrivacy?: () => void;
 }
@@ -126,7 +125,7 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-48 sm:h-64 bg-emerald-500/20 blur-[80px] sm:blur-[100px] rounded-full pointer-events-none" />
 
             {/* Card 1: Voice Memo */}
-            <div className="absolute z-30 left-2 sm:left-4 top-4 sm:top-12 w-44 sm:w-56 p-4 glass-card-interactive animate-scale-in">
+            <div className="absolute z-30 left-2 sm:left-4 top-4 sm:top-12 w-[45%] sm:w-56 p-4 glass-card-interactive animate-scale-in">
               <div className="flex items-center gap-2 mb-6">
                 <Mic className="w-4 h-4 text-emerald-400" />
                 <span className="text-sm font-bold text-[var(--text-primary)]">Voice Memo</span>
@@ -145,7 +144,7 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
             </div>
 
             {/* Card 2: Muscle Volume */}
-            <div className="absolute z-20 right-2 sm:right-8 top-24 sm:top-24 w-48 sm:w-60 p-4 sm:p-5 glass-card-interactive animate-scale-in" style={{ animationDelay: '100ms' }}>
+            <div className="absolute z-20 right-2 sm:right-8 top-24 sm:top-24 w-[45%] sm:w-60 p-4 sm:p-5 glass-card-interactive animate-scale-in" style={{ animationDelay: '100ms' }}>
               <span className="text-xs sm:text-sm font-bold text-[var(--text-primary)] mb-4 sm:mb-6 block">Muscle Volume</span>
               <div className="flex items-end justify-between h-20 sm:h-24 gap-1.5 border-b border-[var(--border-subtle)] pb-2">
                 {[40, 30, 80, 50, 95, 60].map((val, i) => (
@@ -159,7 +158,7 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
             </div>
 
             {/* Card 3: Sync Status */}
-            <div className="absolute z-10 right-12 sm:-right-8 bottom-6 sm:bottom-20 w-36 sm:w-48 p-4 sm:p-6 glass-card-interactive flex flex-col items-center gap-3 sm:gap-4 animate-scale-in" style={{ animationDelay: '200ms' }}>
+            <div className="absolute z-10 right-[10%] sm:-right-8 bottom-6 sm:bottom-20 w-[35%] sm:w-48 p-4 sm:p-6 glass-card-interactive flex flex-col items-center gap-3 sm:gap-4 animate-scale-in" style={{ animationDelay: '200ms' }}>
               <div className="relative">
                 <div className="absolute inset-0 bg-violet-500/20 blur-md rounded-full" />
                 <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full border-2 border-[var(--border-subtle)] flex items-center justify-center bg-[var(--bg-surface-1)]">
@@ -242,7 +241,7 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
               <h2 className="text-lg font-bold tracking-tight text-[var(--text-primary)]">Interactive Feature Previews</h2>
               <p className="text-xs text-[var(--text-muted)]">Experience how the dual athlete/coach workflow functions.</p>
             </div>
-            <div className="flex bg-[var(--bg-surface-1)] p-1 rounded-2xl border border-[var(--border-subtle)]">
+            <div className="flex flex-wrap bg-[var(--bg-surface-1)] p-1 rounded-2xl border border-[var(--border-subtle)]">
               <button
                 onClick={() => setActiveShowcaseTab('athlete')}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${

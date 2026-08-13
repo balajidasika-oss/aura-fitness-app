@@ -74,7 +74,7 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
         {isComplete ? (
           <div className="flex flex-col items-center">
             <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">100%</span>
-            <span className="text-[10px] font-bold tracking-wider uppercase text-[var(--text-secondary)]">
+            <span className="text-xs font-bold tracking-wider uppercase text-[var(--text-secondary)]">
               3/3 DONE
             </span>
           </div>
@@ -83,7 +83,7 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
             <span className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
               {Math.round(val)}%
             </span>
-            <span className="text-[10px] font-bold text-[var(--text-muted)] tracking-wider">
+            <span className="text-xs font-bold text-[var(--text-muted)] tracking-wider">
               {completedTasks !== undefined ? `${completedTasks}/${totalTasks}` : '3 Habits'}
             </span>
           </div>

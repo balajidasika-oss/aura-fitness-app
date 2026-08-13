@@ -23,6 +23,7 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
   const startIdx = initialIndex !== undefined ? initialIndex : initialClientIndex;
   const [currentIndex, setCurrentIndex] = useState(startIdx);
   const [progress, setProgress] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     setCurrentIndex(startIdx);
@@ -34,6 +35,7 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
     setProgress(0);
     const interval = setInterval(() => {
       setProgress((prev) => {
+        if (paused) return prev;
         if (prev >= 100) {
           handleNext();
           return 0;
@@ -43,7 +45,7 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
     }, 100);
 
     return () => clearInterval(interval);
-  }, [isOpen, currentIndex]);
+  }, [isOpen, currentIndex, paused]);
 
   if (!isOpen || clients.length === 0) return null;
 
@@ -68,8 +70,10 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
   };
 
   const handleQuickCheer = (emoji: string) => {
+    setPaused(true);
     soundFx.playCheerSound();
     onCheer?.(currentClient._id, emoji);
+    setTimeout(() => setPaused(false), 3000);
   };
 
   // Fallback selfie / workout photo
@@ -79,7 +83,7 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 backdrop-blur-xl p-3 animate-fade-in-up">
-      <div className="relative w-full max-w-sm aspect-[9/16] bg-[var(--bg-void)] rounded-3xl overflow-hidden flex flex-col border border-[var(--border-subtle)] shadow-2xl animate-scale-in">
+      <div className="relative w-full max-w-sm aspect-[9/16] max-h-[100dvh] bg-[var(--bg-void)] rounded-3xl overflow-hidden flex flex-col border border-[var(--border-subtle)] shadow-2xl animate-scale-in">
         {/* Background Image Story */}
         <img
           src={storyImage}
@@ -155,7 +159,7 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
         </div>
 
         {/* Bottom Story Content & Quick Cheer Bar */}
-        <div className="relative z-10 mt-auto p-4 space-y-3">
+        <div className="relative z-10 mt-auto p-4 pb-safe space-y-3">
           {/* Workout Stats Badge */}
           <div className="p-3 rounded-2xl bg-[var(--bg-surface-1)]/80 backdrop-blur-xl border border-[var(--border-subtle)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-semibold text-[var(--text-primary)]">

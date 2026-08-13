@@ -49,7 +49,7 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
       >
         <span className={`w-2 h-2 rounded-full ${tierConfig.dot} animate-pulse shadow-sm`} style={{ filter: 'drop-shadow(0 0 4px currentColor)' }} />
         <span>{score}%</span>
-        {showDetails && <span className="font-normal opacity-80 text-[11px]">· {tierConfig.label}</span>}
+        {showDetails && <span className="font-normal opacity-80 text-xs">· {tierConfig.label}</span>}
       </div>
 
       {/* 7-Day Mini Heatmap Dots */}
@@ -66,7 +66,7 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
             return (
               <div
                 key={idx}
-                className={`w-5 h-5 rounded-md border flex items-center justify-center text-[9px] font-bold transition-all duration-300 shadow-sm ${dotClass}`}
+                className={`w-6 h-6 rounded-md border flex items-center justify-center text-[11px] font-bold transition-all duration-300 shadow-sm ${dotClass}`}
                 title={`${day.dayName} (${day.date}): ${day.score}% logged`}
               >
                 {day.dayName.charAt(0)}

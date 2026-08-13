@@ -172,13 +172,13 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
           </div>
           <div>
             <h4 className="text-sm font-bold tracking-tight text-[var(--text-primary)]">{title || `Daily Voice Memo to ${coachName}`}</h4>
-            <span className="text-[11px] text-[var(--text-muted)] font-medium mt-0.5 block">
+            <span className="text-xs text-[var(--text-muted)] font-medium mt-0.5 block">
               {subtitle || 'Explain how sets felt, energy levels, or soreness'}
             </span>
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-[var(--text-secondary)] font-bold bg-[var(--bg-surface-2)] px-2.5 py-1 rounded-full border border-[var(--border-subtle)] shadow-sm">
+        <div className="hidden sm:flex items-center gap-1.5 text-xs text-[var(--text-secondary)] font-bold bg-[var(--bg-surface-2)] px-2.5 py-1 rounded-full border border-[var(--border-subtle)] shadow-sm">
           <ShieldCheck className="w-3.5 h-3.5" />
           <span>Mic Ready</span>
         </div>
@@ -278,7 +278,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
                 type="button"
                 onClick={startRecording}
                 title="Re-record"
-                className="p-2.5 rounded-xl btn-ghost transition-all duration-300"
+                className="p-3 rounded-xl btn-ghost transition-all duration-300 flex items-center justify-center"
               >
                 <RotateCcw className="w-4.5 h-4.5" />
               </button>
@@ -286,7 +286,7 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
                 type="button"
                 onClick={handleDiscard}
                 title="Discard"
-                className="p-2.5 rounded-xl bg-[var(--bg-surface-2)] text-rose-400 hover:bg-rose-500/10 border border-[var(--border-subtle)] hover:border-rose-500/30 transition-all duration-300"
+                className="p-3 rounded-xl bg-[var(--bg-surface-2)] text-rose-400 hover:bg-rose-500/10 border border-[var(--border-subtle)] hover:border-rose-500/30 transition-all duration-300 flex items-center justify-center"
               >
                 <Trash2 className="w-4.5 h-4.5" />
               </button>

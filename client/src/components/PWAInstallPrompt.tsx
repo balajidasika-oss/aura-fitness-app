@@ -90,7 +90,7 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-[rgba(0,0,0,0.6)] backdrop-blur-md animate-fade-in-up">
-      <div className="relative w-full max-w-sm overflow-hidden rounded-3xl glass-card-elevated border border-[var(--border-medium)] p-6 space-y-5 animate-slide-up">
+      <div className="relative w-full max-w-sm overflow-hidden rounded-3xl glass-card-elevated border border-[var(--border-medium)] p-6 space-y-5 animate-slide-up pb-safe">
         {/* Glow Accent */}
         <div className="absolute top-[-20%] right-[-10%] w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -102,14 +102,14 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold tracking-tight text-[var(--text-primary)]">Install Aura App</h3>
-              <p className="text-[11px] text-[var(--text-muted)] font-medium mt-0.5">Fast, offline & instant launch</p>
+              <p className="text-xs text-[var(--text-muted)] font-medium mt-0.5">Fast, offline & instant launch</p>
             </div>
           </div>
 
           <button
             type="button"
             onClick={handleClose}
-            className="p-2 rounded-2xl btn-ghost transition-all duration-300"
+            className="w-10 h-10 p-2.5 rounded-2xl btn-ghost transition-all duration-300 flex items-center justify-center"
           >
             <X className="w-4 h-4" />
           </button>
@@ -123,7 +123,7 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
           <div className="flex-1">
             <div className="flex items-center gap-2">
               <span className="text-sm font-bold tracking-tight text-[var(--text-primary)]">Aura Fitness Coach</span>
-              <span className="text-[9px] font-bold text-[var(--text-secondary)] bg-[var(--bg-surface-2)] px-2 py-0.5 rounded-full border border-[var(--border-subtle)]">
+              <span className="text-[11px] font-bold text-[var(--text-secondary)] bg-[var(--bg-surface-2)] px-2 py-0.5 rounded-full border border-[var(--border-subtle)]">
                 PWA v1.0
               </span>
             </div>
@@ -152,20 +152,20 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
         {/* State C: iOS Instructions */}
         {isIOS && !isStandalone && (
           <div className="space-y-3 p-4 rounded-2xl surface-card">
-            <div className="text-[11px] font-bold tracking-tight text-[var(--text-primary)] uppercase tracking-wider flex items-center gap-2">
+            <div className="text-xs font-bold tracking-tight text-[var(--text-primary)] uppercase tracking-wider flex items-center gap-2">
               <span>📱 How to Install on iOS:</span>
             </div>
             <ol className="space-y-3 text-xs text-[var(--text-secondary)]">
               <li className="flex items-start gap-2.5">
-                <span className="w-5 h-5 rounded-full bg-[var(--bg-surface-2)] text-[var(--text-primary)] text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 border border-[var(--border-subtle)]">1</span>
+                <span className="w-5 h-5 rounded-full bg-[var(--bg-surface-2)] text-[var(--text-primary)] text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5 border border-[var(--border-subtle)]">1</span>
                 <span className="leading-relaxed">Tap the <strong className="text-[var(--text-primary)]">Share</strong> button <Share className="w-3.5 h-3.5 inline mx-1 text-cyan-400" /> at bottom of Safari.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="w-5 h-5 rounded-full bg-[var(--bg-surface-2)] text-[var(--text-primary)] text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 border border-[var(--border-subtle)]">2</span>
+                <span className="w-5 h-5 rounded-full bg-[var(--bg-surface-2)] text-[var(--text-primary)] text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5 border border-[var(--border-subtle)]">2</span>
                 <span className="leading-relaxed">Scroll down and tap <strong className="text-[var(--text-primary)]">"Add to Home Screen"</strong> <PlusSquare className="w-3.5 h-3.5 inline mx-1 text-[var(--text-primary)]" />.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="w-5 h-5 rounded-full bg-[var(--bg-surface-2)] text-[var(--text-primary)] text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 border border-[var(--border-subtle)]">3</span>
+                <span className="w-5 h-5 rounded-full bg-[var(--bg-surface-2)] text-[var(--text-primary)] text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5 border border-[var(--border-subtle)]">3</span>
                 <span className="leading-relaxed">Tap <strong className="text-[var(--text-primary)]">Add</strong> in top right. You're ready to train!</span>
               </li>
             </ol>
@@ -187,7 +187,7 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
               <Download className="w-4 h-4" />
               <span>{deferredPrompt ? '1-Tap Add to Home Screen' : 'Install via Browser Menu (⋮ > Install)'}</span>
             </button>
-            <p className="text-[11px] text-[var(--text-muted)] text-center font-medium leading-relaxed">
+            <p className="text-xs text-[var(--text-muted)] text-center font-medium leading-relaxed">
               Works directly on Android Chrome, Samsung Internet, and Brave.
             </p>
           </div>

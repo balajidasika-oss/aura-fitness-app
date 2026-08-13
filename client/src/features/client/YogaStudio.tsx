@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, Volume2, Bell, Heart, Sparkles, Activity, Clock, Image as ImageIcon, ScanEye, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { soundFx } from '../../utils/audio';
 import { AIPoseCoach } from './AIPoseCoach';
@@ -43,17 +43,22 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
   // Zumba Video State
   const [selectedZumbaVideo, setSelectedZumbaVideo] = useState<{ title: string; videoUrl: string; duration: string } | null>(null);
 
+  // Refs for timer
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
     if (isMeditating && meditationTimeRemaining > 0) {
-      interval = setInterval(() => {
+      if (timerRef.current) clearInterval(timerRef.current);
+      timerRef.current = setInterval(() => {
         setMeditationTimeRemaining((prev) => prev - 1);
       }, 1000);
     } else if (isMeditating && meditationTimeRemaining === 0) {
       setIsMeditating(false);
       soundFx.playCheerSound(); // Alert when meditation ends
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [isMeditating, meditationTimeRemaining]);
 
   const toggleMeditation = () => {
@@ -115,7 +120,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         <button
           onClick={() => { soundFx.playTapSound(); setActiveTab('yoga'); }}
           className={`flex-1 py-2.5 rounded-2xl text-[11px] font-bold tracking-tight transition-all duration-300 flex items-center justify-center gap-1.5 ${
-            activeTab === 'yoga' ? 'bg-[var(--bg-surface-1)] text-[var(--text-primary)] border-[var(--border-subtle)] ' : 'text-[var(--text-secondary)] hover:surface-card'
+            activeTab === 'yoga' ? 'bg-[var(--bg-surface-1)] text-[var(--text-primary)] border-[var(--border-subtle)]' : 'text-[var(--text-secondary)] hover:surface-card'
           }`}
         >
           <Activity className="w-3.5 h-3.5" /> Yoga Asanas
@@ -123,7 +128,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         <button
           onClick={() => { soundFx.playTapSound(); setActiveTab('meditation'); }}
           className={`flex-1 py-2.5 rounded-2xl text-[11px] font-bold tracking-tight transition-all duration-300 flex items-center justify-center gap-1.5 ${
-            activeTab === 'meditation' ? 'bg-[var(--bg-surface-1)] text-[var(--text-primary)] border-[var(--border-subtle)] ' : 'text-[var(--text-secondary)] hover:surface-card'
+            activeTab === 'meditation' ? 'bg-[var(--bg-surface-1)] text-[var(--text-primary)] border-[var(--border-subtle)]' : 'text-[var(--text-secondary)] hover:surface-card'
           }`}
         >
           <Clock className="w-3.5 h-3.5" /> Meditation
@@ -131,7 +136,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         <button
           onClick={() => { soundFx.playTapSound(); setActiveTab('zumba'); }}
           className={`flex-1 py-2.5 rounded-2xl text-[11px] font-bold tracking-tight transition-all duration-300 flex items-center justify-center gap-1.5 ${
-            activeTab === 'zumba' ? 'bg-pink-500/30 text-pink-300 border border-pink-500/40 ' : 'text-[var(--text-secondary)] hover:surface-card'
+            activeTab === 'zumba' ? 'bg-pink-500/30 text-pink-300 border border-pink-500/40' : 'text-[var(--text-secondary)] hover:surface-card'
           }`}
         >
           <Heart className="w-3.5 h-3.5" /> Zumba Class
@@ -148,7 +153,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {YOGA_ASANAS.map((asana, idx) => (
-                <div key={idx} className="glass-panel rounded-2xl overflow-hidden group hover:border-[var(--border-subtle)] hover:-translate-y-1 transition-all duration-300 hover:">
+                <div key={idx} className="glass-panel rounded-2xl overflow-hidden group hover:border-[var(--border-subtle)] hover:-translate-y-1 transition-all duration-300">
                   <div className="h-36 surface-card relative overflow-hidden">
                     <img src={asana.image} alt={asana.name} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
@@ -230,7 +235,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
                     soundFx.playTapSound();
                     setSelectedZumbaVideo({ title: video.title, videoUrl: video.videoUrl, duration: video.duration });
                   }}
-                  className="flex items-center p-2.5 rounded-2xl glass-panel hover:border-pink-500/40 hover:-translate-x-1 hover: transition-all duration-300 group cursor-pointer"
+                  className="flex items-center p-2.5 rounded-2xl glass-panel hover:border-pink-500/40 hover:-translate-x-1 transition-all duration-300 group cursor-pointer"
                 >
                   <div className="w-28 h-20 rounded-2xl overflow-hidden relative shrink-0">
                     <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
@@ -290,7 +295,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
               </div>
             </div>
             
-            <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border border-pink-500/30 mt-16 bg-black relative">
+            <div className="w-full max-w-2xl aspect-video rounded-2xl overflow-hidden border border-pink-500/30 mt-16 bg-black relative">
               <iframe
                 className="w-full h-full object-contain"
                 src={`${selectedZumbaVideo.videoUrl}?autoplay=1`}

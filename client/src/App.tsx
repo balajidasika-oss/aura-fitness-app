@@ -90,11 +90,7 @@ const MainAppContent: React.FC = () => {
   // If user is not authenticated, show the interactive Fitness Showcase & Auth Landing page
   if (!isAuthenticated || !currentUser) {
     return (
-      <LandingShowcase
-        onOpenPWAInstall={() => setShowPWAInstall(true)}
-        onOpenLegal={() => setShowLegalModal(true)}
-        onOpenPrivacy={() => setShowPrivacyModal(true)}
-      />
+      <LandingShowcase />
     );
   }
 
@@ -124,13 +120,13 @@ const MainAppContent: React.FC = () => {
       </main>
 
       {/* Premium Portfolio Footer */}
-      <footer className="w-full py-8 mt-auto border-t border-[var(--border-subtle)] bg-[var(--bg-glass)] backdrop-blur-xl relative z-10">
+      <footer className="w-full py-8 mt-auto border-t border-[var(--border-subtle)] bg-[var(--bg-glass)] backdrop-blur-xl relative z-10 pb-safe">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4 bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] pr-6 pl-2 py-2 rounded-full">
             <img src="https://github.com/balajidasika.png" alt="Balaji Dasika" className="w-12 h-12 rounded-full border-2 border-[var(--border-subtle)]" />
             <div className="text-left">
               <p className="text-[var(--text-primary)] text-sm font-bold tracking-wide uppercase">Balaji Dasika</p>
-              <p className="text-[var(--text-secondary)] text-[10px] font-bold tracking-widest uppercase">Lead Engineer • Aura OS</p>
+              <p className="text-[var(--text-secondary)] text-xs font-bold tracking-widest uppercase">Lead Engineer • Aura OS</p>
             </div>
           </div>
           <div className="flex flex-wrap justify-center items-center gap-3">
@@ -152,7 +148,7 @@ const MainAppContent: React.FC = () => {
           <div className="relative w-full max-w-md animate-scale-in">
             <button
               onClick={() => setShowPWAInstall(false)}
-              className="absolute -top-3 -right-3 z-20 w-8 h-8 rounded-full bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-1)] text-[var(--text-primary)] flex items-center justify-center border border-[var(--border-subtle)] shadow-lg transition-all duration-300"
+              className="absolute -top-3 -right-3 z-20 w-10 h-10 rounded-full bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-1)] text-[var(--text-primary)] flex items-center justify-center border border-[var(--border-subtle)] shadow-lg transition-all duration-300"
             >
               ✕
             </button>

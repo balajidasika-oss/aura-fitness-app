@@ -639,7 +639,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         )}
 
       {/* WORKOUT MODE SWITCHER */}
-      <div className="flex p-1.5 glass-panel rounded-2xl relative shadow-black/40 mb-2">
+      <div className="flex flex-wrap p-1.5 glass-panel rounded-2xl relative shadow-black/40 mb-2">
         <button
           onClick={() => {
             soundFx.playTapSound();
@@ -794,6 +794,11 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               type="button"
               onClick={() => {
                 soundFx.playTapSound();
+                setNewExName('');
+                setNewExSets(3);
+                setNewExReps('8-10');
+                setNewExWeight(0);
+                setNewExNotes('');
                 setShowAddModal(true);
               }}
               className="px-2.5 py-1.5 rounded-2xl bg-[var(--bg-surface-1)] hover:bg-[var(--bg-surface-1)] text-[var(--text-primary)] text-xs font-bold tracking-tight flex items-center space-x-1 shadow-md shadow-[#FF3B30]/20 transition active:scale-95"
@@ -1381,7 +1386,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         onCapture={handleLiveCameraCapture}
         title={cameraModalMode === 'meal' ? 'Snap Nutrition Photo' : 'Capture Session Selfie'}
         subtitle="Align within frame and tap shutter"
-        defaultFacingMode={cameraModalMode === 'selfie' ? 'user' : 'environment'}
+        defaultFacingMode={cameraModalMode === 'meal' ? 'environment' : 'user'}
       />
     </div>
   );

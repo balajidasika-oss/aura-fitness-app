@@ -105,7 +105,7 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="text-sm font-bold text-[var(--text-primary)] tracking-wide">{coachName}</span>
-              <span className="pill-violet text-[9px] font-bold px-2 py-0.5 flex items-center gap-1 shadow-sm">
+              <span className="pill-violet text-[11px] font-bold px-2 py-0.5 flex items-center gap-1 shadow-sm">
                 <Sparkles className="w-2.5 h-2.5" />
                 <span>Daily Voice Coach</span>
               </span>
@@ -122,7 +122,7 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
             <button
               onClick={handleReplay}
               title="Replay Audio"
-              className="p-2.5 rounded-2xl btn-ghost transition-all duration-300"
+              className="p-3 rounded-2xl btn-ghost transition-all duration-300 flex items-center justify-center"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -167,7 +167,7 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
             soundFx.playTapSound();
             setShowTranscript(!showTranscript);
           }}
-          className="text-[11px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-bold flex items-center gap-1.5 transition-all duration-300 px-3 py-1.5 rounded-xl bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] ml-2"
+          className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-bold flex items-center gap-1.5 transition-all duration-300 px-3 py-2 rounded-xl bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] ml-2"
         >
           <span>{showTranscript ? 'Hide Script' : 'Read Script'}</span>
           {showTranscript ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -177,7 +177,7 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
       {/* Expandable Spoken Transcript */}
       {showTranscript && (
         <div className="mt-4 p-4 rounded-2xl bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)] leading-relaxed animate-slide-in-right space-y-2 shadow-inner">
-          <div className="flex items-center gap-2 text-[var(--text-primary)] text-[11px] font-bold uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-[var(--text-primary)] text-xs font-bold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5 text-violet-400" />
             <span>Voice Coach Script</span>
           </div>

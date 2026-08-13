@@ -69,7 +69,12 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
 
   useEffect(() => {
     loadCoaches();
-  }, []);
+    return () => {
+      if (avatarPreview) {
+        URL.revokeObjectURL(avatarPreview);
+      }
+    };
+  }, [avatarPreview]);
 
   const loadCoaches = async () => {
     try {
@@ -88,6 +93,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
   const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (avatarPreview) {
+        URL.revokeObjectURL(avatarPreview);
+      }
       setAvatarFile(file);
       const previewUrl = URL.createObjectURL(file);
       setAvatarPreview(previewUrl);
@@ -233,7 +241,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
               <div className="font-bold text-rose-200">Attention Needed</div>
               <div>{errorMsg}</div>
             </div>
-            <button onClick={() => setErrorMsg(null)} className="text-rose-400 hover:text-[var(--text-primary)]">
+            <button onClick={() => setErrorMsg(null)} className="text-rose-400 hover:text-[var(--text-primary)] shrink-0">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -354,6 +362,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, onLoginSucces
                   type="button"
                   onClick={() => {
                     setSelectedRole('coach');
+                    setCoachCode('');
                     soundFx.playTapSound();
                   }}
                   className={`p-3.5 rounded-2xl border flex items-center gap-3 transition-all text-left ${

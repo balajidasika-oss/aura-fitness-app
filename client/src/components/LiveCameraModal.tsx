@@ -161,11 +161,11 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping shadow-[0_0_8px_rgba(244,63,94,0.6)]" />
               <h3 className="font-bold text-[var(--text-primary)] text-sm">{title}</h3>
             </div>
-            <p className="text-[11px] text-[var(--text-muted)] mt-0.5">{subtitle}</p>
+            <p className="text-xs text-[var(--text-muted)] mt-0.5">{subtitle}</p>
           </div>
           <button
             onClick={handleClose}
-            className="w-8 h-8 rounded-full btn-ghost flex items-center justify-center transition-all duration-300"
+            className="w-10 h-10 rounded-full btn-ghost flex items-center justify-center transition-all duration-300"
           >
             <X className="w-4 h-4" />
           </button>
@@ -231,7 +231,7 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
               <div className="absolute top-3 right-3 flex items-center gap-2">
                 <button
                   onClick={() => setHasGrid(!hasGrid)}
-                  className={`px-2.5 py-1.5 rounded-xl text-[10px] font-semibold border backdrop-blur-md transition-all duration-300 ${
+                  className={`px-3 py-2 rounded-xl text-xs font-semibold border backdrop-blur-md transition-all duration-300 ${
                     hasGrid
                       ? 'bg-[var(--bg-glass)] text-[var(--text-primary)] border-[var(--border-medium)]'
                       : 'bg-black/30 text-[var(--text-secondary)] border-[var(--border-subtle)]'
@@ -247,7 +247,7 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
         </div>
 
         {/* Bottom Shutter & Action Bar */}
-        <div className="p-4 bg-[var(--bg-glass)] border-t border-[var(--border-subtle)] flex items-center justify-between backdrop-blur-xl">
+        <div className="p-4 bg-[var(--bg-glass)] border-t border-[var(--border-subtle)] flex items-center justify-between backdrop-blur-xl pb-safe">
           {capturedImage ? (
             /* Confirm / Retake Actions */
             <div className="flex items-center justify-between w-full gap-3">
