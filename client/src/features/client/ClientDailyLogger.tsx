@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Camera,
   Utensils,
@@ -531,8 +532,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
 
       {/* Change Coach Modal */}
-      {showCoachModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      {showCoachModal && createPortal(
+        <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="surface-card border-[var(--border-subtle)] rounded-2xl p-5 w-full max-w-sm relative shadow-2xl">
             <button 
               onClick={() => setShowCoachModal(false)}
@@ -560,7 +561,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               <span>{isJoiningCoach ? 'Connecting...' : 'Connect Now'}</span>
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
         {/* Coach Cheer Alert if available */}
@@ -779,8 +781,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       </div>
 
       {/* Add Exercise Modal */}
-      {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
+      {showAddModal && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
           <div className="glass-card rounded-2xl p-4 w-full max-w-sm space-y-3">
             <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
               <h4 className="text-xs font-bold tracking-tight text-[var(--text-primary)] flex items-center space-x-1.5">
@@ -888,7 +890,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
               </button>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
           </div>
 
@@ -1131,8 +1134,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         )}
 
         {/* Add Meal Detail Modal */}
-        {isAddingMeal && mealPreviewUrl && (
-          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        {isAddingMeal && mealPreviewUrl && createPortal(
+          <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="surface-card border-[var(--border-subtle)] rounded-2xl p-5 w-full max-w-sm relative shadow-2xl">
               <button 
                 onClick={() => {
@@ -1188,7 +1191,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
                 </button>
               </div>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
       </div>
 

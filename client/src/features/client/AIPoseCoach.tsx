@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
@@ -292,8 +293,8 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
     }
   }, [isCorrect]);
 
-  return (
-    <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-xl p-2 md:p-6 animate-in fade-in zoom-in-95 duration-500 ${isFullscreen ? 'p-0' : ''}`}>
+  return createPortal(
+    <div className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-xl p-2 md:p-6 animate-in fade-in zoom-in-95 duration-500 ${isFullscreen ? 'p-0' : ''}`}>
       <div className={`relative glass-card flex flex-col overflow-hidden  ${isFullscreen ? 'w-full h-full rounded-none' : 'w-full h-full max-w-7xl max-h-[900px] rounded-[2rem]'}`}>
         
         {/* Header - Glassmorphism */}
@@ -456,6 +457,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
 
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
