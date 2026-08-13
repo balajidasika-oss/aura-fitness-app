@@ -95,7 +95,7 @@ const MainAppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg-void)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-[var(--bg-surface-2)] selection:text-[var(--text-primary)]">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[var(--bg-void)] text-[var(--text-primary)] flex flex-col font-sans selection:bg-[var(--bg-surface-2)] selection:text-[var(--text-primary)]">
       {/* Top Header */}
       <Header
         onOpenPWAInstall={() => setShowPWAInstall(true)}

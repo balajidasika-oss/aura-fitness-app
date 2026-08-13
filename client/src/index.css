@@ -59,12 +59,9 @@
   body,
   #root {
     min-height: 100vh;
-    /* Next line prevents overscroll on mobile */
     overscroll-behavior-y: none;
     background-color: var(--bg-void);
     color: var(--text-primary);
-    overflow-x: hidden;
-    max-width: 100vw;
   }
 
   body {
