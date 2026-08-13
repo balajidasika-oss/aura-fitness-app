@@ -137,16 +137,7 @@ export const Header: React.FC<HeaderProps> = ({
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
             </button>
 
-            {/* GitHub Profile */}
-            <a
-              href="https://github.com/balajidasika"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Developer GitHub Profile"
-              className="flex items-center justify-center w-10 h-10 p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
-            >
-              <Github className="w-4 h-4" />
-            </a>
+
 
             {/* Install PWA Button */}
             {onOpenPWAInstall && !isStandalone && (

@@ -340,15 +340,15 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
           
           {/* LEFT/BOTTOM PANEL: Reference Image & Instructions */}
           <div className="order-2 md:order-1 w-full md:w-1/3 h-[35%] md:h-full border-t md:border-t-0 md:border-r border-[var(--border-subtle)] bg-[var(--bg-surface-1)] flex flex-col overflow-y-auto z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.2)]">
-            {/* Reference Image (Hidden on very small screens, visible on md+) */}
-            <div className="hidden sm:flex relative h-32 md:h-2/5 shrink-0 bg-[var(--bg-surface-1)] border-b border-[var(--border-subtle)] p-4 flex-col justify-center items-center">
+            {/* Reference Image */}
+            <div className="flex relative h-28 md:h-2/5 shrink-0 bg-[var(--bg-surface-1)] border-b border-[var(--border-subtle)] p-3 md:p-4 flex-col justify-center items-center">
               <img 
                 src={targetAsana.image} 
                 alt={targetAsana.name} 
-                className="w-full h-full object-cover rounded-2xl shadow-lg border-[var(--border-subtle)]"
+                className="w-full h-full object-cover rounded-xl md:rounded-2xl shadow-lg border-[var(--border-subtle)]"
               />
-              <div className="absolute bottom-6 bg-[var(--bg-surface-1)] backdrop-blur px-3 py-1.5 rounded-lg border-[var(--border-subtle)] text-xs font-bold text-[var(--text-primary)] flex items-center gap-2">
-                <Info className="w-3.5 h-3.5 text-[var(--text-primary)]" />
+              <div className="absolute bottom-4 md:bottom-6 bg-[var(--bg-surface-1)]/80 backdrop-blur px-2 py-1 md:px-3 md:py-1.5 rounded-lg border border-[var(--border-subtle)] text-[10px] md:text-xs font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                <Info className="w-3 h-3 md:w-3.5 md:h-3.5 text-[var(--text-primary)]" />
                 Target Reference
               </div>
             </div>

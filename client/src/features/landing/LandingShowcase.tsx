@@ -509,14 +509,6 @@ export const LandingShowcase: React.FC<LandingShowcaseProps> = () => {
               >
                 Balaji Dasika
               </a>
-              <a
-                href="https://github.com/balajidasika"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-1.5 rounded-full bg-[var(--bg-surface-2)] border border-[var(--border-subtle)] hover:border-[var(--text-primary)] text-[var(--text-secondary)] font-bold text-sm transition-all flex items-center gap-2 shadow-lg"
-              >
-                GitHub
-              </a>
             </div>
           </div>
           <p className="text-[10px] sm:text-xs text-[var(--text-muted)]">

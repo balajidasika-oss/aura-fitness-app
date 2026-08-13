@@ -45,7 +45,7 @@ export const AthleteProfile: React.FC<AthleteProfileProps> = ({ client }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Meal Gallery Section */}
-        <div className="glass-panel rounded-2xl p-6">
+        <div className="glass-card rounded-2xl p-6">
           <h3 className="text-lg font-bold tracking-tight text-[var(--text-primary)] flex items-center gap-2 mb-4">
             <Utensils className="w-5 h-5 text-emerald-400" />
             Nutrition Gallery
@@ -74,7 +74,7 @@ export const AthleteProfile: React.FC<AthleteProfileProps> = ({ client }) => {
         </div>
 
         {/* Voice Messages Section */}
-        <div className="glass-panel rounded-2xl p-6">
+        <div className="glass-card rounded-2xl p-6">
           <h3 className="text-lg font-bold tracking-tight text-[var(--text-primary)] flex items-center gap-2 mb-4">
             <Mic className="w-5 h-5 text-rose-400" />
             Voice Check-ins

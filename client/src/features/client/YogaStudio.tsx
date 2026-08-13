@@ -90,7 +90,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
     <div className="w-full max-w-4xl mx-auto pb-24 md:pb-8 animate-fade-in-up">
       <div className="glass-panel-elevated rounded-2xl overflow-hidden relative shadow-2xl border-[var(--border-subtle)] min-h-[calc(100vh-140px)]">
       {/* Background Mesh */}
-      <div className="absolute inset-0 bg-mesh-dark opacity-30 pointer-events-none transition-opacity group-hover:opacity-50" />
+      <div className="absolute inset-0 bg-white/20 opacity-30 pointer-events-none transition-opacity group-hover:opacity-50" />
       {aiCoachAsana && (
         <AIPoseCoach 
           targetAsana={aiCoachAsana} 
@@ -158,7 +158,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
                 <div key={idx} className="glass-panel rounded-2xl overflow-hidden group hover:border-[var(--border-subtle)] hover:-translate-y-1 transition-all duration-300">
                   <div className="h-36 surface-card relative overflow-hidden">
                     <img src={asana.image} alt={asana.name} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/30 to-transparent" />
                     <div className="absolute bottom-3 left-3 flex items-center gap-2">
                       <div className="text-[10px] font-bold tracking-tight bg-[var(--bg-surface-1)] text-[var(--text-primary)] px-2 py-0.5 rounded">
                         {asana.duration}
@@ -260,44 +260,45 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         )}
         {/* PREMIUM VIDEO OVERLAY */}
         {selectedZumbaVideo && createPortal(
-          <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-xl flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-500">
-            <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-              <div className="surface-card px-4 py-2 rounded-2xl border-[var(--border-subtle)] hidden sm:block">
-                <h3 className="text-[var(--text-primary)] font-bold tracking-tight tracking-wide text-sm flex items-center gap-2">
-                  <Play className="w-4 h-4 text-pink-500 fill-pink-500" />
-                  {selectedZumbaVideo.title}
-                </h3>
+          <div className="fixed inset-0 z-[9999] bg-white/60 backdrop-blur-xl flex flex-col items-center justify-center p-4 sm:p-6 animate-in fade-in zoom-in-95 duration-500 overflow-y-auto">
+            <div className="w-full max-w-2xl flex flex-col gap-4 mt-16 sm:mt-0">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 z-10 w-full">
+                <div className="surface-card px-4 py-3 rounded-2xl border-[var(--border-subtle)] w-full sm:w-auto">
+                  <h3 className="text-[var(--text-primary)] font-bold tracking-tight tracking-wide text-sm flex items-center gap-2">
+                    <Play className="w-4 h-4 text-pink-500 fill-pink-500" />
+                    {selectedZumbaVideo.title}
+                  </h3>
+                </div>
+                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0 hide-scrollbar">
+                  <button 
+                    onClick={() => {
+                      soundFx.playSuccessChime();
+                      if (onCompleteSession) {
+                        onCompleteSession({
+                          type: 'flow',
+                          title: `Zumba: ${selectedZumbaVideo.title}`,
+                          duration: parseInt(selectedZumbaVideo.duration) || 15,
+                          videoUrl: selectedZumbaVideo.videoUrl
+                        });
+                      }
+                      setSelectedZumbaVideo(null);
+                    }}
+                    className="flex-shrink-0 px-4 py-2 rounded-full bg-[var(--bg-surface-1)] hover:bg-[var(--bg-surface-2)] text-[var(--text-primary)] font-bold text-sm flex items-center gap-2 transition whitespace-nowrap"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    Complete Zumba
+                  </button>
+                  <button 
+                    onClick={() => setSelectedZumbaVideo(null)}
+                    className="flex-shrink-0 px-4 py-2 rounded-full surface-card hover:bg-rose-500/20 text-[var(--text-primary)] hover:text-rose-400 border-[var(--border-subtle)] flex items-center justify-center gap-2 transition whitespace-nowrap"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                    <span className="font-bold text-sm">Back</span>
+                  </button>
+                </div>
               </div>
-              <div className="flex items-center gap-3">
-                <button 
-                  onClick={() => {
-                    soundFx.playSuccessChime();
-                    if (onCompleteSession) {
-                      onCompleteSession({
-                        type: 'flow',
-                        title: `Zumba: ${selectedZumbaVideo.title}`,
-                        duration: parseInt(selectedZumbaVideo.duration) || 15,
-                        videoUrl: selectedZumbaVideo.videoUrl
-                      });
-                    }
-                    setSelectedZumbaVideo(null);
-                  }}
-                  className="px-4 py-2 rounded-full bg-[var(--bg-surface-1)] hover:bg-[var(--bg-surface-1)] text-[var(--text-primary)] font-bold text-sm flex items-center gap-2 transition"
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  Complete Zumba
-                </button>
-                <button 
-                  onClick={() => setSelectedZumbaVideo(null)}
-                  className="px-4 py-2 rounded-full surface-card hover:bg-rose-500/20 text-[var(--text-primary)] hover:text-rose-400 border-[var(--border-subtle)] flex items-center justify-center gap-2 transition"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                  <span className="font-bold text-sm">Back</span>
-                </button>
-              </div>
-            </div>
-            
-            <div className="w-full max-w-2xl aspect-video rounded-2xl overflow-hidden border border-pink-500/30 mt-16 bg-black relative">
+              
+              <div className="w-full aspect-video rounded-2xl overflow-hidden border border-pink-500/30 bg-[var(--bg-surface-2)] relative flex-shrink-0">
               <iframe
                 className="w-full h-full object-contain"
                 src={`${selectedZumbaVideo.videoUrl}?autoplay=1`}
@@ -305,11 +306,11 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
+              </div>
             </div>
           </div>,
           document.body
         )}
-
       </div>
     </div>
     </div>
