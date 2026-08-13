@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IClientUser } from '../../types';
 import { ClientDailyLogger } from './ClientDailyLogger';
 import { YogaStudio } from './YogaStudio';
@@ -31,9 +31,30 @@ type TabType = 'hub' | 'workout' | 'cardio' | 'nutrition' | 'yoga' | 'profile';
 export const ClientDashboardLayout: React.FC<ClientDashboardLayoutProps> = ({ client }) => {
   const [activeTab, setActiveTab] = useState<TabType>('hub');
 
+  useEffect(() => {
+    // Listen to browser back button to navigate tabs instead of closing app
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.tab) {
+        setActiveTab(event.state.tab);
+      } else {
+        setActiveTab('hub');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const handleTabChange = (tab: TabType) => {
     soundFx.playTapSound();
     setActiveTab(tab);
+    
+    // Push state to browser history so back button works on mobile
+    if (tab === 'hub') {
+      window.history.pushState({ tab: 'hub' }, '', '/');
+    } else {
+      window.history.pushState({ tab }, '', `#${tab}`);
+    }
   };
 
   const portals = [

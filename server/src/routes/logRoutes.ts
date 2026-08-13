@@ -180,15 +180,19 @@ router.post(
         }
       }
 
-      const mealTypes = req.body.mealTypes ? (typeof req.body.mealTypes === 'string' ? JSON.parse(req.body.mealTypes) : req.body.mealTypes) : [];
-      const mealCaptions = req.body.mealCaptions ? (typeof req.body.mealCaptions === 'string' ? JSON.parse(req.body.mealCaptions) : req.body.mealCaptions) : [];
+      const newMealsData = req.body.newMealsData ? (typeof req.body.newMealsData === 'string' ? JSON.parse(req.body.newMealsData) : req.body.newMealsData) : [];
 
       if (files?.mealPhotos) {
         files.mealPhotos.forEach((file, idx) => {
           const photoPath = `/uploads/meals/${file.filename}`;
+          const mealMeta = newMealsData[idx] || {};
           existingMeals.push({
-            type: mealTypes[idx] || 'snack',
-            caption: mealCaptions[idx] || 'Meal logged',
+            type: mealMeta.type || 'snack',
+            caption: mealMeta.caption || 'Meal logged',
+            calories: mealMeta.calories || 0,
+            protein: mealMeta.protein || 0,
+            carbs: mealMeta.carbs || 0,
+            fats: mealMeta.fats || 0,
             imagePath: photoPath,
             photoUrl: photoPath,
             loggedAt: new Date().toISOString(),
