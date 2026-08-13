@@ -80,49 +80,49 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950/80 via-slate-900/95 to-slate-950 border border-[var(--border)] p-4 shadow-none ">
+    <div className="relative overflow-hidden rounded-3xl glass-card-elevated border border-[var(--border-medium)] p-5 animate-scale-in">
       {/* Glow Effect */}
-      <div className="absolute -top-10 -right-10 w-36 h-36 bg-[var(--surface)] rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-10 -left-10 w-36 h-36 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-12 -right-12 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="flex items-center justify-between relative z-10">
         {/* Left: Coach Info & Status */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center gap-4">
           <div className="relative">
             <img
               src={avatarUrl}
               alt={coachName}
-              className="w-12 h-12 rounded-2xl object-cover border-2 border-[var(--border)] shadow-lg shadow-indigo-500/20"
+              className="w-14 h-14 rounded-2xl object-cover border-2 border-[var(--border-subtle)] shadow-lg shadow-violet-500/20"
             />
             {isPlaying ? (
-              <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-[var(--surface)] ring-2 ring-slate-950 animate-ping" />
+              <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[var(--bg-surface-2)] border-2 border-[var(--bg-void)] animate-ping" />
             ) : (
-              <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-[var(--surface)] ring-2 ring-slate-950 flex items-center justify-center text-[8px] text-white font-bold">
-                <Mic className="w-2 h-2" />
+              <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[var(--bg-surface-2)] border-2 border-[var(--bg-void)] flex items-center justify-center shadow-md">
+                <Mic className="w-2.5 h-2.5 text-[var(--text-primary)]" />
               </span>
             )}
           </div>
           <div>
-            <div className="flex items-center space-x-1.5">
-              <span className="text-xs font-bold text-white tracking-wide">{coachName}</span>
-              <span className="bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 text-gray-200 text-[10px] font-bold px-2 py-0.5 rounded-full border border-[var(--border)] flex items-center space-x-1">
-                <Sparkles className="w-2.5 h-2.5 text-cyan-400" />
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-sm font-bold text-[var(--text-primary)] tracking-wide">{coachName}</span>
+              <span className="pill-violet text-[9px] font-bold px-2 py-0.5 flex items-center gap-1 shadow-sm">
+                <Sparkles className="w-2.5 h-2.5" />
                 <span>Daily Voice Coach</span>
               </span>
             </div>
-            <p className="text-[11px] text-[#8E8E93] mt-0.5">
+            <p className="text-xs text-[var(--text-muted)] font-medium">
               {isPlaying ? '🎙️ Speaking your daily breakdown...' : 'Tap play for today\'s audio coaching'}
             </p>
           </div>
         </div>
 
         {/* Right: Controls */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-3">
           {isPlaying && (
             <button
               onClick={handleReplay}
               title="Replay Audio"
-              className="p-2.5 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition-colors"
+              className="p-2.5 rounded-2xl btn-ghost transition-all duration-300"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -130,32 +130,32 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
 
           <button
             onClick={handlePlayToggle}
-            className={`w-11 h-11 rounded-2xl flex items-center justify-center font-bold text-white transition-all shadow-lg ${
+            className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-[var(--bg-void)] transition-all duration-300 shadow-lg ${
               isPlaying
-                ? 'bg-[var(--surface)] hover:bg-[var(--surface)] shadow-amber-500/30 scale-105 animate-pulse'
-                : 'bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 hover:from-indigo-400 hover:to-cyan-400 shadow-indigo-500/30 active:scale-95'
+                ? 'bg-[var(--text-primary)] hover:bg-[var(--text-secondary)] shadow-amber-500/30 scale-105 animate-pulse'
+                : 'bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500 hover:brightness-110 shadow-violet-500/30 active:scale-95'
             }`}
           >
-            {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-white ml-0.5" />}
+            {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current ml-0.5" />}
           </button>
         </div>
       </div>
 
       {/* Animated Sound Wave Equalizer */}
-      <div className="mt-3.5 flex items-center space-x-2 py-2 px-3 rounded-2xl bg-slate-950/70 border border-slate-800/90 relative z-10">
-        <Volume2 className={`w-4 h-4 ${isPlaying ? 'text-cyan-400 animate-bounce' : 'text-slate-500'}`} />
+      <div className="mt-5 flex items-center gap-3 py-2.5 px-4 rounded-2xl bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] relative z-10 shadow-inner">
+        <Volume2 className={`w-4 h-4 ${isPlaying ? 'text-cyan-400 animate-bounce' : 'text-[var(--text-muted)]'}`} />
         
-        <div className="flex-1 flex items-center justify-between h-5 px-2">
+        <div className="flex-1 flex items-center justify-between h-6 px-2">
           {[12, 24, 16, 32, 20, 28, 14, 30, 22, 18, 26, 12, 30, 16, 22, 28, 14, 24, 20, 16].map((h, i) => (
             <span
               key={i}
               className={`w-1 rounded-full transition-all duration-150 ${
                 isPlaying
-                  ? 'bg-gradient-to-t from-indigo-500 via-cyan-400 to-emerald-400'
-                  : 'bg-slate-700/50'
+                  ? 'bg-gradient-to-t from-violet-500 via-cyan-400 to-emerald-400'
+                  : 'bg-[var(--bg-surface-2)]'
               }`}
               style={{
-                height: isPlaying ? `${Math.max(4, (h * ((i % 4) + 1)) % 20 + 4)}px` : '4px',
+                height: isPlaying ? `${Math.max(4, (h * ((i % 4) + 1)) % 24 + 4)}px` : '4px',
                 animationDelay: `${i * 45}ms`,
               }}
             />
@@ -167,21 +167,21 @@ export const VoiceFeedbackPlayer: React.FC<VoiceFeedbackPlayerProps> = ({
             soundFx.playTapSound();
             setShowTranscript(!showTranscript);
           }}
-          className="text-[11px] text-gray-200 hover:text-gray-200 font-bold flex items-center space-x-1 ml-1 transition-colors px-2 py-1 rounded-lg bg-[var(--surface)] hover:bg-[var(--surface)] border border-[var(--border)]"
+          className="text-[11px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-bold flex items-center gap-1.5 transition-all duration-300 px-3 py-1.5 rounded-xl bg-[var(--bg-surface-2)] hover:bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] ml-2"
         >
           <span>{showTranscript ? 'Hide Script' : 'Read Script'}</span>
-          {showTranscript ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+          {showTranscript ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
         </button>
       </div>
 
       {/* Expandable Spoken Transcript */}
       {showTranscript && (
-        <div className="mt-3 p-3.5 rounded-2xl bg-slate-950/90 border border-[var(--border)] text-xs text-slate-300 leading-relaxed animate-in fade-in slide-in-from-top-1 duration-200 space-y-1.5">
-          <div className="flex items-center space-x-1.5 text-gray-200 text-[11px] font-bold uppercase tracking-wider">
-            <Sparkles className="w-3 h-3" />
+        <div className="mt-4 p-4 rounded-2xl bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)] leading-relaxed animate-slide-in-right space-y-2 shadow-inner">
+          <div className="flex items-center gap-2 text-[var(--text-primary)] text-[11px] font-bold uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5 text-violet-400" />
             <span>Voice Coach Script</span>
           </div>
-          <p className="text-slate-300 italic font-medium">"{scriptText}"</p>
+          <p className="italic font-medium">"{scriptText}"</p>
         </div>
       )}
     </div>

@@ -106,20 +106,20 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-transparent  animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-950 border border-[var(--border)] p-5 shadow-none space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[rgba(0,0,0,0.6)] backdrop-blur-md animate-fade-in-up">
+      <div className="relative w-full max-w-md overflow-hidden rounded-3xl glass-card-elevated border border-[var(--border-medium)] p-6 space-y-5 shadow-2xl animate-scale-in">
         {/* Glow Accent */}
-        <div className="absolute top-0 right-0 w-36 h-36 bg-[var(--surface)] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-[-20%] left-[-10%] w-48 h-48 bg-violet-500/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Top Header */}
         <div className="flex items-center justify-between relative z-10">
-          <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-2xl bg-[var(--surface)] text-gray-200 flex items-center justify-center shadow-md">
-              <Shield className="w-4 h-4" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-[var(--bg-surface-2)] text-[var(--text-primary)] flex items-center justify-center shadow-md border border-[var(--border-subtle)]">
+              <Shield className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-bold tracking-tight text-white">GDPR Privacy & Data Controls</h3>
-              <p className="text-[10px] text-[#8E8E93] font-medium">Manage and export your personal athlete data</p>
+              <h3 className="text-base font-bold tracking-tight text-[var(--text-primary)]">GDPR Privacy Controls</h3>
+              <p className="text-[11px] text-[var(--text-muted)] font-medium mt-0.5">Manage your personal athlete data</p>
             </div>
           </div>
 
@@ -129,53 +129,53 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
               soundFx.playTapSound();
               onClose();
             }}
-            className="p-1.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-[#8E8E93] hover:text-white transition"
+            className="p-2 rounded-2xl btn-icon transition-all duration-300"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* User Identity Pill */}
-        <div className="p-3 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] flex items-center space-x-3">
+        <div className="p-4 rounded-2xl surface-card flex items-center gap-4">
           <img
             src={currentUser.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'}
             alt={currentUser.name}
-            className="w-10 h-10 rounded-2xl object-cover border border-[var(--border)]"
+            className="w-12 h-12 rounded-2xl object-cover border border-[var(--border-subtle)]"
           />
           <div className="flex-1">
-            <span className="text-xs font-bold tracking-tight text-white block">{currentUser.name}</span>
-            <span className="text-[10px] text-[#8E8E93] font-medium">{currentUser.email}</span>
+            <span className="text-sm font-bold tracking-tight text-[var(--text-primary)] block">{currentUser.name}</span>
+            <span className="text-[11px] text-[var(--text-secondary)] font-medium">{currentUser.email}</span>
           </div>
-          <span className="text-[9px] font-bold tracking-tight uppercase tracking-wider text-gray-200 bg-[var(--surface)] px-2 py-0.5 rounded-full border border-[var(--border)]">
+          <span className="pill text-[9px] font-bold tracking-wider uppercase">
             {currentUser.role}
           </span>
         </div>
 
         {/* Action 1: Export My Data (Right to Portability) */}
-        <div className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] space-y-2">
-          <div className="flex items-center space-x-2">
-            <Download className="w-4 h-4 text-gray-200" />
-            <h4 className="text-xs font-bold tracking-tight text-white">Export My Data Archive (GDPR Art. 20)</h4>
+        <div className="p-4 rounded-2xl surface-card space-y-3">
+          <div className="flex items-center gap-2.5">
+            <Download className="w-4 h-4 text-[var(--text-primary)]" />
+            <h4 className="text-sm font-bold tracking-tight text-[var(--text-primary)]">Export My Data Archive</h4>
           </div>
-          <p className="text-[11px] text-[#8E8E93]">
-            Download a full, machine-readable JSON copy of your profile, daily muscle workouts, cardio sessions, and meal history.
+          <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+            Download a full, machine-readable JSON copy of your profile, daily muscle workouts, cardio sessions, and meal history (GDPR Art. 20).
           </p>
           <button
             type="button"
             onClick={handleExportData}
             disabled={isExporting}
-            className="w-full py-2.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-white text-xs font-bold flex items-center justify-center space-x-2 transition active:scale-98"
+            className="w-full py-3 rounded-2xl btn-ghost text-xs font-bold flex items-center justify-center gap-2 transition-all duration-300 active:scale-95"
           >
             {exportSuccess ? (
-              <span className="flex items-center space-x-1 text-gray-200 font-bold">
-                <Check className="w-3.5 h-3.5" />
+              <span className="flex items-center gap-2 text-emerald-400 font-bold">
+                <Check className="w-4 h-4" />
                 <span>Downloaded Successfully!</span>
               </span>
             ) : isExporting ? (
               <span>Preparing Archive...</span>
             ) : (
-              <span className="flex items-center space-x-1.5">
-                <FileSpreadsheet className="w-3.5 h-3.5 text-gray-200" />
+              <span className="flex items-center gap-2">
+                <FileSpreadsheet className="w-4 h-4 text-[var(--text-primary)]" />
                 <span>Download JSON Data Archive</span>
               </span>
             )}
@@ -183,12 +183,12 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
         </div>
 
         {/* Action 2: Permanent Account Erasure (GDPR Art. 17) */}
-        <div className="p-3.5 rounded-2xl bg-red-950/20 border border-red-500/30 space-y-2">
-          <div className="flex items-center space-x-2 text-red-400">
+        <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-3 shadow-inner">
+          <div className="flex items-center gap-2.5 text-rose-400">
             <Trash2 className="w-4 h-4" />
-            <h4 className="text-xs font-bold tracking-tight">Right to Erasure (Delete Account)</h4>
+            <h4 className="text-sm font-bold tracking-tight">Right to Erasure (Delete Account)</h4>
           </div>
-          <p className="text-[11px] text-[#8E8E93]">
+          <p className="text-[11px] text-rose-300/80 leading-relaxed">
             Permanently purge your account, all daily workout entries, cardio logs, uploaded meal photos, and voice memos. This action cannot be undone.
           </p>
 
@@ -199,27 +199,27 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
                 soundFx.playTapSound();
                 setShowDeleteConfirm(true);
               }}
-              className="w-full py-2 rounded-2xl bg-red-950/60 hover:bg-red-900/60 text-red-300 border border-red-500/40 text-xs font-bold transition"
+              className="w-full py-3 rounded-2xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 text-xs font-bold transition-all duration-300"
             >
               Request Account & Data Deletion
             </button>
           ) : (
-            <div className="space-y-2 pt-1">
-              <div className="p-2 rounded-2xl bg-red-950/80 border border-red-500/60 text-[11px] text-red-200">
-                Type <strong className="text-white font-mono font-bold tracking-tight">DELETE</strong> below to permanently erase:
+            <div className="space-y-3 pt-2">
+              <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-500/50 text-[11px] text-rose-200">
+                Type <strong className="text-white font-mono font-bold tracking-tight">DELETE</strong> below to confirm erasure:
               </div>
               <input
                 type="text"
                 value={deleteConfirmationText}
                 onChange={(e) => setDeleteConfirmationText(e.target.value)}
                 placeholder="Type DELETE"
-                className="w-full bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-red-500/40 rounded-2xl px-3 py-1.5 text-xs text-white uppercase focus:outline-none focus:border-red-400 font-mono font-bold"
+                className="w-full bg-[var(--bg-surface-2)] border border-rose-500/50 rounded-xl px-4 py-2.5 text-xs text-[var(--text-primary)] uppercase focus:outline-none focus:border-rose-400 font-mono font-bold shadow-inner"
               />
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setShowDeleteConfirm(false)}
-                  className="flex-1 py-2 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-zinc-300 text-xs font-bold hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition"
+                  className="flex-1 py-2.5 rounded-xl btn-ghost text-xs font-bold transition-all duration-300"
                 >
                   Cancel
                 </button>
@@ -227,7 +227,7 @@ export const PrivacyDataSettingsModal: React.FC<PrivacyDataSettingsModalProps> =
                   type="button"
                   onClick={handleDeleteAccount}
                   disabled={isDeleting}
-                  className="flex-1 py-2 rounded-2xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold tracking-tight shadow-lg shadow-red-600/30 transition active:scale-95 disabled:opacity-50"
+                  className="flex-1 py-2.5 rounded-xl btn-danger text-xs font-bold tracking-tight shadow-lg shadow-rose-500/20 transition-all duration-300 active:scale-95 disabled:opacity-50"
                 >
                   {isDeleting ? 'Deleting...' : 'Erase Forever'}
                 </button>

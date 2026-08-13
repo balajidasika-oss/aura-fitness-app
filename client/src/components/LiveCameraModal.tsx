@@ -147,25 +147,25 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-transparent  p-4 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-sm bg-slate-900 border border-slate-700/80 rounded-2xl overflow-hidden shadow-none flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.6)] backdrop-blur-md p-4 animate-scale-in">
+      <div className="relative w-full max-w-sm glass-card-elevated border border-[var(--border-medium)] rounded-3xl overflow-hidden flex flex-col">
         {/* Shutter White Flash overlay */}
         {isFlashing && (
-          <div className="absolute inset-0 bg-[var(--surface)] z-40 pointer-events-none animate-out fade-out duration-200" />
+          <div className="absolute inset-0 bg-white z-40 pointer-events-none opacity-80" />
         )}
 
         {/* Top Header */}
-        <div className="flex items-center justify-between p-4 bg-slate-950/80 border-b border-slate-800 z-10">
+        <div className="flex items-center justify-between p-4 bg-[var(--bg-glass)] border-b border-[var(--border-subtle)] z-10 backdrop-blur-xl">
           <div>
-            <div className="flex items-center space-x-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
-              <h3 className="font-bold text-white text-sm">{title}</h3>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping shadow-[0_0_8px_rgba(244,63,94,0.6)]" />
+              <h3 className="font-bold text-[var(--text-primary)] text-sm">{title}</h3>
             </div>
-            <p className="text-[11px] text-[#8E8E93] mt-0.5">{subtitle}</p>
+            <p className="text-[11px] text-[var(--text-muted)] mt-0.5">{subtitle}</p>
           </div>
           <button
             onClick={handleClose}
-            className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors"
+            className="w-8 h-8 rounded-full btn-ghost flex items-center justify-center transition-all duration-300"
           >
             <X className="w-4 h-4" />
           </button>
@@ -181,21 +181,21 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
                 alt="Captured Preview"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute top-3 left-3 bg-[var(--surface)] text-white text-xs font-semibold px-2.5 py-1 rounded-full  shadow flex items-center space-x-1">
+              <div className="absolute top-3 left-3 pill-emerald shadow-lg flex items-center gap-1 animate-slide-in-right">
                 <Check className="w-3.5 h-3.5" />
                 <span>Captured Ready</span>
               </div>
             </div>
           ) : cameraError ? (
             /* Camera Permission or Hardware Error Fallback */
-            <div className="p-6 text-center flex flex-col items-center justify-center space-y-3">
-              <div className="w-12 h-12 rounded-full bg-[var(--surface)] text-gray-200 flex items-center justify-center">
+            <div className="p-6 text-center flex flex-col items-center justify-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-[var(--bg-surface-2)] text-[var(--text-primary)] flex items-center justify-center shadow-lg">
                 <Camera className="w-6 h-6" />
               </div>
-              <p className="text-xs text-slate-300 font-medium">{cameraError}</p>
+              <p className="text-xs text-[var(--text-secondary)] font-medium">{cameraError}</p>
               <button
                 onClick={handleUseMockSnapshot}
-                className="mt-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xs font-semibold px-4 py-2 rounded-2xl shadow-lg hover:brightness-110 flex items-center space-x-1.5"
+                className="mt-2 btn-primary shadow-lg shadow-emerald-500/20 flex items-center gap-1.5"
               >
                 <Zap className="w-3.5 h-3.5" />
                 <span>Use Instant High-Res Cam Shot</span>
@@ -228,13 +228,13 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
               )}
 
               {/* Top Viewfinder Controls */}
-              <div className="absolute top-3 right-3 flex items-center space-x-2">
+              <div className="absolute top-3 right-3 flex items-center gap-2">
                 <button
                   onClick={() => setHasGrid(!hasGrid)}
-                  className={`px-2 py-1 rounded-lg text-[10px] font-semibold  border ${
+                  className={`px-2.5 py-1.5 rounded-xl text-[10px] font-semibold border backdrop-blur-md transition-all duration-300 ${
                     hasGrid
-                      ? 'bg-[var(--surface)] text-gray-200 border-[var(--border)]'
-                      : 'bg-transparent text-[#8E8E93] border-[var(--border)]'
+                      ? 'bg-[var(--bg-glass)] text-[var(--text-primary)] border-[var(--border-medium)]'
+                      : 'bg-black/30 text-[var(--text-secondary)] border-[var(--border-subtle)]'
                   }`}
                 >
                   Grid {hasGrid ? 'ON' : 'OFF'}
@@ -247,20 +247,20 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
         </div>
 
         {/* Bottom Shutter & Action Bar */}
-        <div className="p-4 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
+        <div className="p-4 bg-[var(--bg-glass)] border-t border-[var(--border-subtle)] flex items-center justify-between backdrop-blur-xl">
           {capturedImage ? (
             /* Confirm / Retake Actions */
-            <div className="flex items-center justify-between w-full space-x-3">
+            <div className="flex items-center justify-between w-full gap-3">
               <button
                 onClick={handleRetake}
-                className="flex-1 py-2.5 px-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center space-x-1.5 transition-colors"
+                className="flex-1 py-2.5 px-4 rounded-2xl btn-ghost text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-300"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>Retake</span>
               </button>
               <button
                 onClick={handleConfirm}
-                className="flex-1 py-2.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xs font-bold shadow-lg shadow-[#FF3B30]/20 flex items-center justify-center space-x-1.5 transition-all"
+                className="flex-1 py-2.5 px-4 rounded-2xl btn-primary text-xs font-bold shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-1.5 transition-all duration-300 animate-slide-in-right"
               >
                 <Check className="w-4 h-4" />
                 <span>Use Photo</span>
@@ -273,18 +273,18 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
               <button
                 onClick={handleUseMockSnapshot}
                 title="Use instant snapshot"
-                className="w-10 h-10 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors"
+                className="w-12 h-12 rounded-full btn-icon transition-all duration-300"
               >
-                <ImageIcon className="w-4 h-4" />
+                <ImageIcon className="w-5 h-5" />
               </button>
 
               {/* Primary Shutter Button */}
               <button
                 onClick={handleTakeShutter}
-                className="relative group p-1 rounded-full border-4 border-[var(--border)] hover:border-[var(--border)] transition-transform active:scale-95"
+                className="relative group p-1.5 rounded-full border-[3px] border-[var(--border-medium)] hover:border-[var(--text-secondary)] transition-transform active:scale-95"
               >
-                <div className="w-14 h-14 rounded-full bg-[var(--surface)] group-hover:bg-[var(--surface)] transition-colors shadow-lg flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full border-2 border-slate-900 bg-[var(--surface)]" />
+                <div className="w-14 h-14 rounded-full bg-[var(--bg-surface-2)] group-hover:bg-[var(--bg-surface-1)] transition-colors shadow-lg flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-[var(--bg-void)] bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
                 </div>
               </button>
 
@@ -292,9 +292,9 @@ export const LiveCameraModal: React.FC<LiveCameraModalProps> = ({
               <button
                 onClick={handleFlipCamera}
                 title="Flip Camera"
-                className="w-10 h-10 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors"
+                className="w-12 h-12 rounded-full btn-icon transition-all duration-300"
               >
-                <RefreshCw className="w-4 h-4" />
+                <RefreshCw className="w-5 h-5" />
               </button>
             </div>
           )}

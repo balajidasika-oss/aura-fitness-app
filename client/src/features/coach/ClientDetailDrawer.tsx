@@ -157,25 +157,25 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-transparent  flex justify-end animate-fadeIn">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-black/40 backdrop-blur-sm flex justify-end animate-fade-in-up">
       <div 
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-lg bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border-l border-[var(--border)] h-full flex flex-col shadow-none overflow-hidden"
+        className="w-full max-w-lg bg-[var(--bg-void)] border-l border-[var(--border-subtle)] h-full flex flex-col overflow-hidden animate-slide-in-right shadow-2xl"
       >
         {/* Top Header */}
-        <div className="p-4 border-b border-[var(--border)] bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] backdrop-blur flex items-center justify-between">
+        <div className="p-4 border-b border-[var(--border-subtle)] bg-[var(--bg-glass)] backdrop-blur-xl flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
               src={clientDetail?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120'}
               alt={clientDetail?.name}
-              className="w-10 h-10 rounded-2xl object-cover border-2 border-[var(--border)]"
+              className="w-10 h-10 rounded-2xl object-cover border border-[var(--border-subtle)]"
             />
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-sm text-white">{clientDetail?.name || 'Athlete'}</h3>
+                <h3 className="font-extrabold text-sm text-[var(--text-primary)]">{clientDetail?.name || 'Athlete'}</h3>
                 {clientDetail && <ComplianceBadge tier={clientDetail.compliance.tier} score={clientDetail.compliance.score} />}
               </div>
-              <p className="text-[11px] text-[#8E8E93] font-medium">
+              <p className="text-[11px] text-[var(--text-secondary)] font-medium">
                 {clientDetail?.fitnessGoal} · {clientDetail?.streak || 0}d streak
               </p>
             </div>
@@ -183,14 +183,14 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-2xl text-[#8E8E93] hover:text-white bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] hover:bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition"
+            className="btn-icon"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-[var(--border)] bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] px-3 pt-2 gap-1 overflow-x-auto no-scrollbar">
+        <div className="flex border-b border-[var(--border-subtle)] bg-[var(--bg-surface-1)] px-3 pt-2 gap-1 overflow-x-auto no-scrollbar">
           {[
             { id: 'workouts', label: '🏋️ Strength', count: clientDetail?.logs?.filter(l => l.workout?.title || (l.workout?.exercises && l.workout.exercises.length > 0) || (l.workout?.muscleGroups && l.workout.muscleGroups.length > 0)).length || 0 },
             { id: 'yoga', label: '🧘‍♀️ Yoga', count: clientDetail?.logs?.filter(l => l.yoga).length || 0 },
@@ -206,16 +206,16 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                 soundFx.playTapSound();
                 setActiveTab(tab.id as any);
               }}
-              className={`flex items-center gap-1 py-2 px-3 text-xs font-bold rounded-2xl whitespace-nowrap transition ${
+              className={`flex items-center gap-1 py-2 px-3 text-xs font-bold rounded-t-xl whitespace-nowrap transition-all duration-300 ${
                 activeTab === tab.id
-                  ? 'bg-[var(--surface)] text-white font-bold tracking-tight shadow'
-                  : 'text-[#8E8E93] hover:text-zinc-200'
+                  ? 'bg-[var(--bg-surface-2)] text-[var(--text-primary)] shadow-md border-t border-l border-r border-[var(--border-subtle)]'
+                  : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] border-transparent'
               }`}
             >
               <span>{tab.label}</span>
               {tab.count !== null && (
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  activeTab === tab.id ? 'bg-transparent text-white font-bold tracking-tight' : 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-[#8E8E93]'
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                  activeTab === tab.id ? 'bg-transparent text-[var(--text-primary)]' : 'bg-[var(--bg-surface-2)] text-[var(--text-muted)]'
                 }`}>
                   {tab.count}
                 </span>
@@ -228,19 +228,19 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {isLoading ? (
             <div className="flex justify-center items-center py-20">
-              <div className="w-7 h-7 border-2 border-[var(--border)] border-t-transparent rounded-full animate-spin" />
+              <div className="w-7 h-7 border-2 border-[var(--border-subtle)] border-t-[var(--text-primary)] rounded-full animate-spin" />
             </div>
           ) : activeTab === 'workouts' ? (
-            <div className="space-y-3">
+            <div className="space-y-3 animate-fade-in-up">
               <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">
                   Strength & Muscle Breakdown
                 </h4>
-                <span className="text-[10px] text-[#8E8E93]">Categorized by Muscle Group</span>
+                <span className="text-[10px] text-[var(--text-muted)]">Categorized by Muscle Group</span>
               </div>
 
               {clientDetail?.logs?.filter(l => l.workout?.title || (l.workout?.exercises && l.workout.exercises.length > 0) || (l.workout?.muscleGroups && l.workout.muscleGroups.length > 0)).length === 0 ? (
-                <p className="text-xs text-[#8E8E93] py-8 text-center">No strength workouts logged yet.</p>
+                <p className="text-xs text-[var(--text-muted)] py-8 text-center">No strength workouts logged yet.</p>
               ) : (
                 clientDetail?.logs
                   ?.filter(l => l.workout?.title || (l.workout?.exercises && l.workout.exercises.length > 0) || (l.workout?.muscleGroups && l.workout.muscleGroups.length > 0))
@@ -250,27 +250,27 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                     const grandTotalReps = w?.totalWorkoutReps || w?.muscleGroups?.reduce((a, b) => a + (b.totalMuscleReps || 0), 0) || 0;
 
                     return (
-                      <div key={log._id} className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] space-y-3">
+                      <div key={log._id} className="surface-card p-3.5 space-y-3">
                         {/* Workout Header */}
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2">
-                            <div className="w-8 h-8 rounded-2xl bg-[var(--surface)] text-gray-200 flex items-center justify-center font-bold text-xs">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-xl bg-[var(--bg-surface-2)] text-[var(--text-primary)] flex items-center justify-center font-bold text-xs">
                               <Dumbbell className="w-4 h-4" />
                             </div>
                             <div>
-                              <h5 className="font-bold text-white text-xs">{w?.title || 'Strength Workout'}</h5>
-                              <span className="text-[10px] text-[#8E8E93] font-medium">
+                              <h5 className="font-bold text-[var(--text-primary)] text-xs">{w?.title || 'Strength Workout'}</h5>
+                              <span className="text-[10px] text-[var(--text-secondary)] font-medium">
                                 {log.date} · {totalDuration} mins total · {w?.intensity || 'high'} intensity
                               </span>
                             </div>
                           </div>
 
                           {grandTotalReps > 0 ? (
-                            <span className="text-[10px] font-bold tracking-tight uppercase text-gray-200 bg-[var(--surface)] px-2 py-0.5 rounded-full border border-[var(--border)]">
+                            <span className="pill text-[10px] uppercase">
                               {grandTotalReps} Total Reps
                             </span>
                           ) : (
-                            <span className="text-[10px] font-bold uppercase text-gray-200 bg-[var(--surface)] px-2 py-0.5 rounded-full">
+                            <span className="pill text-[10px] uppercase">
                               {w?.category || 'Strength'}
                             </span>
                           )}
@@ -280,21 +280,21 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                         {w?.muscleGroups && w.muscleGroups.length > 0 ? (
                           <div className="space-y-2 pt-1">
                             {w.muscleGroups.map((mg: IMuscleGroupLog, mgIdx: number) => (
-                              <div key={mgIdx} className="bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] rounded-2xl p-2.5 border border-[var(--border)] space-y-1.5">
-                                <div className="flex items-center justify-between border-b border-[var(--border)] pb-1">
-                                  <span className="text-xs font-bold text-zinc-200">{mg.label}</span>
-                                  <span className="text-[10px] font-bold tracking-tight text-gray-200 bg-[var(--surface)] px-1.5 py-0.2 rounded">
+                              <div key={mgIdx} className="bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl p-2.5 space-y-1.5">
+                                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1">
+                                  <span className="text-xs font-bold text-[var(--text-primary)]">{mg.label}</span>
+                                  <span className="pill text-[10px]">
                                     {mg.totalMuscleReps} reps
                                   </span>
                                 </div>
                                 <div className="space-y-1">
                                   {mg.exercises.map((ex, exIdx) => (
-                                    <div key={exIdx} className="text-xs flex justify-between items-center text-zinc-300">
+                                    <div key={exIdx} className="text-xs flex justify-between items-center text-[var(--text-secondary)]">
                                       <div className="flex-1 pr-2">
-                                        <span className="font-medium text-white">{ex.name}</span>
-                                        {ex.notes && <span className="text-[10px] text-[#8E8E93] block italic">({ex.notes})</span>}
+                                        <span className="font-medium text-[var(--text-primary)]">{ex.name}</span>
+                                        {ex.notes && <span className="text-[10px] text-[var(--text-muted)] block italic">({ex.notes})</span>}
                                       </div>
-                                      <span className="text-gray-200 font-mono text-[11px] font-bold whitespace-nowrap">
+                                      <span className="text-[var(--text-primary)] font-mono text-[11px] font-bold whitespace-nowrap">
                                         {ex.sets}×{ex.reps} {ex.weightKg ? `@${ex.weightKg}kg` : ''} ({ex.totalReps || ex.sets * 10}r)
                                       </span>
                                     </div>
@@ -306,9 +306,9 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                         ) : w?.exerciseDetails && w.exerciseDetails.length > 0 ? (
                           <div className="space-y-1 pt-1">
                             {w.exerciseDetails.map((ex, i) => (
-                              <div key={i} className="p-2 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-xs flex justify-between items-center">
-                                <span className="font-semibold text-zinc-200">{ex.name}</span>
-                                <span className="text-gray-200 font-bold text-[11px]">
+                              <div key={i} className="p-2 rounded-xl bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] text-xs flex justify-between items-center">
+                                <span className="font-semibold text-[var(--text-primary)]">{ex.name}</span>
+                                <span className="text-[var(--text-secondary)] font-bold text-[11px]">
                                   {ex.sets} × {ex.reps} {ex.weightKg ? `@ ${ex.weightKg}kg` : ''}
                                 </span>
                               </div>
@@ -321,47 +321,39 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               )}
             </div>
           ) : activeTab === 'voice' ? (
-            /* Voice Notes Tab */
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider">
+            <div className="space-y-3 animate-fade-in-up">
+              <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">
                 Athlete Voice Memos ({allVoiceNotes.length})
               </h4>
               {allVoiceNotes.length === 0 ? (
-                <p className="text-xs text-[#8E8E93] py-8 text-center">No voice notes recorded yet.</p>
+                <p className="text-xs text-[var(--text-muted)] py-8 text-center">No voice notes recorded yet.</p>
               ) : (
                 <div className="space-y-2.5">
                   {allVoiceNotes.map((v, idx) => {
                     const isPlaying = playingAudioUrl === v.url;
                     return (
-                      <div key={idx} className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] space-y-2">
+                      <div key={idx} className="surface-card p-3.5 space-y-2">
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center gap-2">
                             <button
                               onClick={() => togglePlayAudio(v.url)}
-                              className={`w-9 h-9 rounded-2xl flex items-center justify-center transition active:scale-95 ${
+                              className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 active:scale-95 ${
                                 isPlaying
                                   ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/20'
-                                  : 'bg-[var(--surface)] text-white shadow-lg shadow-[#FF3B30]/20'
+                                  : 'bg-[var(--bg-surface-2)] text-[var(--text-primary)]'
                               }`}
                             >
-                              {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-slate-950 ml-0.5" />}
+                              {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
                             </button>
                             <div>
-                              <h5 className="text-xs font-bold text-white">Daily Athlete Debrief</h5>
-                              <span className="text-[10px] text-[#8E8E93]">{v.date}</span>
+                              <h5 className="text-xs font-bold text-[var(--text-primary)]">Daily Athlete Debrief</h5>
+                              <span className="text-[10px] text-[var(--text-secondary)]">{v.date}</span>
                             </div>
-                          </div>
-
-                          <div className="flex items-center space-x-1">
-                            <span className="w-1.5 h-4 bg-[var(--surface)] rounded-full" />
-                            <span className={`w-1.5 h-6 rounded-full ${isPlaying ? 'bg-[var(--surface)] animate-pulse' : 'bg-[var(--surface)]'}`} />
-                            <span className={`w-1.5 h-3 rounded-full ${isPlaying ? 'bg-[var(--surface)] animate-pulse' : 'bg-[var(--surface)]'}`} />
-                            <span className={`w-1.5 h-5 rounded-full ${isPlaying ? 'bg-[var(--surface)] animate-pulse' : 'bg-[var(--surface)]'}`} />
                           </div>
                         </div>
 
                         {v.notes && (
-                          <p className="text-[11px] text-zinc-300 italic bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] p-2 rounded-2xl border border-[var(--border)]">
+                          <p className="text-[11px] text-[var(--text-secondary)] italic bg-[var(--bg-surface-1)] p-2 rounded-xl border border-[var(--border-subtle)]">
                             "{v.notes}"
                           </p>
                         )}
@@ -372,33 +364,33 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               )}
             </div>
           ) : activeTab === 'yoga' ? (
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider">Yoga & Mobility History</h4>
+            <div className="space-y-3 animate-fade-in-up">
+              <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Yoga & Mobility History</h4>
               {clientDetail?.logs?.filter(l => l.yoga).length === 0 ? (
-                <p className="text-xs text-[#8E8E93] py-8 text-center">No yoga sessions logged yet.</p>
+                <p className="text-xs text-[var(--text-muted)] py-8 text-center">No yoga sessions logged yet.</p>
               ) : (
                 clientDetail?.logs?.filter(l => l.yoga).map((log) => {
                   const y = log.yoga;
                   return (
-                    <div key={log._id} className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] space-y-2">
+                    <div key={log._id} className="surface-card p-3.5 space-y-2">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-8 h-8 rounded-2xl bg-[var(--surface)] text-gray-200 flex items-center justify-center font-bold text-xs">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-xl bg-[var(--bg-surface-2)] text-[var(--text-primary)] flex items-center justify-center font-bold text-xs">
                             <Sparkles className="w-4 h-4" />
                           </div>
                           <div>
-                            <h5 className="font-bold text-white text-xs">{y?.title || 'Yoga Session'}</h5>
-                            <span className="text-[10px] text-[#8E8E93] font-medium capitalize">
+                            <h5 className="font-bold text-[var(--text-primary)] text-xs">{y?.title || 'Yoga Session'}</h5>
+                            <span className="text-[10px] text-[var(--text-secondary)] font-medium capitalize">
                               {log.date} · {y?.durationMinutes || 15} mins · {y?.type || 'mobility'}
                             </span>
                           </div>
                         </div>
-                        <span className="text-[10px] font-bold text-gray-200 bg-[var(--surface)] px-2 py-0.5 rounded-full border border-[var(--border)]">
+                        <span className="pill">
                           {log.completionScore}% Done
                         </span>
                       </div>
                       {y?.notes && (
-                        <p className="text-[11px] text-zinc-300 italic bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] p-2 rounded-2xl border border-[var(--border)] mt-2">
+                        <p className="text-[11px] text-[var(--text-secondary)] italic bg-[var(--bg-surface-1)] p-2 rounded-xl border border-[var(--border-subtle)] mt-2">
                           {y.notes}
                         </p>
                       )}
@@ -408,55 +400,55 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               )}
             </div>
           ) : activeTab === 'cardio' ? (
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider">Cardio & Conditioning History</h4>
+            <div className="space-y-3 animate-fade-in-up">
+              <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Cardio & Conditioning History</h4>
               {clientDetail?.logs?.filter(l => (l.cardio?.distanceKm && l.cardio.distanceKm > 0) || (l.cardio?.stairmasterFloors && l.cardio.stairmasterFloors > 0) || (l.running?.distanceKm && l.running.distanceKm > 0)).map((log) => {
                 const c = log.cardio || log.running;
                 const isStair = c?.activityType === 'stairmaster' || (c?.stairmasterFloors && c.stairmasterFloors > 0);
                 const isIncline = c?.activityType === 'incline_walk' || (c?.inclinePercentage && c.inclinePercentage > 0);
 
                 return (
-                  <div key={log._id} className="p-3.5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] space-y-2">
+                  <div key={log._id} className="surface-card p-3.5 space-y-2">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-xs">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold text-xs">
                           {isStair ? <Layers className="w-4 h-4" /> : isIncline ? <TrendingUp className="w-4 h-4" /> : <Activity className="w-4 h-4" />}
                         </div>
                         <div>
-                          <h5 className="font-bold text-white text-xs">
+                          <h5 className="font-bold text-[var(--text-primary)] text-xs">
                             {isStair ? `StairMaster: ${c?.stairmasterFloors || 80} Floors (Lvl ${c?.stairmasterLevel || 8})` : isIncline ? `Incline Treadmill (${c?.inclinePercentage || 10}% Incline)` : `Run / Jog: ${c?.distanceKm || 5} km`}
                           </h5>
-                          <span className="text-[10px] text-[#8E8E93] font-medium">
+                          <span className="text-[10px] text-[var(--text-secondary)] font-medium">
                             {log.date} · {c?.durationMinutes || 30} mins · {c?.pace || '5.2 min/km'}
                           </span>
                         </div>
                       </div>
-                      <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20">
+                      <span className="pill-cyan">
                         {log.completionScore}% Done
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between text-[11px] text-[#8E8E93] pt-1 border-t border-[var(--border)]">
+                    <div className="flex items-center justify-between text-[11px] text-[var(--text-secondary)] pt-1 border-t border-[var(--border-subtle)] mt-2">
                       <span>Heart Rate: <strong className="text-rose-400">{c?.heartRateAvg || 142} bpm</strong></span>
-                      <span>Est. Burn: <strong className="text-gray-200">~{c?.caloriesBurned || 320} kcal</strong></span>
+                      <span>Est. Burn: <strong className="text-[var(--text-primary)]">~{c?.caloriesBurned || 320} kcal</strong></span>
                     </div>
                   </div>
                 );
               })}
             </div>
           ) : activeTab === 'selfies' ? (
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider">End-of-Session Selfies</h4>
+            <div className="space-y-3 animate-fade-in-up">
+              <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">End-of-Session Selfies</h4>
               {allSelfiesWithDates.length === 0 ? (
-                <p className="text-xs text-[#8E8E93] py-8 text-center">No workout selfies uploaded yet.</p>
+                <p className="text-xs text-[var(--text-muted)] py-8 text-center">No workout selfies uploaded yet.</p>
               ) : (
                 <div className="grid grid-cols-2 gap-2.5">
                   {allSelfiesWithDates.map((s, idx) => (
-                    <div key={idx} className="bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] rounded-2xl border border-[var(--border)] overflow-hidden">
+                    <div key={idx} className="surface-card overflow-hidden">
                       <img src={s.photo} alt="Workout selfie" className="w-full aspect-square object-cover" />
                       <div className="p-2">
-                        <span className="text-[10px] font-bold text-[#8E8E93]">{s.date}</span>
-                        {s.notes && <p className="text-[10px] text-zinc-300 truncate mt-0.5">{s.notes}</p>}
+                        <span className="text-[10px] font-bold text-[var(--text-secondary)]">{s.date}</span>
+                        {s.notes && <p className="text-[10px] text-[var(--text-muted)] truncate mt-0.5">{s.notes}</p>}
                       </div>
                     </div>
                   ))}
@@ -464,21 +456,21 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               )}
             </div>
           ) : activeTab === 'meals' ? (
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider">Meal Photos History</h4>
+            <div className="space-y-3 animate-fade-in-up">
+              <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Meal Photos History</h4>
               {allMealsWithDates.length === 0 ? (
-                <p className="text-xs text-[#8E8E93] py-8 text-center">No meal photos logged yet.</p>
+                <p className="text-xs text-[var(--text-muted)] py-8 text-center">No meal photos logged yet.</p>
               ) : (
                 <div className="grid grid-cols-2 gap-2.5">
                   {allMealsWithDates.map((m, idx) => (
-                    <div key={idx} className="bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] rounded-2xl border border-[var(--border)] overflow-hidden">
+                    <div key={idx} className="surface-card overflow-hidden">
                       <img src={m.meal.imagePath} alt={m.meal.caption || m.meal.type} className="w-full aspect-square object-cover" />
                       <div className="p-2">
-                        <span className="text-[9px] font-bold tracking-tight text-gray-200 bg-[var(--surface)] px-1.5 py-0.5 rounded capitalize">
+                        <span className="pill text-[9px] uppercase">
                           {m.meal.type}
                         </span>
-                        <span className="text-[10px] text-[#8E8E93] ml-2">{m.date}</span>
-                        {m.meal.caption && <p className="text-[10px] text-zinc-300 mt-1">{m.meal.caption}</p>}
+                        <span className="text-[10px] text-[var(--text-secondary)] ml-2">{m.date}</span>
+                        {m.meal.caption && <p className="text-[10px] text-[var(--text-muted)] mt-1">{m.meal.caption}</p>}
                       </div>
                     </div>
                   ))}
@@ -486,18 +478,18 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               )}
             </div>
           ) : (
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider">7-Day Habit Adherence</h4>
-              <div className="grid grid-cols-7 gap-1 bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] p-3 rounded-2xl border border-[var(--border)]">
+            <div className="space-y-3 animate-fade-in-up">
+              <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">7-Day Habit Adherence</h4>
+              <div className="grid grid-cols-7 gap-1 surface-card p-3">
                 {clientDetail?.compliance?.weeklyHistory?.map((day, idx) => (
                   <div key={idx} className="flex flex-col items-center gap-1">
-                    <span className="text-[9px] text-[#8E8E93] font-bold">{day.dayName}</span>
-                    <div className={`w-8 h-8 rounded-2xl flex items-center justify-center text-xs font-bold tracking-tight ${
+                    <span className="text-[9px] text-[var(--text-secondary)] font-bold">{day.dayName}</span>
+                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold tracking-tight border border-[var(--border-subtle)] ${
                       day.status === 'complete'
-                        ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)]'
+                        ? 'bg-[var(--bg-surface-2)] text-[var(--text-primary)]'
                         : day.status === 'partial'
-                        ? 'bg-[var(--surface)] text-gray-200 border border-[var(--border)]'
-                        : 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-zinc-600 border border-[var(--border)]'
+                        ? 'bg-[var(--bg-surface-2)] text-[var(--text-primary)]'
+                        : 'bg-transparent text-[var(--text-muted)]'
                     }`}>
                       {day.score}%
                     </div>
@@ -509,7 +501,7 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
         </div>
 
         {/* Coach Quick Send Cheer Footer */}
-        <div className="p-3 border-t border-[var(--border)] bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] space-y-2">
+        <div className="p-3 border-t border-[var(--border-subtle)] bg-[var(--bg-glass)] backdrop-blur-xl space-y-2">
           
           <div className="mb-2">
             <VoiceNoteRecorder 
@@ -524,8 +516,8 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               <button
                 key={emoji}
                 onClick={() => setReactionEmoji(emoji)}
-                className={`text-base p-1 rounded-2xl transition ${
-                  reactionEmoji === emoji ? 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] ring-2 ring-emerald-400' : 'opacity-70 hover:opacity-100'
+                className={`text-base p-1 rounded-xl transition-all duration-300 ${
+                  reactionEmoji === emoji ? 'bg-[var(--bg-surface-2)] ring-1 ring-[var(--text-primary)]' : 'opacity-70 hover:opacity-100'
                 }`}
               >
                 {emoji}
@@ -536,18 +528,18 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               placeholder={voiceBlob ? "Audio attached! Add optional text..." : "Quick cheer message to athlete..."}
               value={feedbackText}
               onChange={(e) => setFeedbackText(e.target.value)}
-              className="flex-1 bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-[var(--border)] rounded-2xl px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[var(--border)]"
+              className="flex-1 bg-[var(--bg-surface-1)] border border-[var(--border-subtle)] rounded-xl px-2.5 py-1.5 text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--border-medium)] transition-all duration-300"
             />
             <button
               onClick={handleSendFeedback}
               disabled={isSendingFeedback || (!feedbackText.trim() && !voiceBlob)}
-              className="bg-[var(--surface)] hover:bg-[var(--surface)] text-white font-bold p-2 rounded-2xl text-xs transition active:scale-95 disabled:opacity-50"
+              className="btn-primary p-2 text-xs transition-all duration-300 disabled:opacity-50"
             >
               <Send className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
           </div>
           {feedbackSentSuccess && (
-            <span className="text-[10px] text-gray-200 font-bold block text-center">
+            <span className="text-[10px] text-emerald-400 font-bold block text-center mt-1">
               Cheer sent to athlete's feed!
             </span>
           )}

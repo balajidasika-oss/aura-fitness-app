@@ -19,27 +19,18 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
 }) => {
   const tierConfig = {
     green: {
-      bg: 'bg-[var(--surface)]',
-      border: 'border-[var(--border)]',
-      text: 'text-gray-200',
-      glow: 'shadow-[#FF3B30]/20',
-      dot: 'bg-[var(--surface)]',
+      pillClass: 'pill-emerald',
+      dot: 'bg-emerald-400',
       label: 'High Compliance',
     },
     yellow: {
-      bg: 'bg-[var(--surface)]',
-      border: 'border-[var(--border)]',
-      text: 'text-gray-200',
-      glow: 'shadow-amber-500/20',
-      dot: 'bg-[var(--surface)]',
+      pillClass: 'pill-amber',
+      dot: 'bg-amber-400',
       label: 'Moderate',
     },
     red: {
-      bg: 'bg-rose-500/10',
-      border: 'border-rose-500/30',
-      text: 'text-rose-400',
-      glow: 'shadow-rose-500/20',
-      dot: 'bg-rose-500',
+      pillClass: 'pill-rose',
+      dot: 'bg-rose-400',
       label: 'Needs Attention',
     },
   }[tier];
@@ -51,31 +42,31 @@ export const ComplianceBadge: React.FC<ComplianceBadgeProps> = ({
   }[size];
 
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex flex-col gap-1.5 animate-fade-in-up">
       {/* Pill Badge */}
       <div
-        className={`inline-flex items-center gap-1.5 rounded-full border font-semibold shadow-[0_4px_20px_rgba(0,0,0,0.2)] ${tierConfig.bg} ${tierConfig.border} ${tierConfig.text} ${tierConfig.glow} ${sizeClasses} w-fit`}
+        className={`inline-flex items-center gap-1.5 rounded-full font-semibold shadow-lg ${tierConfig.pillClass} ${sizeClasses} w-fit backdrop-blur-xl transition-all duration-300`}
       >
-        <span className={`w-2 h-2 rounded-full ${tierConfig.dot} animate-pulse`} />
+        <span className={`w-2 h-2 rounded-full ${tierConfig.dot} animate-pulse shadow-sm`} style={{ filter: 'drop-shadow(0 0 4px currentColor)' }} />
         <span>{score}%</span>
-        {showDetails && <span className="font-normal text-[#8E8E93] text-[11px]">· {tierConfig.label}</span>}
+        {showDetails && <span className="font-normal opacity-80 text-[11px]">· {tierConfig.label}</span>}
       </div>
 
       {/* 7-Day Mini Heatmap Dots */}
       {weeklyHistory && weeklyHistory.length > 0 && (
         <div className="flex items-center gap-1 mt-0.5" title="Last 7 Days Logging History">
           {weeklyHistory.map((day, idx) => {
-            let dotBg = 'bg-[var(--surface)] border border-[var(--border)] shadow-[0_4px_20px_rgba(0,0,0,0.2)] border-[var(--border)] text-zinc-600';
+            let dotClass = 'bg-[var(--bg-surface-1)] border-[var(--border-subtle)] text-[var(--text-muted)]';
             if (day.status === 'complete') {
-              dotBg = 'bg-[var(--surface)] border-[var(--border)] text-gray-200';
+              dotClass = 'bg-[var(--bg-surface-2)] border-emerald-500/50 text-emerald-400';
             } else if (day.status === 'partial') {
-              dotBg = 'bg-[var(--surface)] border-[var(--border)] text-gray-200';
+              dotClass = 'bg-[var(--bg-surface-2)] border-amber-500/50 text-amber-400';
             }
 
             return (
               <div
                 key={idx}
-                className={`w-5 h-5 rounded-md border flex items-center justify-center text-[9px] font-bold transition-all ${dotBg}`}
+                className={`w-5 h-5 rounded-md border flex items-center justify-center text-[9px] font-bold transition-all duration-300 shadow-sm ${dotClass}`}
                 title={`${day.dayName} (${day.date}): ${day.score}% logged`}
               >
                 {day.dayName.charAt(0)}

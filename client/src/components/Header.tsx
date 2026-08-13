@@ -64,22 +64,22 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-slate-950/90  border-b border-slate-800/80 shadow-md">
+    <header className="sticky top-0 z-40 bg-[var(--bg-glass)] backdrop-blur-xl border-b border-[var(--border-subtle)] transition-all duration-300">
       <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 gap-2 sm:gap-4">
           {/* Logo & Brand */}
-          <div className="flex items-center gap-2.5 flex-shrink-0">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-2xl bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg shadow-[#FF3B30]/20 text-white font-bold">
-              <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-slate-950 text-white" />
+          <div className="flex items-center gap-2.5 flex-shrink-0 animate-fade-in-up">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-2xl bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg text-white font-bold">
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-[var(--bg-void)] text-white" />
             </div>
             <div>
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="font-extrabold text-sm sm:text-base tracking-wider text-white">AURAFIT</span>
-                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-tight tracking-wider px-1.5 py-0.5 rounded bg-[var(--surface)] text-gray-200 border border-[var(--border)]">
+                <span className="font-extrabold text-sm sm:text-base tracking-wider text-[var(--text-primary)] bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--text-secondary)]">AURAFIT</span>
+                <span className="pill text-[9px] sm:text-[10px] uppercase font-bold">
                   {activeRole === 'coach' ? 'Coach Portal' : 'Athlete'}
                 </span>
               </div>
-              <p className="text-[10px] text-[#8E8E93] hidden sm:block">Performance Habit Logger &amp; Coach OS</p>
+              <p className="text-[10px] text-[var(--text-muted)] hidden sm:block">Performance Habit Logger & Coach OS</p>
             </div>
           </div>
 
@@ -90,34 +90,34 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={handleCopyCoachCode}
                 title="Copy Coach Invite Code to share with athletes"
-                className="hidden sm:flex items-center gap-1.5 bg-slate-900 border border-[var(--border)] hover:border-[var(--border)] rounded-2xl px-2.5 py-1 text-xs text-gray-200 font-bold transition active:scale-95"
+                className="hidden sm:flex items-center gap-1.5 btn-ghost rounded-2xl px-2.5 py-1 text-xs transition active:scale-95 animate-scale-in"
               >
                 <Award className="w-3.5 h-3.5" />
                 <span>{currentUser.coachCode}</span>
-                {copiedCode ? <Check className="w-3 h-3 text-gray-200" /> : <Copy className="w-3 h-3 text-[#8E8E93]" />}
+                {copiedCode ? <Check className="w-3 h-3 text-[var(--text-primary)]" /> : <Copy className="w-3 h-3 text-[var(--text-secondary)]" />}
               </button>
             )}
 
             {/* Active User Info */}
             {currentUser && (
-              <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-800 rounded-2xl sm:rounded-2xl px-2 sm:px-2.5 py-1 sm:py-1.5 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+              <div className="flex items-center gap-2 glass-card rounded-2xl px-2 sm:px-2.5 py-1 sm:py-1.5">
                 <div className="relative">
                   <img
                     src={currentUser.avatarUrl}
                     alt={currentUser.name}
-                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-[var(--border)]"
+                    className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-[var(--border-subtle)]"
                   />
                   {currentUser.streak && currentUser.streak > 0 ? (
-                    <span className="absolute -bottom-1 -right-1 bg-[var(--surface)] text-white font-bold text-[7px] sm:text-[8px] px-1 rounded-full flex items-center">
-                      <Flame className="w-1.5 h-1.5 sm:w-2 sm:h-2 fill-slate-950" />
+                    <span className="absolute -bottom-1 -right-1 bg-[var(--bg-surface-2)] text-[var(--text-primary)] font-bold text-[7px] sm:text-[8px] px-1 rounded-full flex items-center border border-[var(--border-subtle)]">
+                      <Flame className="w-1.5 h-1.5 sm:w-2 sm:h-2 fill-amber-500 text-amber-500" />
                     </span>
                   ) : null}
                 </div>
                 <div className="text-left hidden md:block">
-                  <p className="text-xs font-bold text-white truncate max-w-[120px]">
+                  <p className="text-xs font-bold text-[var(--text-primary)] truncate max-w-[120px]">
                     {currentUser.name}
                   </p>
-                  <p className="text-[10px] text-[#8E8E93] capitalize">
+                  <p className="text-[10px] text-[var(--text-muted)] capitalize">
                     {currentUser.role === 'coach' ? 'Coach' : `${currentUser.streak || 0}d streak`}
                   </p>
                 </div>
@@ -128,10 +128,10 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={handleToggleMute}
               title={isMuted ? 'Unmute Sound FX' : 'Mute Sound FX'}
-              className={`p-1.5 sm:p-2 rounded-2xl border text-xs transition active:scale-95 ${
+              className={`p-1.5 sm:p-2 rounded-2xl text-xs transition-all duration-300 active:scale-95 ${
                 isMuted
-                  ? 'bg-slate-900 text-slate-500 border-slate-800'
-                  : 'bg-slate-900 text-gray-200 border-[var(--border)]'
+                  ? 'bg-[var(--bg-surface-1)] text-[var(--text-muted)] border border-[var(--border-subtle)]'
+                  : 'btn-ghost border border-[var(--border-subtle)]'
               }`}
             >
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -143,7 +143,7 @@ export const Header: React.FC<HeaderProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               title="Developer GitHub Profile"
-              className="flex p-1.5 sm:p-2 rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-white hover:bg-[rgba(255,255,255,0.1)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition shadow-[0_4px_20px_rgba(0,0,0,0.2)] active:scale-95"
+              className="flex p-1.5 sm:p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
             >
               <Github className="w-4 h-4" />
             </a>
@@ -156,7 +156,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenPWAInstall();
                 }}
                 title="Install PWA / Add to Home Screen"
-                className="flex p-1.5 sm:p-2 rounded-2xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-gray-200 hover:border-[var(--border)] transition active:scale-95"
+                className="flex p-1.5 sm:p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
               >
                 <Smartphone className="w-4 h-4" />
               </button>
@@ -170,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenLegal();
                 }}
                 title="Legal & Safety Policy"
-                className="hidden md:flex p-1.5 sm:p-2 rounded-2xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-gray-200 hover:border-[var(--border)] transition active:scale-95"
+                className="hidden md:flex p-1.5 sm:p-2 rounded-2xl btn-ghost border border-[var(--border-subtle)] active:scale-95 transition-all duration-300"
               >
                 <Shield className="w-4 h-4" />
               </button>
@@ -182,7 +182,7 @@ export const Header: React.FC<HeaderProps> = ({
                 logout();
               }}
               title="Sign Out"
-              className="p-1.5 sm:p-2 rounded-2xl border border-rose-500/30 bg-slate-900 text-rose-400 hover:bg-rose-500/10 transition active:scale-95"
+              className="p-1.5 sm:p-2 rounded-2xl btn-danger active:scale-95 transition-all duration-300"
             >
               <LogOut className="w-4 h-4" />
             </button>

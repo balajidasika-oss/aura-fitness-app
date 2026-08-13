@@ -78,8 +78,8 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
     'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&auto=format&fit=crop&q=80';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-transparent  p-3 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-sm aspect-[9/16] bg-slate-900 rounded-2xl overflow-hidden shadow-none flex flex-col border border-slate-700">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 backdrop-blur-xl p-3 animate-fade-in-up">
+      <div className="relative w-full max-w-sm aspect-[9/16] bg-[var(--bg-void)] rounded-3xl overflow-hidden flex flex-col border border-[var(--border-subtle)] shadow-2xl animate-scale-in">
         {/* Background Image Story */}
         <img
           src={storyImage}
@@ -88,14 +88,14 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
         />
 
         {/* Gradient Overlay for Readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[var(--bg-void)] pointer-events-none" />
 
         {/* Top Story Bars */}
-        <div className="relative z-10 p-3 flex space-x-1">
+        <div className="relative z-10 p-3 flex gap-1">
           {clients.map((_, i) => (
-            <div key={i} className="flex-1 h-1 bg-[var(--surface)]/30 rounded-full overflow-hidden">
+            <div key={i} className="flex-1 h-1 bg-[var(--bg-surface-1)]/50 rounded-full overflow-hidden">
               <div
-                className="h-full bg-[var(--surface)] transition-all duration-100"
+                className="h-full bg-[var(--text-primary)] transition-all duration-100"
                 style={{
                   width:
                     i < currentIndex
@@ -111,28 +111,28 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
 
         {/* Top User Info Bar */}
         <div className="relative z-10 px-4 py-2 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-3">
             <img
               src={currentClient.avatarUrl}
               alt={currentClient.name}
-              className="w-10 h-10 rounded-full object-cover border-2 border-[var(--border)] shadow-md"
+              className="w-10 h-10 rounded-full object-cover border-2 border-[var(--border-subtle)] shadow-md"
             />
             <div>
-              <div className="flex items-center space-x-1.5">
-                <span className="font-bold text-white text-sm drop-shadow">{currentClient.name}</span>
-                <span className="bg-[var(--surface)] text-white text-[10px] font-bold px-2 py-0.5 rounded-full  shadow">
+              <div className="flex items-center gap-1.5">
+                <span className="font-bold text-[var(--text-primary)] text-sm drop-shadow-md">{currentClient.name}</span>
+                <span className="bg-[var(--bg-surface-2)]/80 backdrop-blur-md text-[var(--text-primary)] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[var(--border-subtle)] shadow-sm">
                   {currentClient.compliance?.overallScore || 100}% Logged
                 </span>
               </div>
-              <p className="text-[11px] text-slate-200 drop-shadow flex items-center space-x-1">
-                <Flame className="w-3 h-3 text-gray-200 fill-amber-400 inline" />
+              <p className="text-[11px] text-[var(--text-secondary)] drop-shadow-md flex items-center gap-1 mt-0.5">
+                <Flame className="w-3 h-3 text-amber-400 fill-amber-400 inline" />
                 <span>{currentClient.streak || 1} day streak · {currentClient.fitnessGoal}</span>
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-transparent text-white flex items-center justify-center hover:bg-transparent transition-colors"
+            className="btn-icon bg-black/40 hover:bg-black/60 backdrop-blur-md text-[var(--text-primary)]"
           >
             <X className="w-4 h-4" />
           </button>
@@ -142,30 +142,30 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
         <div className="absolute inset-y-16 inset-x-0 flex justify-between z-10">
           <button
             onClick={handlePrev}
-            className="w-1/3 h-full opacity-0 hover:opacity-100 flex items-center justify-start pl-2 transition-opacity"
+            className="w-1/3 h-full opacity-0 hover:opacity-100 flex items-center justify-start pl-2 transition-opacity duration-300"
           >
-            <ChevronLeft className="w-8 h-8 text-white/50" />
+            <ChevronLeft className="w-8 h-8 text-[var(--text-primary)]/70 drop-shadow-md" />
           </button>
           <button
             onClick={handleNext}
-            className="w-2/3 h-full opacity-0 hover:opacity-100 flex items-center justify-end pr-2 transition-opacity"
+            className="w-2/3 h-full opacity-0 hover:opacity-100 flex items-center justify-end pr-2 transition-opacity duration-300"
           >
-            <ChevronRight className="w-8 h-8 text-white/50" />
+            <ChevronRight className="w-8 h-8 text-[var(--text-primary)]/70 drop-shadow-md" />
           </button>
         </div>
 
         {/* Bottom Story Content & Quick Cheer Bar */}
         <div className="relative z-10 mt-auto p-4 space-y-3">
           {/* Workout Stats Badge */}
-          <div className="p-3 rounded-2xl bg-transparent  border border-[var(--border)] space-y-1.5">
-            <div className="flex items-center justify-between text-xs font-semibold text-gray-200">
-              <span className="flex items-center space-x-1">
-                <Zap className="w-3.5 h-3.5 fill-emerald-400" />
+          <div className="p-3 rounded-2xl bg-[var(--bg-surface-1)]/80 backdrop-blur-xl border border-[var(--border-subtle)] space-y-1.5">
+            <div className="flex items-center justify-between text-xs font-semibold text-[var(--text-primary)]">
+              <span className="flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 fill-emerald-400 text-emerald-400" />
                 <span>Today's Check-in Complete</span>
               </span>
-              <span className="text-white">Active Now</span>
+              <span className="text-[var(--text-primary)] opacity-80">Active Now</span>
             </div>
-            <p className="text-xs text-slate-200 leading-snug">
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
               {currentClient.compliance?.habits?.running
                 ? `🏃 Completed daily cardio workout. Energy high and nutrition locked in.`
                 : `⚡ Habits logged for the day.`}
@@ -173,16 +173,16 @@ export const StoryPreviewModal: React.FC<StoryPreviewModalProps> = ({
           </div>
 
           {/* 1-Tap Cheer Reactions */}
-          <div className="flex items-center space-x-2 pt-1">
-            <span className="text-xs font-semibold text-slate-300 flex items-center space-x-1">
-              <Sparkles className="w-3.5 h-3.5 text-gray-200" />
-              <span>Send Cheer:</span>
+          <div className="flex items-center gap-3 pt-2">
+            <span className="text-xs font-semibold text-[var(--text-secondary)] flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Cheer:</span>
             </span>
             {['🔥', '💪', '🥗', '👏'].map((emoji) => (
               <button
                 key={emoji}
                 onClick={() => handleQuickCheer(emoji)}
-                className="w-10 h-10 rounded-full bg-[var(--surface)]/20 hover:bg-[var(--surface)]/30  text-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-lg border border-[var(--border)]"
+                className="w-10 h-10 rounded-full bg-[var(--bg-surface-2)]/60 hover:bg-[var(--bg-surface-2)] backdrop-blur-md text-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg border border-[var(--border-subtle)]"
               >
                 {emoji}
               </button>
