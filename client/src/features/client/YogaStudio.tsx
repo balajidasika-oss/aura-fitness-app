@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, Volume2, Bell, Heart, Sparkles, Activity, Clock, Image as ImageIcon, ScanEye, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { soundFx } from '../../utils/audio';
-import { AIPoseCoach } from './AIPoseCoach';
+
 
 interface YogaStudioProps {
   onCompleteSession?: (details: { type: 'flow' | 'mobility' | 'flexibility' | 'recovery'; title: string; duration: number; videoUrl?: string }) => void;
@@ -37,8 +37,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
   const [isMeditating, setIsMeditating] = useState(false);
   const [selectedDuration, setSelectedDuration] = useState(300);
 
-  // AI Coach State
-  const [aiCoachAsana, setAiCoachAsana] = useState<{ name: string; image: string; duration: string; benefits: string } | null>(null);
+
 
   // Zumba Video State
   const [selectedZumbaVideo, setSelectedZumbaVideo] = useState<{ title: string; videoUrl: string; duration: string } | null>(null);
@@ -90,22 +89,6 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
       <div className="glass-panel-elevated rounded-2xl overflow-hidden relative shadow-2xl border-[var(--border-subtle)] min-h-[calc(100vh-140px)]">
       {/* Background Mesh */}
       <div className="absolute inset-0 bg-mesh-dark opacity-30 pointer-events-none transition-opacity group-hover:opacity-50" />
-      {aiCoachAsana && (
-        <AIPoseCoach 
-          targetAsana={aiCoachAsana} 
-          onClose={() => setAiCoachAsana(null)} 
-          onComplete={(asana) => {
-            setAiCoachAsana(null);
-            if (onCompleteSession) {
-              onCompleteSession({
-                type: 'mobility',
-                title: `Yoga Asana: ${asana.name}`,
-                duration: parseInt(asana.duration) || 2
-              });
-            }
-          }}
-        />
-      )}
       
       {/* Studio Header */}
       <div className="relative z-10 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 p-5 border-b border-[var(--border-subtle)]">
@@ -167,16 +150,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
                   <div className="p-4 space-y-2">
                     <h4 className="text-sm font-bold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--text-primary)] transition-colors">{asana.name}</h4>
                     <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed min-h-[40px]">{asana.benefits}</p>
-                    <button
-                      onClick={() => {
-                        soundFx.playTapSound();
-                        setAiCoachAsana(asana);
-                      }}
-                      className="w-full py-2 rounded-2xl bg-[var(--bg-surface-1)] hover:bg-[var(--bg-surface-1)] border-[var(--border-subtle)] text-[11px] font-bold text-[var(--text-primary)] flex items-center justify-center gap-1.5 transition active:scale-95"
-                    >
-                      <ScanEye className="w-3.5 h-3.5" />
-                      Start AI Coach
-                    </button>
+
                   </div>
                 </div>
               ))}

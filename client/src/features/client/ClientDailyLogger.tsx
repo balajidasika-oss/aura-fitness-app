@@ -46,8 +46,7 @@ import { submitDailyLog, fetchTodayLog, joinCoach, API_BASE } from '../../servic
 import { useAuth } from '../../context/AuthContext';
 import { ProgressRing } from '../../components/ProgressRing';
 import { LiveCameraModal } from '../../components/LiveCameraModal';
-import { VoiceFeedbackPlayer } from '../../components/VoiceFeedbackPlayer';
-import { VoiceNoteRecorder } from '../../components/VoiceNoteRecorder';
+
 import { soundFx } from '../../utils/audio';
 interface ClientDailyLoggerProps {
   client: IClientUser;
@@ -134,9 +133,6 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
   const [sessionPhotoFile, setSessionPhotoFile] = useState<File | null>(null);
   const [sessionPhotoUrl, setSessionPhotoUrl] = useState<string | null>(null);
 
-  // 5. CLIENT VOICE NOTE (Microphone Recorded)
-  const [voiceNoteBlob, setVoiceNoteBlob] = useState<Blob | null>(null);
-  const [voiceNoteUrl, setVoiceNoteUrl] = useState<string | null>(null);
 
   // Notes & Coach Cheer
   const [clientNotes, setClientNotes] = useState<string>('Hydration reached 3.5L. Felt energetic through all sets.');
@@ -349,10 +345,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
     setIsAddingMeal(false);
   };
 
-  const handleVoiceAudioReady = (audioBlob: Blob | null, url: string | null) => {
-    setVoiceNoteBlob(audioBlob);
-    setVoiceNoteUrl(url);
-  };
+
 
   // Save full daily log payload
   const handleSaveDailyLog = async () => {
@@ -433,15 +426,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         formData.append('postWorkoutPhoto', sessionPhotoUrl);
       }
 
-      // Client Voice Note Audio File
-      if (voiceNoteBlob) {
-        const audioFile = new File([voiceNoteBlob], `voicenote-${client._id}-${Date.now()}.webm`, {
-          type: 'audio/webm',
-        });
-        formData.append('voiceNoteAudio', audioFile);
-      } else if (voiceNoteUrl) {
-        formData.append('voiceNoteUrl', voiceNoteUrl);
-      }
+
 
       await submitDailyLog(formData);
 
@@ -907,8 +892,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
       )}
           </div>
 
-      {/* SECTION 2: CLIENT DAILY VOICE NOTE (Microphone Access) */}
-      <div className="bg-transparent rounded-2xl p-6 md:p-8 border-[var(--border-subtle)] relative overflow-hidden mt-8"><VoiceNoteRecorder onAudioReady={handleVoiceAudioReady} coachName="Coach Kai" /></div>
+
 
       {/* SECTION 3: CARDIO LOGGING (Incline Walk, StairMaster, Running) */}
       <div className="rounded-2xl bg-transparent border-[var(--border-subtle)] p-4 space-y-3.5">
@@ -1248,23 +1232,6 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
         )}
       </div>
 
-      {/* SECTION 6: DAILY AUDIO DEBRIEF (Voice Feedback Player) */}
-      <VoiceFeedbackPlayer
-        options={{
-          clientName: client.name ? client.name.split(' ')[0] : 'Athlete',
-          workoutTitle: workoutTitle || 'Session',
-          workoutIntensity,
-          workoutDuration: totalSessionDurationMinutes,
-          mealCount: meals.length + (mealFile ? 1 : 0),
-          hasSelfie: Boolean(sessionPhotoUrl || sessionPhotoFile),
-          streak: client.streak || 0,
-          coachName: 'Coach Kai',
-          activityType: cardioType,
-          distanceKm: cardioDistanceKm,
-          durationMinutes: cardioDurationMins,
-          stairmasterFloors,
-        }}
-      />
 
       {/* SECTION 7: PRIMARY SUBMIT ACTION */}
       <div className="pt-2 pb-6">
