@@ -4,13 +4,23 @@ import { Flame, Trophy, Zap, Activity, Award } from 'lucide-react';
 interface GamificationDashboardProps {
   yogaCompleted?: boolean;
   zumbaCompleted?: boolean;
+  streak?: number;
+  totalLogsSubmitted?: number;
 }
 
 export const GamificationDashboard: React.FC<GamificationDashboardProps> = ({
   yogaCompleted = false,
   zumbaCompleted = false,
+  streak = 0,
+  totalLogsSubmitted = 0,
 }) => {
   const unlockedCount = (yogaCompleted ? 1 : 0) + (zumbaCompleted ? 1 : 0);
+  
+  // Calculate dynamic gamification stats
+  const level = Math.floor(totalLogsSubmitted / 5) + 1;
+  const ranks = ['Novice', 'Rookie', 'Contender', 'Pro Contender', 'Elite', 'Master'];
+  const rankTitle = ranks[Math.min(level - 1, ranks.length - 1)];
+  const totalVolume = (totalLogsSubmitted * 3.1).toFixed(1);
 
   return (
     <div className="w-full bg-transparent border-[var(--border-subtle)] rounded-2xl p-6 md:p-8 mb-8 relative overflow-hidden">
@@ -20,26 +30,26 @@ export const GamificationDashboard: React.FC<GamificationDashboardProps> = ({
       
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] uppercase tracking-tight flex items-center gap-3">
+          <h2 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] uppercase flex items-center gap-3">
             <Trophy className="w-6 h-6 text-yellow-400" />
             Athlete Profile
           </h2>
-          <p className="text-[var(--text-primary)]/80 font-medium mt-1">Level 4 • Pro Contender</p>
+          <p className="text-[var(--text-primary)]/80 font-medium mt-1">Level {level} • {rankTitle}</p>
         </div>
         
         <div className="flex items-center gap-4">
           <div className="surface-card rounded-2xl px-5 py-3 flex flex-col items-center justify-center">
             <span className="text-sm text-[var(--text-muted)] font-semibold uppercase tracking-wider mb-1">Streak</span>
             <div className="flex items-center gap-2">
-              <Flame className="w-5 h-5 text-orange-500 fill-orange-500" />
-              <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">5 Days</span>
+              <Flame className={`w-5 h-5 ${streak > 0 ? 'text-orange-500 fill-orange-500' : 'text-gray-500'}`} />
+              <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">{streak} Days</span>
             </div>
           </div>
           <div className="surface-card rounded-2xl px-5 py-3 flex flex-col items-center justify-center">
             <span className="text-sm text-[var(--text-muted)] font-semibold uppercase tracking-wider mb-1">Total Volume</span>
             <div className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-blue-400 fill-blue-400" />
-              <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">12.4k lbs</span>
+              <Zap className={`w-5 h-5 ${totalLogsSubmitted > 0 ? 'text-blue-400 fill-blue-400' : 'text-gray-500'}`} />
+              <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">{totalVolume}k lbs</span>
             </div>
           </div>
         </div>

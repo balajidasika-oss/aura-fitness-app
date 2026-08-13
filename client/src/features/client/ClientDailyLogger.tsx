@@ -572,6 +572,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
       <GamificationDashboard 
         yogaCompleted={isYogaActive && yogaType !== 'flow'}
+        streak={client.compliance?.streak || client.streak || 0}
+        totalLogsSubmitted={client.totalLogsSubmitted || 0}
         zumbaCompleted={isYogaActive && yogaType === 'flow'}
       />
 

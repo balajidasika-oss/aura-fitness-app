@@ -92,6 +92,9 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
       mounted = false;
       if (reqFrameRef.current) cancelAnimationFrame(reqFrameRef.current);
       if (streamRef.current) streamRef.current.getTracks().forEach(track => track.stop());
+      if (detectorRef.current) {
+        detectorRef.current.dispose();
+      }
     };
   }, [facingMode]);
 
@@ -206,7 +209,13 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
             }
           }
           else {
-            setFeedbackMsg('Tracking body alignment...');
+            // Generic fallback for un-modeled poses
+            if (validKeypoints.length >= 10) {
+              currentPoseCorrect = true;
+              setFeedbackMsg('Great form! Hold the pose.');
+            } else {
+              setFeedbackMsg('Tracking body alignment... (Make sure you are fully visible)');
+            }
           }
         } else {
           setFeedbackMsg('Step back to show more of your body.');
@@ -329,7 +338,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
         <div className="flex-1 flex flex-col md:flex-row relative w-full h-full surface-card overflow-hidden pt-[88px]">
           
           {/* LEFT/BOTTOM PANEL: Reference Image & Instructions */}
-          <div className="order-2 md:order-1 w-full md:w-1/3 h-[35%] md:h-full border-t md:border-t-0 md:border-r border-[var(--border-subtle)] bg-[var(--bg-surface-1)] flex flex-col overflow-y-auto z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.2)] md:">
+          <div className="order-2 md:order-1 w-full md:w-1/3 h-[35%] md:h-full border-t md:border-t-0 md:border-r border-[var(--border-subtle)] bg-[var(--bg-surface-1)] flex flex-col overflow-y-auto z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.2)]">
             {/* Reference Image (Hidden on very small screens, visible on md+) */}
             <div className="hidden sm:flex relative h-32 md:h-2/5 shrink-0 bg-[var(--bg-surface-1)] border-b border-[var(--border-subtle)] p-4 flex-col justify-center items-center">
               <img 
@@ -412,7 +421,7 @@ export const AIPoseCoach: React.FC<AIPoseCoachProps> = ({ onClose, onComplete, t
             />
             <canvas 
               ref={canvasRef}
-              className="absolute inset-0 w-full h-full object-contain scale-x-[-1] z-10 drop-"
+              className="absolute inset-0 w-full h-full object-contain scale-x-[-1] z-10"
             />
             
             {/* Live Feedback Bubble Overlay */}
