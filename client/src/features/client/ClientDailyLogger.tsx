@@ -547,8 +547,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
       {/* Change Coach Modal */}
       {showCoachModal && (
-        <div className="fixed inset-0 z-50 bg-transparent flex items-center justify-center p-4">
-          <div className="bg-transparent border-[var(--border-subtle)] rounded-2xl p-5 w-full max-w-sm relative">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="surface-card border-[var(--border-subtle)] rounded-2xl p-5 w-full max-w-sm relative shadow-2xl">
             <button 
               onClick={() => setShowCoachModal(false)}
               className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -795,7 +795,7 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
       {/* Add Exercise Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-transparent p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
           <div className="glass-card rounded-2xl p-4 w-full max-w-sm space-y-3">
             <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
               <h4 className="text-xs font-bold tracking-tight text-[var(--text-primary)] flex items-center space-x-1.5">
@@ -1148,8 +1148,8 @@ export const ClientDailyLogger: React.FC<ClientDailyLoggerProps> = ({ client, on
 
         {/* Add Meal Detail Modal */}
         {isAddingMeal && mealPreviewUrl && (
-          <div className="fixed inset-0 z-50 bg-transparent flex items-center justify-center p-4">
-            <div className="bg-transparent border-[var(--border-subtle)] rounded-2xl p-5 w-full max-w-sm relative">
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="surface-card border-[var(--border-subtle)] rounded-2xl p-5 w-full max-w-sm relative shadow-2xl">
               <button 
                 onClick={() => {
                   setIsAddingMeal(false);

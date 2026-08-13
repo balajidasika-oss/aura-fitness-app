@@ -29,9 +29,9 @@ export const ClientDashboardLayout: React.FC<ClientDashboardLayoutProps> = ({ cl
   ] as const;
 
   return (
-    <div className="w-full flex flex-col h-[calc(100vh-80px)] md:h-auto animate-fade-in-up">
+    <div className="w-full flex flex-col animate-fade-in-up">
       {/* Tab Navigation - Top on desktop, Bottom fixed on mobile */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 md:sticky md:top-4 bg-[var(--bg-glass)] backdrop-blur-xl border-t md:border border-[var(--border-subtle)] pb-safe md:rounded-2xl md:mb-6 shadow-xl">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 md:sticky md:top-4 bg-[var(--bg-glass)] backdrop-blur-xl border-t md:border border-[var(--border-subtle)] pb-6 md:pb-0 md:rounded-2xl md:mb-6 shadow-xl">
         <div className="max-w-md mx-auto md:max-w-none flex items-center justify-around md:justify-center p-2 md:gap-4 md:p-3">
           {navItems.map((item) => {
             const Icon = item.icon;

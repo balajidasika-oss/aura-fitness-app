@@ -259,7 +259,7 @@ export const YogaStudio: React.FC<YogaStudioProps> = ({ onCompleteSession }) => 
         )}
         {/* PREMIUM VIDEO OVERLAY */}
         {selectedZumbaVideo && (
-          <div className="fixed inset-0 z-[200] bg-transparent backdrop-blur-3xl flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-500">
+          <div className="fixed inset-0 z-[200] bg-black/80 backdrop-blur-xl flex flex-col items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-500">
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
               <div className="surface-card px-4 py-2 rounded-2xl border-[var(--border-subtle)] hidden sm:block">
                 <h3 className="text-[var(--text-primary)] font-bold tracking-tight tracking-wide text-sm flex items-center gap-2">
